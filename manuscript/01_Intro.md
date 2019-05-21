@@ -1,7 +1,7 @@
 # Introduction
 
 > "One of the biggest sins you can commit is to stop programming when it works." - Brandon Rhodes
-
+  
 Here's a little insight into what I'm thinking about when I write code.
 
 So, I'm working on--what I'll call for now--a data migration feature. It's for a new version of an issue tracking tool I helped create ten years ago called DoneDone. For the past handful of years, I've been its sole developer. Being the lone developer on a product for that long has some drawbacks, but, for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away at this large piece of stone.
@@ -30,9 +30,17 @@ I told Mike about my conundrum. He suggested using the word _import_. Ah hah!
 
 There's a heftiness to the word _import_. Whenever I think about importing data, I envision metal gear icons spinning slowly and CPU graphs spiking briefly. Even when you import things in the real world, it has that same feeling-- huge cargo ships coming to port across the ocean and offloading a large amount of goods.
 
-And unlike migrate, the word import doesn't feel like data is leaving one place and going to another. I typically think of importing data from a file I've uploaded. I know that data isn't being removed from the file. I also don't necessarily expect this one-to-one mapping of my data that the word _copy_ suggests.
+And unlike migrate, the word import doesn't feel like data is leaving one place and going to another. I typically think of importing data from a file I've uploaded, where I know that data isn't being removed from the file. I also don't necessarily expect this one-to-one mapping between my data and the imported data. Import seems like the perfect word to use.
 
 So, I end up substituting _migrate_ (and all its various derivatives) with _import_.
+  
+If you haven't figured it out already, I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. I think naming things in code deserves as much attention as all the other skills we preach in programming---like good architecture, continuous refactoring, or testing. 
+
+While all the other best practices are critical, they share the common drawback that you cannot feel them right away. It's only after a bit of digestion of a codebase that you can feel its benefits. On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when opening up the codebase. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work.
+
+
+
+
 
 
 
