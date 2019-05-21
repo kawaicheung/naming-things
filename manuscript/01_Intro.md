@@ -14,11 +14,28 @@ It's intense work, but I get it all done and tested. Things are going suprisingl
 
 When the dust settles, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. 
 
-What's bugging me is this word _migration_. Mike (my business partner) and I have been using the phrase "data migration" the whole time. Sometimes you use a term or phrase so much, you no longer think about what it actually means; You just know what it's _supposed_ to mean.
+What's bugging me is this word _migrate_. Mike (my business partner) and I have been using the term "data migration" in reference to this feature the whole time. Sometimes you use a term so much that you no longer think about what it actually means; You just know what it's _supposed_ to mean.
 
-I always like to use the words that I use to talk about the product in my codebase. This avoids any unnecessary mental mapping between talking about the system with people and actually writing code for the system. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. 
+I always like to use the same words we use to talk about the product in the codebase itself. This avoids any unnecessary mental mapping between talking about the system and actually writing code for the system. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. The copy on the application uses the word migration too.
 
 It's an important word to get right.
+
+But, in reality, we aren't migrating data. Migrate has this connotation that something is leaving one place to go to another, like a flock of birds migrating south for the winter. In our case, data isn't leaving the Classic version. That data is still there, untouched, after a migration. This way, Classic users can play around with the new system using their existing data but don't have to leave Classic if they don't like the new system.
+
+Migrate is actually a very misleading word. Using that word in the application copy might make customers apprehensive about their existing data. Using that word in code might confuse future developers.
+
+So, next, I think about replacing migration with _copy_. But, copy isn't right either. As I mentioned, this data transfer isn't a literal copy. There are some things that don't translate perfectly, or at all. Copying also seems like a fast, mindless operation--a simple `CTRL+C`, `CTRL+V` exercise. That's not what this is.
+
+I told Mike about my conundrum. He suggested using the word _import_. Ah hah!
+
+There's a heftiness to the word _import_. Whenever I think about importing data, I envision metal gear icons spinning slowly and CPU graphs spiking briefly. Even when you import things in the real world, it has that same feeling-- huge cargo ships coming to port across the ocean and offloading a large amount of goods.
+
+And unlike migrate, the word import doesn't feel like data is leaving one place and going to another. I typically think of importing data from a file I've uploaded. I know that data isn't being removed from the file. I also don't necessarily expect this one-to-one mapping of my data that the word _copy_ suggests.
+
+So, I end up substituting _migrate_ (and all its various derivatives) with _import_.
+
+
+
 
 
 
