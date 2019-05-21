@@ -34,8 +34,8 @@ So, I end up substituting _migrate_ (and all its various derivatives) with _impo
 
 * * *
 
-If you haven't figured it out already, I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. I think naming things in code deserves as much attention as all the other skills we preach in programming---like good architecture, continuous refactoring, or testing. 
+If you haven't figured it out already, I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. Finding that just-right name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
 
-While all the other best practices are critical, they share the common drawback that you cannot see them right away. It's only after a bit of digestion of a codebase that you reap its benefits. On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when opening up the codebase. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work.
+I also think naming things in code deserves as much attention as all the other skills we preach in programming---like good architecture, continuous refactoring, or testing. While all the other best practices are critical, they share the common drawback that you cannot see them right away. It's only after a bit of digestion of a codebase that you reap its benefits. 
 
-I wrote this book to collect a handful of thoughts I have about how to name things well. Some of these ideas blend into other programming topics you might be familiar with, but all are anchored around the simple idea that you should spend time considering how things are named.
+On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when opening up the codebase. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work. Isn't that what we're all striving for?
