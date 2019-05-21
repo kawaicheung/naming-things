@@ -14,11 +14,9 @@ It's intense work, but I get it all done and tested. Things are going suprisingl
 
 When the dust settles, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. 
 
-What's bugging me is this word _migrate_. Mike (my business partner) and I have been using the term "data migration" in reference to this feature the whole time. Sometimes you use a term so much that you no longer think about what it actually means; You just know what it's _supposed_ to mean.
+I always like to use the same words we use to talk about the product in the codebase itself. This avoids any unnecessary mental mapping between talking about the system and actually writing code for the system. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. The copy on the application uses the words _migrate_ and _migration_ too.
 
-I always like to use the same words we use to talk about the product in the codebase itself. This avoids any unnecessary mental mapping between talking about the system and actually writing code for the system. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. The copy on the application uses the word migration too.
-
-It's an important word to get right.
+But, this word is really eating at me. Mike (my business partner) and I have been using the word "migration" in reference to this feature the whole time. Sometimes you use a term so much that you no longer think about what it actually means; You just know what it's _supposed_ to mean. It's an important word to get right.
 
 But, in reality, we aren't migrating data. Migrate has this connotation that something is leaving one place to go to another, like a flock of birds migrating south for the winter. In our case, data isn't leaving the Classic version. That data is still there, untouched, after a migration. This way, Classic users can play around with the new system using their existing data but don't have to leave Classic if they don't like the new system.
 
