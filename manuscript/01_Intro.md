@@ -1,5 +1,7 @@
 # Introduction
 
+> "One of the biggest sins you can commit is to stop programming when it works." - Brandon Rhodes
+
 Here's a little insight into what I'm thinking about when I write code.
 
 So, I'm working on--what I'll call for now--a data migration feature. It's for a new version of a product I helped create ten years ago called DoneDone. It's an issue tracking and customer support tool. For the past handful of years, I've been its sole developer. Being the lone developer on a product for that long has some drawbacks, but, for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away at this large piece of stone.
@@ -10,7 +12,9 @@ For about six days, I'm working on this feature. The whole bit. There are a few 
 
 It's intense work, but I get it all done. Things are going suprisingly smoothly for such a big feature.
 
-When the dust has settled, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. Something about the word "migration" is bugging me. Mike (my business partner) and I have been using the phrase "data migration" the whole time. Sometimes you use a term or phrase so much, you no longer think about what it actually means; You just know what it's _supposed_ to mean.
+When the dust settles, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. Something about the word "migration" is bugging me. Mike (my business partner) and I have been using the phrase "data migration" the whole time. Sometimes you use a term or phrase so much, you no longer think about what it actually means; You just know what it's _supposed_ to mean.
+
+Because I like 
 
 
 
