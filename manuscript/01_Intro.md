@@ -26,7 +26,7 @@ So, next, I think about replacing migration with _copy_. But, copy isn't right e
 
 I told Mike about my conundrum. Immediately, he suggested using the word _import_ instead. Ah hah!
 
-There's a heftiness to the word _import_. Whenever I think about importing data, I envision metal gear icons spinning slowly and CPU graphs spiking briefly. Even when you import things in the real world, it has that same feeling-- huge cargo ships coming to port across the ocean and offloading a large amount of goods.
+There's a heftiness to the word _import_. Whenever I think about importing data, I think metal gear icons spinning slowly and CPU graphs spiking. Even when you import things in the real world, it has that same feeling of heft--huge cargo ships coming to port across the ocean lugging a large amount of goods.
 
 And unlike migrate, the word import doesn't feel like data is leaving one place and going to another. I typically think of importing data from a file I've uploaded, where I know that data isn't being removed from the file. I also don't necessarily expect this one-to-one mapping between my data and the imported data. Import seems like the perfect word to use.
 
