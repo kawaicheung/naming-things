@@ -1,3 +1,4 @@
+# Introduction
 
 Here's a little insight into what I'm thinking about when I write code.
 
