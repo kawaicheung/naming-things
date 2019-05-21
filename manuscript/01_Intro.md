@@ -38,4 +38,6 @@ If you haven't figured it out already, I'm the kind of programmer that obsesses 
 
 Naming things in code deserves as much attention as all the other skills we preach in programming---like good architecture, continuous refactoring, or testing. While all the other best practices are critical, they share the common drawback that you cannot see them right away. It's only after a bit of digestion of a codebase that you reap its benefits. 
 
-On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when opening up the codebase. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work. Isn't that what we're all striving for?
+On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when opening up the codebase. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work.
+
+After all, isn't that what we're all striving for?
