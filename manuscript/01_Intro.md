@@ -4,17 +4,21 @@
 
 Here's a little insight into what I'm thinking about when I write code.
 
-So, I'm working on--what I'll call for now--a data migration feature. It's for a new version of a product I helped create ten years ago called DoneDone. It's an issue tracking and customer support tool. For the past handful of years, I've been its sole developer. Being the lone developer on a product for that long has some drawbacks, but, for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away at this large piece of stone.
+So, I'm working on--what I'll call for now--a data migration feature. It's for a new version of an issue tracking tool I helped create ten years ago called DoneDone. For the past handful of years, I've been its sole developer. Being the lone developer on a product for that long has some drawbacks, but, for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away at this large piece of stone.
 
-Anyways, here I am working on this data migration feature. The goal is to give users an easy way to bring their existing data over from the old version of DoneDone over to this new version. I certainly wished the process was as straightforward as mapping the columns and tables from the old database over to the new database, but it's not. The new DoneDone is markedly different than its predecessor. Some data maps simply, other data requires some massaging, and still others simply can't be mapped at all.
+Anyways, here I am working on this data migration feature. The goal is to give users an easy way to bring their existing data over from the old version of DoneDone (which we call Classic DoneDone) over to this new version. I certainly wished the process was as straightforward as mapping the columns and tables from the Classic database over to the new database, but it's not. The new DoneDone is markedly different than its predecessor. Some data maps simply. Other data requires some massaging. Still others simply can't be mapped at all.
 
-For about six days, I'm working on this feature. The whole bit. There are a few screens to design and develop: a screen to login to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On top of this, there's an out-of-band service to write that "picks up" these requests and performs the dirty work of moving this data over cleanly.  Then, there are pieces like emailing the requester when the migration is complete or notifying us of any errors.
+For about six days, I'm working on this feature. The whole bit. I design and develop a screen to login to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On top of this, I write an out-of-band service that "picks up" these requests and performs the dirty work of moving this data over to the new system cleanly. Then, there are other tangential pieces like emailing the requester when the migration is complete or notifying us of any errors.
 
-It's intense work, but I get it all done. Things are going suprisingly smoothly for such a big feature.
+It's intense work, but I get it all done and tested. Things are going suprisingly smoothly for such a big feature.
 
-When the dust settles, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. Something about the word "migration" is bugging me. Mike (my business partner) and I have been using the phrase "data migration" the whole time. Sometimes you use a term or phrase so much, you no longer think about what it actually means; You just know what it's _supposed_ to mean.
+When the dust settles, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. 
 
-Because I like 
+What's bugging me is this word _migration_. Mike (my business partner) and I have been using the phrase "data migration" the whole time. Sometimes you use a term or phrase so much, you no longer think about what it actually means; You just know what it's _supposed_ to mean.
+
+I always like to use the words that I use to talk about the product in my codebase. This avoids any unnecessary mental mapping between talking about the system with people and actually writing code for the system. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. 
+
+It's an important word to get right.
 
 
 
