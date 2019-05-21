@@ -1,5 +1,15 @@
 # Using your imagination
 
+MAN SIMPLIFY THIS to...
+
+
+OBJECT ORIENTED IS A MISNOMER. DOG STUFF.
+
+THEN MOVE TO HERE's AN EXAMPLE. LET ME DESCRIBE THIS OBJECT (Talk about what it accepts tooo...paint hte picture that its not really a thing in the 'real world').
+
+
+=====
+
 If you're a fan of the cult classic _Office Space_, you'll certainly remember the line in the film when the contemptuous consultant asks the agitated employee a simple--yet piercing--question.
 
 > What would you say...ya do here?
