@@ -6,7 +6,15 @@ So, I'm working on--what I'll call for now--a data migration feature. It's for a
 
 Anyways, here I am working on this data migration feature. The goal is to give users an easy way to bring their existing data over from the old version of DoneDone over to this new version. I certainly wished the process was as straightforward as mapping the columns and tables from the old database over to the new database, but it's not. The new DoneDone is markedly different than its predecessor. Some data maps simply, other data requires some massaging, and still others simply can't be mapped at all.
 
-For about six days, I'm working on this feature--the whole bit. There are a few screens to design and develop, a way to login to the old system, a way to let users choose the projects 
+For about six days, I'm working on this feature. The whole bit. There are a few screens to design and develop: a screen to login to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On top of this, there's an out-of-band service to write that "picks up" these requests and performs the dirty work of moving this data over cleanly.  Then, there are pieces like emailing the requester when the migration is complete or notifying us of any errors.
+
+It's intense work, but I get it all done. Things are going suprisingly smoothly for such a big feature.
+
+When the dust has settled, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. Something about the word "migration" is bugging me. Mike (my business partner) and I have been using the phrase "data migration" the whole time. Sometimes you use a term or phrase so much, you no longer think about what it actually means; You just know what it's _supposed_ to mean.
+
+
+
+
 
 
 
