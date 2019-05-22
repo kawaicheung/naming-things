@@ -10,8 +10,6 @@ For the next six days, I work away at this feature--the whole bit. I develop a s
 
 It's intense work but I get it all done and tested. Things go suprisingly smoothly for such a large addition.
 
-> "One of the biggest sins you can commit is to stop programming when it works." -Brandon Rhodes
-
 When the dust settles, I give my code another onceover--it's like re-reading a manuscript from the beginning again with a fresh set of eyes. You tend to pick out things you don't like about your code best that way.
 
 I always try to use the same terms when I write code as when I talk about a feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. The copy on the application uses the words _migrate_ and _migration_ too.
