@@ -1,10 +1,12 @@
 # Use your imagination
 
-If you write in any one of the common software programming languages today, you probably do some amount of object-oriented programming. But, the term _object-oriented_ is a misnomer.
+If you write in any one of the common software programming languages today, you probably do some amount of object-oriented programming. But, I think the term _object-oriented_ is a misnomer.
 
 Most classes we create in code don't have a direct representation in the physical world. Introductory textbooks on object-oriented programming all seem to use examples involving dogs, cats, and birds (or cars, boats, and planes) as a way of describing how to code objects and interfaces. Unless you're a programmer at PetSmart, those aren't realistic examples.
 
-Many objects manifest because a set of functionality and properties all have a common purpose and it makes sense to corral this stuff together. But, these objects don't always have an obvious physical translation, we lean on generic names that don't tell us much of anything. This is where wishy-washy class names like `UserManager`, `MessagingHelper`, and `AppHandler` are born.
+Really, we should call it _noun-oriented_ programming. Because a noun can be a person, place, thing, or idea. Most classes really are an idea...with functionality. 
+
+Many objects manifest because a set of functionality and properties all have a common purpose and it makes sense to corral this stuff together. But, these "objects" don't always have an obvious physical translation so we lean on generic names that don't tell us much of anything. This is where wishy-washy class names like `UserManager`, `MessagingHelper`, and `AppHandler` are born. 
 
 There are certainly ways around this. Sometimes these generic names are a sign that the guts of the object belong elsewhere. Maybe the methods inside of a `UserManager` can be moved to the `User` class itself. But, sometimes the situation isn't that clear cut.
 
