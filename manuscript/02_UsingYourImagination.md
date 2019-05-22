@@ -1,26 +1,12 @@
-# Using your imagination
+# Use your imagination
 
-MAN SIMPLIFY THIS to...
+If you write in any one of the common software programming languages today, you probably do some amount of object-oriented programming. But, the term _object-oriented_ is a misnomer.
 
+Most classes we create in code don't have a direct representation in the physical world. Introductory textbooks on object-oriented programming all seem to use examples involving dogs, cats, and birds (or cars, boats, and planes) as a way of describing how to code objects and interfaces. Unless you're a programmer at PetSmart, those aren't realistic examples.
 
-OBJECT ORIENTED IS A MISNOMER. DOG STUFF.
+Many objects manifest because a set of functionality and properties all have a common purpose and it makes sense to corral this stuff together. But, these objects don't always have an obvious physical translation, we lean on generic names that don't tell us much of anything. This is where wishy-washy class names like `UserManager`, `MessagingHelper`, and `AppHandler` are born.
 
-THEN MOVE TO HERE's AN EXAMPLE. LET ME DESCRIBE THIS OBJECT (Talk about what it accepts tooo...paint hte picture that its not really a thing in the 'real world').
-
-
-=====
-
-If you're a fan of the cult classic _Office Space_, you'll certainly remember the line in the film when the contemptuous consultant asks the agitated employee a simple--yet piercing--question.
-
-> What would you say...ya do here?
-
-I often channel this scene when I'm swimming my way through all the objects in a large API. We spend so much time and energy shaping (and reshaping) classes into neat, digestible packages, yet, finding a name that neatly explains their reason for being is sometimes near impossible.
-
-The term _object-oriented_ is a misnomer. Most classes we create in code don't have a direct representation in the physical world. Yet, introductory textbooks on object-oriented programming all seem to use examples involving cars, boats, and planes or dogs, cats, and birds as a way of describing objects and interfaces. Those aren't realistic examples--unless you're a programmer at PetSmart.
-
-Instead, objects usually manifest because a set of functionality and properties all have a common purpose. But, because this object doesn't have an obvious physical translation, we lean on generic names that don't tell us much of anything. This is where wishy-washy names like `UserManager`, `MessagingHelper`, and `AppHandler` are born.
-
-What would you say it is, they do here?
+There are certainly ways around this. Sometimes these generic names are a sign that the guts of the object belong elsewhere. Maybe the methods inside of a `UserManager` can be moved to the `User` class itself. But, sometimes the situation isn't that clear cut.
 
 Fortunately, the English language is full of more expressive nouns. Sometimes, even when an object doesn't have an obvious physical representation, a bit of imagination can bridge that gap and make an object's name quite memorable.
 
