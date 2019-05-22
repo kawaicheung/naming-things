@@ -16,9 +16,11 @@ When the dust settles, I give my code another onceover--it's like re-reading a m
 
 I always try to use the same terms when I write code as when I talk about a feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. The copy on the application uses the words _migrate_ and _migration_ too.
 
-But, on this re-read, the word is really eating at me. Mike (my business partner) and I have been using the word "migration" in reference to this feature the whole time. This is an important word to get right. Sometimes you use a word so much that you no longer think about what it actually means; You just know what it's _supposed_ to mean. 
+On this re-read, the word is really eating at me. Mike (my business partner) and I have been using the word "migration" in reference to this feature the whole time. It's an important word to get right. 
 
-Here's the problem: We aren't migrating data. Migrate has this connotation that something is leaving one place to go to another, like a flock of birds migrating south for the winter. In our case, data isn't leaving the Classic version. That data is still there--untouched--after the migration. I wrote it this way so existing customers can try the new system using their existing data, but if they don't like it, they can just go back to Classic.
+Sometimes you use a word so much that you no longer think about what it actually means; You just know what it's _supposed_ to mean. Here's the problem: We aren't actually migrating data. 
+
+Migrate has this connotation that something is leaving one place to go to another, like a flock of birds migrating south for the winter. In our case, data isn't leaving the Classic version. That data is still there--untouched--after the migration. I wrote it this way so existing customers can try the new system using their existing data, but if they don't like it, they can just go back to Classic.
 
 Migrate is misleading. Using that word in the application copy might make customers apprehensive about their existing data. Using that word in code might confuse future developers.
 
