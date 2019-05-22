@@ -1,18 +1,18 @@
 # Introduction
 
-> "One of the biggest sins you can commit is to stop programming when it works." - Brandon Rhodes
-  
 Here's a little insight into what I'm thinking about when I write code.
 
-So, I'm working on--what I'll call for now--a data migration feature. It's for a new version of an issue tracking tool I helped create ten years ago called DoneDone. For the past handful of years, I've been its sole developer. Being the lone developer on a product for that long has some drawbacks, but, for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away at this large piece of stone.
+So, I'm working on--what I'll call for now--a data migration feature. It's for a new version of an issue tracking tool I helped create ten years ago called DoneDone. For the past handful of years, I've been its sole developer. Being the lone developer on a product for that long has some drawbacks, but for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away endlessly at this large piece of stone.
 
-Anyways, here I am working on this data migration feature. The goal is to give users an easy way to bring their existing data over from the old version of DoneDone (which we call Classic DoneDone) over to this new version. I certainly wished the process was as straightforward as mapping the columns and tables from the Classic database over to the new database, but it's not. The new DoneDone is markedly different than its predecessor. Some data maps simply. Other data requires some massaging. Still others simply can't be mapped at all.
+The goal of this feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call _Classic_) over to this new version. I wish I could tell you the process is a simple mapping of database tables and columns from Classic over to the new version, but it's not. The new DoneDone is markedly different than its predecessor: Some data maps simply, other data requires some massaging, and some stuff simply can't be mapped at all.
 
-For about six days, I'm working on this feature. The whole bit. I design and develop a screen to login to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On top of this, I write an out-of-band service that "picks up" these requests and performs the dirty work of moving this data over to the new system cleanly. Then, there are other tangential pieces like emailing the requester when the migration is complete or notifying us of any errors.
+For the next six days, I work away at this feature--the whole bit. I develop a screen to sign in to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On the backend, I work on a number of database updates to store these requests. I then write an out-of-band service that picks up these requests to perform the dirty work of moving this data over cleanly. Then, there are other tangential pieces like emailing the requester when the migration is complete or notifying us of any errors.
 
-It's intense work, but I get it all done and tested. Things are going suprisingly smoothly for such a big feature.
+It's intense work but I get it all done and tested. Things go suprisingly smoothly for such a large addition.
 
-When the dust settles, I like to give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. 
+> "One of the biggest sins you can commit is to stop programming when it works." -Brandon Rhodes
+
+When the dust settles, I give my code another onceover--it's like re-reading a manuscript from the beginning again with a fresh set of eyes. You tend to pick out things you don't like about your code best that way.
 
 I always like to use the same words we use to talk about the product in the codebase itself. This avoids any unnecessary mental mapping between talking about the system and actually writing code for the system. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. The copy on the application uses the words _migrate_ and _migration_ too.
 
