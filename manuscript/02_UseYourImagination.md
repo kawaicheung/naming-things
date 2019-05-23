@@ -2,21 +2,33 @@
 
 If you write in any one of the common software programming languages today, you probably do some amount of object-oriented programming. But, I think the term _object-oriented_ is a misnomer.
 
-Most classes we create in code don't have a direct representation in the physical world. Introductory textbooks on object-oriented programming all seem to use examples involving dogs, cats, and birds (or cars, boats, and planes) as a way of describing how to code objects and interfaces. Unless you're a programmer at PetSmart, those aren't realistic examples.
+Most classes we create in code don't have a direct representation in the physical world. Introductory textbooks on the subject all seem to use examples involving dogs, cats, and birds (or cars, boats, and planes) as a way of describing how to code objects and interfaces. Unless you're a programmer at PetSmart, those aren't realistic examples.
 
 Really, we should call it _noun-oriented_ programming. Because a noun can be a person, place, thing, or idea. Most classes really are an idea...with functionality. 
 
-Many objects manifest because a set of functionality and properties all have a common purpose and it makes sense to corral this stuff together. But, these "objects" don't always have an obvious physical translation so we lean on generic names that don't tell us much of anything. This is where wishy-washy class names like `UserManager`, `MessagingHelper`, and `AppHandler` are born. 
+Objects manifest because a set of functionality and properties all have a common purpose. But, these objects don't always have an obvious physical translation. This is where wishy-washy class names like `UserManager`, `MessagingHelper`, and `AppHandler` are born. Looking through a codebase littered with names like these is a helpless feeling. We have to do so much more mental stretching to figure out where things are and what things mean.
 
-There are certainly ways around this. Sometimes these generic names are a sign that the guts of the object belong elsewhere. Maybe the methods inside of a `UserManager` can be moved to the `User` class itself. But, sometimes the situation isn't that clear cut.
+There are certainly ways around this. Sometimes these generic names are a sign that the guts of the object belong elsewhere. Maybe the methods inside of a `UserManager` can be moved to the `User` class itself. Other times, the situation isn't that clear cut.
 
-Fortunately, the English language is full of more expressive nouns. Sometimes, even when an object doesn't have an obvious physical representation, a bit of imagination can bridge that gap and make an object's name quite memorable.
+Even when an object doesn't have an obvious physical representation, a bit of imagination can bridge that gap and make an object's name memorable. 
 
-In DoneDone, I built a messaging service whose sole responsibility is to decide whom should receive an email based on a created or newly updated issue. The answer depends, first, on who's involved on the issue. For example, I create an issue for Aaron and also add Lindsay, Mustafa, and Penelope on the issue. They all should be notified.
+* * *
+
+In DoneDone, whenever issues are added or updated, the app assembles email objects that are pushed to a queue--each object representing a single email that the messaging service will send to a user. A separate messaging service is responsible for popping these objects off of the queue and sending out the messages.
+
+The slightly challenging bit is who should receive emails. 
+
+By default, anyone assigned who's assigned to or mentioned on the issue receives an email notification. But, this rule can be usurped by each user's own email notification settings. A user can decide to:
+
+* Never be bothered. 
+* Receive emails on any new issues.
+* Receive emails on anything within the project, regardless of whether they are assigned or mentioned.
 
 The other part of this determination depends on what each person has opted into. As a DoneDone user, you can decide to be notified on every update (even on issues you're not directly added to), on every created issue, or just the issues you're added to. You can also decide to not be emailed on anything, ever. It's the messaging service's job to figure out who should receive an email notification and package up a collection of email objects to ship to the email service.
 
 I ended up extracting out a class to handle this extra determination. The class holds various methods helpful to the messaging service. 
+
+Before these emails are shipped, 
 
 For instance, the `AllowEmail()` method accepts a user's ID and checks whether the user has opted out of all emails. This method is used while looping through all the folks on a newly updated issue to sift out the ones that don't want to be bothered at all. Another property of this class is a `UsersThatAlwaysWantEmail` list. The messaging service grabs this list to ship out emails to anyone else not directly on the issue.
 
@@ -37,5 +49,4 @@ I imagine this person with a stern face dressed in a police uniform. And suddenl
 At first, the name feels strange. "Officer" is not a very programmatic term. But, that's _just the point_.
 
 The more I've let the name sit, the more correct it feels. If you asked me a month later what the class `EmailNotificationOfficer` does in the DoneDone codebase, I can tell you in great detail. I can also tell you I wouldn't have had the same luck had I stuck with a name like `EmailNotificationManager`.
-
-[Sometimes, a name might be generic because there's too much happening -- we can break apart a messaging helper into smaller pieces] 
+ 
