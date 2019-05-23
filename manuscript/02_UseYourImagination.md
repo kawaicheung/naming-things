@@ -12,9 +12,9 @@ Working through a codebase littered with class names like these is a helpless fe
 
 There are certainly ways around this. Generic names might be a sign that the guts of the object belong elsewhere. For instance, maybe the methods inside that `UserManager` can be moved into that `User` class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. 
 
-If it's neither of those cases, sometimes we have to face the harsh reality that a class is hard to name because it does something that doesn't have a good real-world equivalent.
+If it's neither of those cases, sometimes we just have to face the reality: A class can be hard to name because it does something that doesn't really exist in the real world.
 
-If an object doesn't have an obvious physical representation, rather than resorting to the [/./.....]
+That's when a little imagination helps.
 
 * * *
 
