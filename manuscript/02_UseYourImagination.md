@@ -38,17 +38,13 @@ This is precisely the approach I took. However, I like working with objects.
 
 So, I packaged these lists up inside a new class and made them `private`. I then created a few friendlier named methods used to determine who should receive (or not receive) emails. 
 
-For instance, there's an `AllowEmail` method which accepts a user's ID and checks whether we should avoid emailing them. This way, I can loop through each person that's assigned or mentioned and confirm they haven't opted out of all emails.
+For instance, there's an `AllowEmail()` method which accepts a user's ID and checks whether we should avoid emailing them. This way, I can loop through each person that's assigned or mentioned and confirm they haven't opted out of all emails. Similarly, there are a couple of methods to get all the users who want to receive emails even if, by default, they wouldn't. 
 
-Similarly, there are a couple of methods to get all the users who want to receive emails even if, by default, they wouldn't. 
-
-The class is small and it's work doesn't belong anywhere else. By these measures, it's a really good class. But, what do you call this thing?
+The class is small and it's work doesn't belong anywhere else. By these measures, it's a really good class. But, I'm really struggling with what to call this thing.
 
 A name like `EmailManager` is tempting. But, looking at this name in isolation, I might assume this class also manages the storing of a user's email preferences. In addition, it doesn't convey the idea that the object helps determine who should get emailed. Scratch that. How about `EmailHelper`? Still too ambiguous. What, exactly, is it trying to help with?
 
-In scenarios like these, I imagine what the best physical parallel would be. Close your eyes and visualize it as a _real thing_. What would this object look like?
-
-Here's what I imagine.
+In scenarios like these, I imagine what the best physical parallel would be. I close my eyes and visualize what this could look like as a _real thing_ in the world. Here's what I imagine.
 
 We're in a dimly lit shipping center. Once an issue is created or updated, the messaging team receives word from the intercom system. One employee looks up the issue to see who's been assigned or mentioned on it. He notes these folks on a clipboard and runs down to an assembly line of workers ready to assemble these small message boxes to put on a conveyer belt.
 
@@ -62,5 +58,6 @@ The more I've let the name sit, the more correct it feels. If you asked me a mon
 
 * * *
 
-[Thing about DHH and PrivateNetworkGuard]
+A> The inspiration behind this approach--of imagining the "real thing"--started from a post by David Heinemeier Hannson called "Hunting for Great Names In Programming", where he discusses his naming choices for a module used to prevent specific IP addresses as user inputs. It's a wonderful read.  
+
  
