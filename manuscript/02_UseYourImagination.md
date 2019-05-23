@@ -6,7 +6,7 @@ Most classes we create in code don't have a direct representation in the physica
 
 Really, we should call it _noun-oriented_ programming. Because a noun can be a person, place, thing, or idea. Most classes really are an idea...with functionality. 
 
-Objects manifest because a set of functions and properties all have a common purpose and we want to wrap them up. But, these objects don't always have an obvious physical translation. This is where wishy-washy class names like `UserManager`, `MessagingHelper`, and `AppHandler` are born. 
+Objects manifest because a set of functions and properties all have a common purpose and we want to wrap them up in a neat little bundle. But, these objects don't always have an obvious physical translation. This is where wishy-washy class names like `UserManager`, `MessagingHelper`, and `AppHandler` are born. 
 
 Working through a codebase littered with class names like these is a helpless feeling. When we're reading code, we have to do more digging to figure out what these things mean. When we know there's a function out there that does what we want, we have to ask ourselves where it lives. _Was it in that helper doohickey or in this other manager thingy?_
 
