@@ -58,6 +58,6 @@ The more I've let the name sit, the more correct it feels. If you asked me a mon
 
 * * *
 
-A> The inspiration behind this approach--of imagining the "real thing"--started from a post by David Heinemeier Hannson called "Hunting for Great Names In Programming", where he discusses his naming choices for a module used to prevent specific IP addresses as user inputs. It's a wonderful read.  
+A> The inspiration behind this approach--of imagining the "real thing"--started from a post by David Heinemeier Hannson called "[Hunting for Great Names In Programming](https://medium.com/signal-v-noise/hunting-for-great-names-in-programming-16f624c8fc03)", where he discusses his naming choices for a module used to prevent specific IP addresses as user inputs. It's a wonderful read.  
 
  
