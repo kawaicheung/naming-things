@@ -1,24 +1,12 @@
-# Hunting for Names
+# What can I name?
 
-[The idea of lines of code is no longer as important when every char counted -- readability is far more important]
+One of the things I like to do routinely is clean up the code I'm working on. I know, I know. There are many of you out there who would love the luxury of a day or two to clean up code at your company. But, that wouldn't sit well with management or your clients.
 
-The first time I ever played around with code was as a 7-year old. My brother and I had convinced our parents to get us our first family computer -- an Apple IIc. As part of the purchase, the local computer store also subscribed us to a year's subscription to _Nibble_, a magazine for Apple II computer users focusing on hobbyist programming. I started reading it because it had a funny name.
+The good news is, you don't need a day or two to make positive impacts on your code. You can get a lot done even in a thirty minute session. One of my favorite programming exercises is what I'll call "the name hunt". 
 
-My favorite section of the magazine was on the back page of each issue, called the "One- And Two-Liners". Readers would submit programs that could be written in just one or two lines of AppleSoft BASIC. You would then type these lines of code meticulously into the console, hit ENTER, and pray for the thing to work. Usually, the thing was some sort of graphical rendering.
+The way this works is pretty simple. I look for bits of business logic using only the properties of a single object in a place _other_ than inside the object itself. 
 
-Here's an example of an actual one-liner from an edition of _Nibble_ https://csc.lsu.edu/~kooima/misc/nibble/nibble2.jpg.
-
-![A one-line program that produces a 3D-rendering of a missile's nose cone](images/nibble.png)
-
-[Need to add: Collab/outreach example - simply putting names to conditionals]
-
-[Git before: https://github.com/GetDoneDone/donedone-2.0/blob/ccc52e4c45e95bff06df2c863d10dec8e75858a9/Services/Accounts.cs]
-
-[Git after: https://github.com/GetDoneDone/donedone-2.0/blob/892c7d69ac5ff9aa98d3c85df3f009408eeb8504/Services/Accounts.cs]
-
-Making your codebase clearer isn't just about naming things better--it's also about finding things to name that weren't being named before. 
-
-A common place I hunt for is anywhere I see bits of business logic using only the properties of an object in a place _other_ than inside the object itself. There's usually an easy way to name that logic and push it back into the object. The object, in turn, gets more powerful and self-sufficient. It can _do_ a lot more than it once did, and that helps any other code that interacts with instances of that class in the future.
+There's usually an easy way to name that logic and push it back into the object. The object, in turn, gets more powerful and self-sufficient. It can _do_ a lot more than it once did, and that helps any other code that interacts with instances of that class in the future.
 
 In this example, I have a `Person` class that houses some basic information used throughout my codebase.
 
