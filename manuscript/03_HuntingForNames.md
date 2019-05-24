@@ -4,9 +4,9 @@ One of the things I like to do routinely is clean up the code I'm working on. I 
 
 The good news is, you don't need a day or two to make positive impacts on your code. You can get a lot done even in a thirty minute session. One of my favorite ways to do this is with an exercise I'll call "the name hunt". 
 
-The way this works is pretty simple. I look for bits of business logic using only the properties of a single object in a place _other_ than inside the object itself. 
+The way this works is pretty simple. I look for bits of business logic using only the properties of a single object in a place _other_ than inside the object itself. There's usually an easy way to give that logic a name and push it back into the class definition. 
 
-There's usually an easy way to name that logic and push it back into the class definition. The object, in turn, gets more powerful and self-sufficient. It can _do_ a lot more than it once did, and that helps any other code that interacts with instances of that class in the future.
+The object, in turn, gets more powerful and self-sufficient. It can _do_ a lot more than it once did, and that helps any other code that interacts with instances of that class in the future.
 
 In this example, I have a `Person` class that houses some basic information used throughout my codebase.
 
