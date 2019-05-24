@@ -1,4 +1,4 @@
-# What can I name?
+# Hunting for names
 
 One of the things I like to do routinely is clean up the code I'm working on. I know, I know--there are many of you out there who would love to devote a day or two just to clean up code at your company. But, that wouldn't sit well with management or your clients.
 
@@ -198,11 +198,10 @@ if (person.IdleLongerThanMinutes(60))
   // Log out and send to the login screen.
 }
 ```
-It's not a bad option--and it removes the extra bit
+It's not a bad option--it replaces the business logic (`MinutesIdle > 60`) with a name (`IdleLongerThanMinutes(60)`)--but for my tastes, it reads a little awkwardly. I prefer the initial switch.
 
+The best part of this work is that, once you get accustomed to the game, it's not a heavy effort. You can make these simple refactorings quickly and you can stop whenever the time you've devoted is up (or your manager's come back from lunch).
 
 Keep hunting for places where you can corral bits of logic back into the objects they're derived from. It will do wonders to the clarity of your code.
 
-_By the way, if you are familiar with common anti-patterns in object-oriented programming, what I've described in this chapter is a flavor of Martin Fowler's anemic domain model. If you've never read his take on this anti-pattern, I recommend taking a few minutes to read his take and enjoy his one-of-a-kind writing style:_ 
-
-https://www.martinfowler.com/bliki/AnemicDomainModel.html
+_By the way, if you are familiar with the "anemic domain model" anti-pattern, what I've described in this chapter is essentially an approach to circumventing this. This is a phrase first introduced by Martin Fowler, one of my favorite technical authors. If you've never read his take, [I recommend taking a few minutes to read it](https://www.martinfowler.com/bliki/AnemicDomainModel.html)._ 
