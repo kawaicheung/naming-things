@@ -42,7 +42,7 @@ For instance, there's an `AllowEmail()` method which accepts a user's ID and che
 
 The object assists in weeding out any assigned or mentioned folks as well as adding any other folks that want to be notified.
 
-It's small and it's work doesn't belong anywhere else. By these measures, it's a really good class. But, I'm really struggling with what to call this thing.
+It's small and its work doesn't belong anywhere else. By these measures, it's a really good class. But, I'm really struggling with what to call this thing.
 
 When in the midst of writing code, the last thing you want to be hung up on is a name. I want to just name this thing and move on. The first thing that comes into my head is, of course, `EmailManager`. 
 
@@ -64,9 +64,9 @@ But, before he gives the assembly line his list, another worker stops him dead i
 
 Suddenly, the name `EmailOfficer` comes to mind. _Officer_ conveys a kind of _policing_ of emails--exactly what this object's main responsibility is. It's certainly more memorable and visual than either a manager or helper. 
 
-At first, the name feels strange. "Officer" is not a very programmatic term. But, that's _just the point_. There are certainly other names that could work just as well. Maybe `EmailCop` or `EmailGateKeeper`. All of these evoke an image in your head far more precise than what the names manager, helper, or handler evoke. 
+At first, the name feels strange. "Officer" is not a very programmatic term. But, that's just the point. There are certainly other names that could work just as well. Maybe `EmailCop` or `EmailGateKeeper`. All of these evoke an image in your head far more precise than what the names manager, helper, or handler evoke. 
 
-If you asked me a month later what the class `EmailOfficer` does in the DoneDone codebase, I can tell you in great detail. I can also tell you I wouldn't have had the same luck had I stuck with a name like `EmailManager`.
+Ask me today what the class `EmailOfficer` does in the DoneDone codebase, and I can tell you in great detail. I can also tell you I wouldn't have had the same luck had I stuck with a name like `EmailManager`.
 
 * * *
 
