@@ -1,4 +1,4 @@
-# Hunting for names
+# Hunting For Names
 
 One of the things I like to do routinely is clean up the code I'm working on. I know, I know--there are many of you out there who would love to devote a day or two just to clean up code at your company. But, that wouldn't sit well with management or your clients.
 
