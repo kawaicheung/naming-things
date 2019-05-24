@@ -38,7 +38,8 @@ For example, on a person's profile page, I have an instance named `AuthedPerson`
 In another part of the application, I use a person's first and last name to prep notification messages when they update an issue.
 ```C#
 // e.g. "Mary D. updated the issue."
-var subject = person.FirstName + " " + person.LastName.Substring(0,1) + "." + " updated the issue.";
+var subject = person.FirstName + " " + 
+  person.LastName.Substring(0,1) + "." + " updated the issue.";
 ```
 I also have a method inside of a security class that checks if a person has accessed the application within an hour. If not, I require them to log in again.
 ```C#
