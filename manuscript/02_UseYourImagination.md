@@ -36,11 +36,13 @@ Then, at the point in code where these issue emails are assembled, it would refe
 
 This is precisely the approach I took. 
 
-Since I like working with objects, I packaged these lists up inside a new class and made them `private`. I then created a few friendlier named methods used to determine who should receive (or not receive) emails. 
+Since I like working with objects, I package these lists up inside a new class and make them `private`. I then create a few methods used to determine who should receive (or not receive) emails. 
 
-For instance, there's an `AllowEmail()` method which accepts a user's ID and checks whether we should avoid emailing them. This way, I can loop through each person that's assigned or mentioned and confirm they haven't opted out of all emails. Similarly, there are a couple of methods to get all the users who want to receive emails even if, by default, they wouldn't. 
+For instance, there's an `AllowEmail()` method which accepts a user's ID and checks whether we should avoid emailing them by referencing that internal list of folks who never want emails. Similarly, there are a couple of methods to get all the users who want to receive emails even if, by default, they wouldn't. 
 
-The class is small and it's work doesn't belong anywhere else. By these measures, it's a really good class. But, I'm really struggling with what to call this thing.
+The object assists in weeding out any assigned or mentioned folks as well as adding any other folks that want to be notified.
+
+It's small and it's work doesn't belong anywhere else. By these measures, it's a really good class. But, I'm really struggling with what to call this thing.
 
 When in the midst of writing code, the last thing you want to be hung up on is a name. I want to just name this thing and move on. The first thing that comes into my head is, of course, `EmailManager`. 
 
