@@ -2,3 +2,4 @@
 01_Intro.md
 02_UseYourImagination.md
 03_HuntingForNames.md
+04_TheShapeOfCode.md
