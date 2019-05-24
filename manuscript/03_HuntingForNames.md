@@ -1,6 +1,6 @@
 # What can I name?
 
-One of the things I like to do routinely is clean up the code I'm working on. I know, I know. There are many of you out there who would love the luxury of a day or two to clean up code at your company. But, that wouldn't sit well with management or your clients.
+One of the things I like to do routinely is clean up the code I'm working on. I know, I know--there are many of you out there who would love the luxury of a day or two to clean up code at your company. But, that wouldn't sit well with management or your clients.
 
 The good news is, you don't need a day or two to make positive impacts on your code. You can get a lot done even in a thirty minute session. One of my favorite programming exercises is what I'll call "the name hunt". 
 
