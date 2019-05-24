@@ -1,4 +1,4 @@
-# Use your imagination
+# Using Your Imagination
 
 I think the term _object-oriented programming_ is a bit of a misnomer.
 
