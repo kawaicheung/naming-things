@@ -32,11 +32,25 @@ And unlike migrate, the word import doesn't feel like data is leaving one place 
 
 So, I end up substituting _migrate_ (and all its various derivatives) with _import_.
 
+I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. Finding that just-right name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
+
 * * *
 
-If you haven't figured it out already, I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. Finding that just-right name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
+If you've written code long enough, there's a good chance you're familiar with this quote, attributed to Phil Karlton.
 
-Naming things in code deserves as much attention as all the other skills we preach in programming---like good architecture, writing "clean code", or rigid testing. While all the other best practices are critical, they share the common drawback that you cannot see these things right away. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
+There are only two hard things in Computer Science: cache invalidation and naming things.
+
+Karlton was a developer at Netscape back in the day and I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
+
+Exactly when I first heard it, I do not recall--I just remember chuckling to myself. First, because I can think of many other things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming things as _hard_.
+
+Of course, it can be hard--sometimes excrutiatingly so. Unlike so many other things in programming, a bad (or good) name won't be caught by the compiler. There are no metrics for naming. A bad name won't break your code. A good name won't speed up your build.
+
+Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. So, how do you name things well? It's something I've become incredibly passionate about over the years, so much so that I decided to dedicate an entire book to this strange niche of programming topics---all of this stemming from a quote attributed to Mr. Phil Karlton.
+
+Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics. It is, in my humble opinion, the most non-technical of technical subjects. Naming is an art. Good naming has a whole lot of subjectivity.
+
+Naming deserves as much attention as all the other skills we preach in programming---like good architecture, writing "clean code", or rigid testing. While all the other best practices are critical, they share the common drawback that you cannot see these things right away. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
 
 On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when they dig in, perhaps on their way to fixing a bug. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work.
 
