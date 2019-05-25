@@ -38,7 +38,7 @@ I'm the kind of programmer that obsesses over these seemingly inconsequential ve
 
 If you've written code long enough, there's a good chance you're familiar with this quote, attributed to Phil Karlton.
 
-There are only two hard things in Computer Science: cache invalidation and naming things.
+> There are only two hard things in Computer Science: cache invalidation and naming things.
 
 Karlton was a developer at Netscape back in the day and I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
 
