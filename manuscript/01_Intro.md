@@ -34,11 +34,9 @@ So, I end up substituting _migrate_ (and all its various derivatives) with _impo
 
 I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. Finding that just-right name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
 
-* * *
+My obsession with naming started from a quote I read some time ago. If you've written code long enough, there's a good chance you've heard it as well.
 
-If you've written code long enough, there's a good chance you're familiar with this quote, attributed to Phil Karlton.
-
-> There are only two hard things in Computer Science: cache invalidation and naming things.
+> There are only two hard things in Computer Science: cache invalidation and naming things. - Phil Karlton
 
 Karlton was a developer at Netscape back in the day and I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
 
