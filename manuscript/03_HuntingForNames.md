@@ -4,9 +4,17 @@ One of the things I like to do routinely is clean up the code I'm working on. I 
 
 The good news is, you don't need a day or two to make positive impacts on your code. You can get a lot done even in a thirty minute session. One of my favorite ways to do this is with an exercise I'll call "the name hunt". 
 
-The way this works is pretty simple. I look for bits of business logic using only the properties of a single object in a place _other_ than inside the object itself. There's usually an easy way to give that logic a name and push it back into the class definition. 
+The way this works is pretty simple: I look for bits of business logic--usually stuffed inside of conditionals--and define them with a name. Then, I can use the name inside the conditional instead of the actual logic. 
 
-The object, in turn, gets more powerful and self-sufficient. It can _do_ a lot more than it once did, and that helps any other code that interacts with instances of that class in the future.
+I tend to... [something about why the biz logic is there in the conditional to begin with. Or, do we move the statement in the next section up here?]
+
+[collab/outreach]
+
+* * *
+
+There's a slightly more advanced version of "the name hunt" that helps you build better objects. Specifically, I look for bits of business logic using only the properties of a single object outside of its class definition. There's usually an easy way to name that piece of logic and push it _back_ into the class definition. 
+
+The object, in turn, gets more powerful and self-sufficient. Done repeatedly, your objects start to _do_ a lot more than they once did. It helps prevent repeated code, and makes those objects more useful to any other code interacting with them down the road.
 
 In this example, I have a `Person` class that houses some basic information used throughout my codebase.
 
