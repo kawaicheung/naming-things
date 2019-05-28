@@ -1,6 +1,7 @@
 # Surfacing Method Parameters
 
-[Needs an intro]
+[Intro]
+
 
 I'll start with an example of a feature addition I worked on for account cancellations. 
 
