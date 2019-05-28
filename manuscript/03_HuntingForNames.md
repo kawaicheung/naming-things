@@ -4,9 +4,11 @@ One of the things I like to do routinely is clean up the code I'm working on. I 
 
 The good news is, you don't need a day or two to make positive impacts on your code. You can get a lot done even in a thirty minute session. One of my favorite ways to do this is with an exercise I'll call "the name hunt". 
 
-The way this works is pretty simple: I look for bits of business logic--usually stuffed inside of conditionals--and define them with a name. Then, I can use the name inside the conditional instead of the actual logic. 
+The way this works is pretty simple: I hunt for bits of business logic that I can extract and define with a name. 
 
-I tend to... [something about why the biz logic is there in the conditional to begin with. Or, do we move the statement in the next section up here?]
+There's a tendency in writing code, particularly when we're in a rush, to implement a concept directly where it's being used, rather than wrap the concept up in a property, and then use the property where its needed. 
+
+You see this happen inside of conditional statements a lot, where logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass.  The name hunt is where we can fix that.
 
 [collab/outreach]
 
