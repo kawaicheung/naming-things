@@ -2,5 +2,5 @@
 01_Intro.md
 02_UsingYourImagination.md
 03_HuntingForNames.md
-04_MethodParameters.md
+04_SurfacingMethodParameters.md
 05_TheShapeOfCode.md
