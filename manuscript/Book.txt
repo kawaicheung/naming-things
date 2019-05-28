@@ -1,6 +1,6 @@
 
 01_Intro.md
 02_UsingYourImagination.md
-02_a_MethodParameters.md
 03_HuntingForNames.md
-04_TheShapeOfCode.md
+04_MethodParameters.md
+05_TheShapeOfCode.md
