@@ -6,3 +6,4 @@
 05_TheShapeOfCode.md
 NamingOpposites.md
 TautologousNameTrap.md
+AbstractingTooSoon.md
