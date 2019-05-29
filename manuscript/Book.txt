@@ -5,3 +5,4 @@
 04_SurfacingMethodParameters.md
 05_TheShapeOfCode.md
 NamingOpposites.md
+TautologousNameTrap.md
