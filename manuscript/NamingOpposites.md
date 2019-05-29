@@ -1,4 +1,4 @@
-**Naming Opposites**
+# Naming Opposites
 
 A lot of code is just about tracking states. An account might be active or inactive. A purchase order could be pending or processed. 
 
