@@ -10,6 +10,9 @@ A workflow can have its own status too. It starts as unpublished, and when a use
 
 But, once a workflow is published, a user can still _unpublish_ the workflow. The requirements for a workflow to be unpublishable are more than just that it's already been published--there are a few other caveats as well. So, I decide to wrap this logic inside of a convenient little method. My first attempt at a method name is:
 
+
+[IsWorkflowPublishable...simple... but then...]
+
 ```
 public bool IsWorkflowUnpublishable();
 ```
@@ -23,6 +26,7 @@ In cases like these, I try to look for a completely different angle to the name.
 Instead of starting the name with the adjective-requiring "is", I start with the verb-requiring "can."
 
 ```
+[and CanPublishWorkflow()]
 public bool CanUnpublishWorkflow();
 ```
 
