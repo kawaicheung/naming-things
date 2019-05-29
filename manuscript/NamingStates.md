@@ -1,14 +1,20 @@
-# Naming Opposites
+# Naming States
 
-A lot of code is just about tracking states. An account might be active or inactive. A purchase order could be pending or processed. 
+I can't think of a place where naming is more essential than when dealing with states. An account might be _active_ or _inactive_; A purchase order could be _pending_, _processed_, or _canceled_. Finding that perfect name for each state is hard--especially when an entity can have a lot of states that all have roughly the same meaning.
 
-Code tends to be more readable if concepts are stated positively. Anytime I see a variable with a not operator (`!`), I see if there's another variable I can create that expresses the same concept without the `!`. For instance, a conditional statement like `if (!won)` can be improved by replacing it with `if (lost)`.
+Billing systems are a great example of this. I've been working with Stripe's API for awhile now and I still have to remind myself what the difference is between subscriptions that are _past_due_, _unpaid_, _incomplete_, _expired_, or _canceled_. They all kind of mean similar things (there's something wrong with the subscription), but understanding their subtle differences are the key to a successful integration and basically having nothing work correctly. 
 
-Usually, the English language has enough breadth in vocabulary that most states have a meaningful opposite. For a piece of functionality that allows us to move a file from the trash, we don't have to say _undelete_. _Restore_ makes perfect sense. It's clear that a file that can be restored is already in the state of being deleted.
+This isn't a problem with Stripe as much as it is that billing is a complex domain.
+
+Code tends to be more readable if states are stated positively. Anytime I see a state variable with a not operator (`!`), I see if there's another variable I can create that expresses the same concept without the `!`. For instance, a conditional statement like `if (!won)` might be better off if we replaced it with `if (lost)`.
+
+Usually, the English language has enough breadth that most states have a meaningful opposite. For a piece of functionality that allows us to move a file from the trash, we don't have to say _undelete_. _Restore_ makes perfect sense. It's clear that a file that can be restored is already in the state of being deleted.
 
 But, this isn't always the case. That makes naming a state's opposite succinctly a bit of a challenge. Take this example.
 
-There's a concept in DoneDone called _Workflows_. A workflow defines a series of statuses that an item can be in. A typical issue tracking workflow might have states like "Open", "In Progress", and "Closed". We let users create workflows to tailor them to their own business processes. When a user is ready to use the workflow, it has to be _published_.
+There's a concept in DoneDone called _Workflows_. A workflow defines a series of states that an item can be in. A typical issue tracking workflow might have states like "Open", "In Progress", and "Closed". We let users create workflows to tailor them to their own business processes. 
+
+But, a workflow can have its own state too. When a user is ready to use the workflow, it must be _published_.
 
 A user can also--for lack of a better verb--_unpublish_ a workflow. The requirements for a workflow to be "unpublishable" are more than just that it's already been published; There are a few other caveats as well. So, I decide to wrap this logic inside of a convenient little method. My first attempt at a method name is:
 
