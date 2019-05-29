@@ -4,3 +4,4 @@
 03_HuntingForNames.md
 04_SurfacingMethodParameters.md
 05_TheShapeOfCode.md
+NamingOpposites.md
