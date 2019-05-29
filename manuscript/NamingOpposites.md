@@ -1,5 +1,6 @@
 # Naming Opposites
 
+[Maybe this is just about simple naming being hard]
 Usually, the English language has enough breadth that most concepts have a meaningful opposite. For a piece of functionality that allows us to move a file from the trash, we don't have to say _undelete_; _Restore_ makes perfect sense. It's clear that a file that can be restored is already in the state of being deleted.
 
 But, this isn't always the case. Take this example.
@@ -26,8 +27,8 @@ In cases like these, I try to look for a completely different angle to the name.
 Instead of starting the name with the adjective-requiring "is", I start with the verb-requiring "can."
 
 ```
-[and CanPublishWorkflow()]
 public bool CanUnpublishWorkflow();
+[and CanPublishWorkflow() for consistency] -- not opposites in this case...
 ```
 
 Now I might be onto something! Notice I still use the word _unpublish_, but as a verb the intent is no longer ambiguous. It's clear we are checking whether this _workflow can be unpublished_ as opposed to checking whether the _workflow can't be published_.
