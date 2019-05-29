@@ -1,4 +1,4 @@
-**The Tautologous Name Trap**
+# The Tautologous Name Trap
 
 It's good habit to look for business logic that we can extract into a method or variable. Consistently doing this infuses better meaning into our code. It makes it easier to understand our intentions later on. But, naming these extractions appropriately can be more elusive than it initially appears.
 
