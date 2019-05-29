@@ -1,19 +1,16 @@
 # The Tautologous Name Trap
 
-It's good habit to look for business logic that we can extract into a method or variable. Consistently doing this infuses better meaning into our code. It makes it easier to understand our intentions later on. But, naming these extractions appropriately can be more elusive than it initially appears.
+It's always a good habit to look for business logic that we can extract into a method or variable. Consistently doing this infuses better meaning into our code. It makes it easier to understand our intentions later on. But, naming these extractions appropriately can be more elusive than it initially appears.
 
 I'm working on a piece of code that processes incoming emails for DoneDone. One of its responsibilities is to send an auto-response email back to the original sender if certain conditions are met.
 
-In the first iteration of this feature, we decide to initiate the auto-response only if the original email was received outside of a company's office hours. 
+In the first iteration of this feature, I initiate the auto-response only if the original email was received outside of a company's office hours. 
 
-I've written a method responsible for this work, querying the company's work hours and comparing these date ranges to the current `DateTime` to answer the question. 
-
+I've written a method responsible for this work, querying the company's work hours and comparing these date ranges to the current time to answer the question. 
 ```C#
 bool isCurrentlyOutsideOfficeHours();
 ```
-
 In my incoming email handler, I call this method to determine if an auto-response is necessary.
-
 ```
 if (isCurrentlyOutsideOfficeHours()) 
   sendAutoResponse();
@@ -25,7 +22,6 @@ The method name `isCurrentlyOutsideOfficeHours()` makes the conditional statemen
 A few weeks later, we receive some requests from our customers to allow them to configure company holidays as well as office hours. This way, the auto-response will always be triggered during a company holiday regardless of the time of day.
 
 Back under the hood, we add the new functionality. I then update the auto-response logic to check whether today is a holiday, and adjust my auto-response logic accordingly. This requires another method that handles the dirty work. I call it `isCompanyHoliday()`.
-
 ```C#
 bool isCurrentlyOutsideOfficeHours();
 bool isCompanyHoliday();
@@ -38,7 +34,6 @@ if (isCurrentlyOutsideOfficeHours() || isCompanyHoliday())
 }
 ```
 Now, I've added more complexity to the auto-response logic -- enough to make me consider consolidating the conditional expression into its own method, then calling the new method in place of the expression. At first, a name like `shouldSendAutoResponse()` sounds sensible. Here's what that would look like:
-
 ```C#
 bool shouldSendAutoResponse()
 {
@@ -51,7 +46,6 @@ if (shouldSendAutoResponse())
 { 
   sendAutoResponse(); 
 }
-
 ```
 With the new method extracted, the conditional, once again, feels tidy. But, now we have a new problem. The conditional statement is tautologous: 
 
@@ -66,7 +60,6 @@ I find this happens a lot with these quick extraction exercises. Our immediate i
 Not only does this create tautalogous statements, but it's less likely we'll reuse the new construct somewhere else. At a glance, we wouldn't think to employ `shouldSendAutoResponse()` anywhere else besides the place in code where we want to send auto-responses. If we named the method after what's _causing_ the sending of the auto-response, we better our chances of reuse later.
 
 So, why are we sending the auto-response? In this case, the cause of sending an auto-response message is because, quite simply, the office is closed. Let's try that.
-
 ```C#
 bool isOfficeClosed()
 {
@@ -87,12 +80,10 @@ Tautologous conditionals aren't necessarily bad, though. There are times where d
 Suppose that we introduce a few more conditions to determine whether to send an auto-response. Namely, we let a user toggle auto-responses altogether and we also want to exclude auto-responses to emails that are flagged as spam. My first step is to augment the conditional one more time.
 
 ```C#
-
 if (isOfficeClosed() && autoResponseEnabled && !_email.IsSpam) 
 { 
   sendAutoResponse(); 
 }
-
 ```
 
 The conditional expression bloats up again and it seems ripe for packaging things up. But, I have trouble finding an elegant solution. Is there a meaningful name that could consolidate all or some of the expression? `isOfficeClosed()`, `autoResponseEnabled`, and `!_email.IsSpam` don't appear to have any relationship to one another other than determining whether we should send an auto-response.
@@ -100,7 +91,6 @@ The conditional expression bloats up again and it seems ripe for packaging thing
 In this case, I can decide to either leave things as is, or name the entire expression for what it affects. I choose the latter.
 
 ```C#
-
 bool isOfficeClosed()
 {
   return isOutsideOfficeHours() || isCompanyHoliday();
