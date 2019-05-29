@@ -1,5 +1,9 @@
 # Naming Opposites
 
+Usually, the English language has enough breadth that most concepts have a meaningful opposite. For a piece of functionality that allows us to move a file from the trash, we don't have to say _undelete_; _Restore_ makes perfect sense. It's clear that a file that can be restored is already in the state of being deleted.
+
+But, this isn't always the case. Take this example.
+
 There's this concept in DoneDone called _Workflows_. A workflow defines a series of statuses available for an issue. A typical workflow might have states like "Open", "In Progress", "Not Reproducible", "Closed" and so forth. We let users create workflows to tailor them to their particular business processes. 
 
 A workflow can have its own status too. It starts as unpublished, and when a user is ready to use the workflow, it becomes published. That's simple enough.
