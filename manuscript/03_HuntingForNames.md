@@ -112,7 +112,9 @@ public bool HasPersonBeenIdleForMoreThan60Minutes
   }
 }  
 ```
-Or, I could push just the calculation of the idle minutes into the object:
+This cleans up _all_ of the logic from the security method. But, the name feels way too specific. If someone were just inspecting the `Person` class, they might ask why such a specific property exists. In addition, if I change the requirements around the idle time, I might easily forget to change the name of the property. I don't like this trade off.
+
+I could push just the calculation of the idle minutes into the object:
 
 ```C#
 public int MinutesIdle
@@ -130,9 +132,7 @@ public bool IdleLongerThanMinutes(int minutes)
   return (person.LastAccessTimestamp - DateTime.Now).TotalMinutes > minutes;
 }  
 ```
-The first option (`HasPersonBeenIdleForMoreThan60Minutes`) cleans up _all_ of the logic from the security method. But, the name feels too specific. If someone were just inspecting the `Person` class, they might ask why such a specific property exists. In addition, if I change the requirements around the idle time, I might easily forget to change the name of the property. I don't like this trade off.
-
-The second and third examples are both decent options. But, let's go with the second option for now.
+These examples are both decent options. But, let's go with the former option for now.
 
 With these updates, our `Person` class now evolves into something a lot more powerful:
 
