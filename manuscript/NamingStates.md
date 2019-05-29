@@ -1,5 +1,7 @@
 # Naming States
 
+[This one is a little weird because my example isn't really about state naming -- Published and Draft are perfectly good states. It's about the action of "Unpublishing" - maybe I can just state that "IsWorkflowUnpublishable()" is weird. Or maybe I can just talk abotu this more as a cautionary tale]
+
 I can't think of a place where naming is more essential than when dealing with states. An account might be _active_ or _inactive_; A purchase order could be _pending_, _processed_, or _canceled_. Finding that perfect name for each state is hard--especially when an entity can have a lot of states that all have roughly the same meaning.
 
 Billing systems are a great example of this. I've been working with Stripe's API for awhile now and I still have to remind myself what the difference is between subscriptions that are _past_due_, _unpaid_, _incomplete_, _expired_, or _canceled_. They all kind of mean similar things (there's something wrong with the subscription), but understanding their subtle differences are the key to a successful integration and basically having nothing work correctly. 
