@@ -1,5 +1,5 @@
-# Naming Completely
+# Naming Completely (Using names as a guide)
 
-To be honest, I didn't know how best to write this chapter. The advice I want to give you in this one is so obvious that it's best I not even try to be clever about it. So here goes. The more detailed you name something, the better...
+There was a major change I had to make when I was building the new version of DoneDone. Whereas I was previously storing all user-generated content in Markdown format, I now realized that it would be far more beneficial to store content as HTML. I didn't make this change lightly--in fact, doing so impacted things up and down the layers of the codebase.
 
-[This one is about markdown/html body]
+The new DoneDone wasn't a complete rewrite--it was iterative update after iterative update from the existing codebase. So, I wasn't starting from scratch. But, this meant that any fundamental technical change (like swapping out Markdown with HTML) required tedious updates around the entire codebase.
