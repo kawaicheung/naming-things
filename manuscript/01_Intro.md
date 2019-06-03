@@ -40,21 +40,18 @@ My obsession with naming started from a quote I read some time ago. If you've wr
 
 Karlton was a developer at Netscape back in the day and I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
 
-Exactly when I first heard it, I do not recall--I just remember chuckling to myself. First, because I can think of many other things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming things as _hard_.
+Exactly when I first heard it, I do not recall--I just remember chuckling to myself. First, because I can think of many other things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming things as inherently _hard_.
 
-Of course, it can be hard--sometimes excrutiatingly so. Unlike so many other things in programming, a bad (or good) name won't be caught by the compiler. There are no metrics for naming. A bad name won't break your code. A good name won't speed up your build.
-
-Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. So, how do you name things well? It's something I've become incredibly passionate about over the years, so much so that I decided to dedicate an entire book to this strange niche of programming topics---all of this stemming from a quote attributed to Mr. Phil Karlton.
+Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. So, how do you name things well? Unlike so many other things in programming, a bad name won't be caught by the compiler. There are no metrics for naming. A bad name won't break your code. A good name won't speed up your build.
 
 Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics. It is, in my humble opinion, the most non-technical of technical subjects. Naming is an art. Good naming has a whole lot of subjectivity.
 
-Naming deserves as much attention as all the other skills we preach in programming---like good architecture, writing "clean code", or rigid testing. While all the other best practices are critical, they share the common drawback that you cannot see these things right away. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
+And though there are no metrics for good names, it deserves as much attention as all the other skills we preach in programming---like good architecture, writing "clean code", or rigid testing. While all the other best practices are critical, they share the common drawback that you cannot see these things right away. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
 
-On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when they dig in, perhaps on their way to fixing a bug. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work.
+On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things a programmer sees when digging into new code. They make code instantly more approachable. You can change the name of something and instantly improve your codebase.
 
-Mike asked me why I cared so much about naming when I happen to be working on a codebase that only I need to maintain. After all, most programmers work on teams and on distributed services---where agreeing on naming conventions is arguably more important than someone writing their own code. 
+* * *
 
-For me, naming well is as important for the other programmer as it is for yourself. A well-tended codedbase is something I enjoy coming back to day after day. In a sense, being the lone programmer on an app motivates me even more _because_ it's my work, something I'm proud of. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put in. 
+Mike asked me why I cared so much about naming when I happen to be working on code that only I'm going to see (as I mentioned earlier, I've been working on DoneDone as a solo developer for quite some time). Most codebases are touched by a multitude of people---where establishing good names is arguably more important than on a codebase managed by just one person.
 
-Naming better makes me want to code better. 
-
+My answer is simple: Naming better makes me want to code better. Being the lone programmer on an app motivates me even more because it's a reflection of the quality I like to put into my work. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put into it. 
