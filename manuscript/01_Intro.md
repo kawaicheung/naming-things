@@ -52,6 +52,9 @@ Naming deserves as much attention as all the other skills we preach in programmi
 
 On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when they dig in, perhaps on their way to fixing a bug. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work.
 
-[Something about having the rare op to work on one product, monolithic, full control, and understanding some folks reading this may work in larger groups and not have as broad a reach on the entire system...  something about Sanders saying why it matters if I'm the sole dev -- and in a way its more important - my work, self-worth, working to make my own life easier is just as important a goal as if i were in a big org helping others (including myself)]
+Mike asked me why I cared so much about naming when I happen to be working on a codebase that only I need to maintain. After all, most programmers work on teams and on distributed services---where agreeing on naming conventions is arguably more important than someone writing their own code. 
 
-After all, isn't that what we're all striving for?
+For me, naming well is as important for the other programmer as it is for yourself. A well-tended codedbase is something I enjoy coming back to day after day. In a sense, being the lone programmer on an app motivates me even more _because_ it's my work, something I'm proud of. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put in. 
+
+Naming better makes me want to code better. 
+
