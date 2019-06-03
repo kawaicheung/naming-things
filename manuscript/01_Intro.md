@@ -52,4 +52,6 @@ Naming deserves as much attention as all the other skills we preach in programmi
 
 On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things the programmer sees when they dig in, perhaps on their way to fixing a bug. They make code instantly more approachable. The best part is you can reap these benefits without a substantial amount of work.
 
+[Something about having the rare op to work on one product, monolithic, full control, and understanding some folks reading this may work in larger groups and not have as broad a reach on the entire system...  something about Sanders saying why it matters if I'm the sole dev -- and in a way its more important - my work, self-worth, working to make my own life easier is just as important a goal as if i were in a big org helping others (including myself)]
+
 After all, isn't that what we're all striving for?
