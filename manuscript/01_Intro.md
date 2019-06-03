@@ -32,6 +32,8 @@ And unlike migrate, the word import doesn't feel like data is leaving one place 
 
 So, I end up substituting _migrate_ (and all its various derivatives) with _import_.
 
+* * *
+
 I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. Finding that just-right name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
 
 My obsession with naming started from a quote I read some time ago. If you've written code long enough, there's a good chance you've heard it as well.
