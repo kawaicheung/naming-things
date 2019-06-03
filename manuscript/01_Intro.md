@@ -56,4 +56,4 @@ On the other hand, there's an immediate payoff to a codebase with well-intention
 
 Mike asked me why I cared so much about naming when I happen to be working on code that only I'm going to see (as I mentioned earlier, I've been working on DoneDone as a solo developer for quite some time). Most codebases are touched by a multitude of people---where establishing good names is arguably more important than on a codebase managed by just one person.
 
-My answer is simple: Naming better makes me want to code better. Being the lone programmer on an app motivates me even more because it's a reflection of the quality I like to put into my work. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put into it. 
+My answer is simple: Naming better makes me want to code better. Being the lone programmer on an app motivates me even more because it's a reflection of the quality I like to put into my work. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put into it.
