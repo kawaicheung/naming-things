@@ -1,67 +1,43 @@
 # The Shape of Code
 
-I never picked up any kind of programming again until the late 1990s. In college, I became enamored with the possibilities of designing web sites. I began learning a new form of code called HTML. At some point, my classmate uncovered a wonderful "secret" feature of a web browser called "View Source". Like sneaking behind-the-stage of a production, I was able to see how all of the stuff on screen was actually created.
+Code has a certain _shape_ to it. It's spacing and indentation. Where line breaks are made. How it flows down a page. These are important to how we consume the code.
 
-It was through viewing the source of various sites that I learned about tables--particularly about using them as a way to layout complex designs in combination with chopped up graphics from Photoshop. However, I remember struggling with a particular issue in Internet Explorer (mind you, this was long before IE6). 
-
-No matter what I added to my table cell tags, I couldn't get two columns in a row containing images to display next to each other without an annoying 1 pixel sliver of white space.
-```HTML
-<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="600">
-  <TR>
-    <TD><IMG SRC="/image/001.gif"></TD>
-    <TD><IMG SRC="/image/002.gif"></TD>
-  </TR>  
-</TABLE>
-```
-At some point, days into my frustration, I figured out the space was due to the physical gap between the `<TD>`s. By omitting the gaps, the white space disappeared.
-
-```HTML
-<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="600"><TR><TD><IMG SRC="/image/001.gif"></TD><TD><IMG SRC="/image/002.gif"></TD></TR></TABLE>
-```
-
-And so, for the next several years, my code was--like the code I had written a decade earlier--a mashing together of lines of text meant for the browser to understand, not the human.
-
-Fortunately, times have changed. Programmers care about the design of their code. I don't just mean the architectural design, but the physical one. Code has a certain _shape_ to it. It's spacing and indentation. The way it's broken out. How it flows down a page. 
-
-Variable names can play a large role in determining this shape. Consider this simple `for` loop.
+Sometimes names can disturb that shape dramatically. Consider this simple `for` loop.
 
 ```C#
 for (int i=0; i < tokens.length; i++)
 {
-  if (tokens[i].Activated)
+  if (tokens[i].Used)
   {
-    usedTokens.Add(tokens);
+    usedTokens.Add(tokens[i]);
   }
 }
 ```
 
-To me, this code has good shape. The indents and spacing are consistent--but, look further. The importance of the variables are commensurate with their size. When I read this code, it doesn't take me long to figure out that tokens are added to a `usedTokens` list if they are activated. That's because the surrounding code that helps me understand this isn't getting in the way.
+To me, this code has good shape. Yes, the indents and spacing are consistent.  But there's something else I notice--the importance of the variables are roughly equal to their size. When I read this code, it doesn't take me long to figure out that there is some `tokens` array, and elements in that araray are added to a `usedTokens` list if they are used. 
 
-Here's that same code block again with one name change. I substitute the index variable `i` with a new, more precise, name.
+Here's that same code block again with a few name changes. In each case, I substitute a name with an even more precise name.
 
 ```C#
 for (int curIndexOfTokenArray=0; 
-	curIndexOfTokenArray < token.length; 
+	curIndexOfTokenArray < tokensArray.length; 
 	curIndexOfTokenArray++)
 {
-   if (tokens[curIndexOfTokenArray].Activated)
+   if (tokensArray[curIndexOfTokenArray].Used)
    {
-     usedTokens.Add(token);
+     usedTokensList.Add(tokensArray[curIndexOfTokenArray]);
    }
 }
 ```
-
-Up until now, I've championed the idea of name clarity. Following this line of thought, `curIndexOfTokenArray` is certainly be a better name than `i`. The name is far more clear. 
-
-[FYI - this may be controversial-- clean code]
+If we think only in terms of clarity, then the code should be an improvement. Certainly, `curIndexOfTokenArray` is clearer than `i`. The names `tokensArray` and `usedTokensList` now tell me the object's type without having to dig into them. The names are far more clear. 
 
 But, now we face a more onerous problem. The whole thing just _looks_ substantially more complex. We need more time to digest what it's saying. The code has lost its shape.
 
 While the current index is a critical anchor of a `for` loop, representing it in a verbally meaningful way isn’t. For one thing, an index is common to _every_ kind of `for` loop. In addition, it's scope is small -- it only exists for the duration of a few lines inside the loop. If someone were really confused about the variable name, they only need to look around a small visual radius to get refamiliarized.
 
-The stars of the show here are the `tokens` and `usedTokens` arrays. Adding more description to `i` brings a peripheral stage crew member into the spotlight. Look at the line `if (tokens[curIndexOfTokenArray].Activated)`. I have to read this line a couple of times to parse through it.
+The stars of the show here ought to be the `tokens` array and `usedTokens` list. Adding more description to `i` brings a peripheral stage crew member into the spotlight. Couple this with the additional suffix `Array` to `tokens` and the line `if (tokensArray[curIndexOfTokenArray].Used)` takes much longer to parse through it.
 
-The original version values the shape of the entire statement over describing a variable which doesn't need that type of attention:
+The original version values the shape of the entire statement more the level of description each variable brings. There are certain times where this is a better trade-off. This example is one of them.
 
 ```C#
 for (int i=0; i < tokens.length; i++)
@@ -72,11 +48,43 @@ for (int i=0; i < tokens.length; i++)
    }
 }
 ```
+A> Sandi Metz has championed the idea of a "squint test" to evaluate how readable your code is. She's even developed a [neat package](https://atom.io/packages/squint-test) for the Atom editor that helps squint for you.
 
-[Another example: Lucene documents -- lucene_document vs doc; repeated doc.Add() looks much cleaner -- emphasis on the rest of the params)in addSearchDocuments()]
+As I look through my own code, I hunt for places where a variable name is getting in the way of the shape of the rest of the code, and then change the name to something smaller. For instance, I recently stumbled across a method in a text search catalog I wrote for DoneDone that leverages a library called Lucene. 
 
-Here’s another example. In this method, `systemTimeZones` represents a collection of objects each describing a time zone. The method loops through this collection, then extracts time zone information to build a list of `DropDownComponents` while marking the passed-in time zone as `Selected`:
+In one method, I defined how new searchable documents are created. The main player in this method is an instance of Lucene's `Document` object that I name `lucene_doc`.
+```C#
+Document createDocument(ItemEventForSearchIndex item_event)
+{
+  var lucene_doc = new Document();
 
+  lucene_doc.Add(new Field(_FIELD_item_event_id,...
+  lucene_doc.Add(new Field(_FIELD_item_id, ...
+  lucene_doc.Add(new Field(_FIELD_project_id, ...
+  lucene_doc.Add(new Field(_FIELD_creator_id, ...
+  lucene_doc.Add(new Field(_FIELD_created_on, ...
+  lucene_doc.Add(new Field(_FIELD_is_convo_thread, ...
+  lucene_doc.Add(new Field(_FIELD_is_non_convo_creation,...
+  ...
+}
+```
+When I ran across this method again, I felt I could improve its shape by shortening the name of the variable from `lucene_doc` to, simply, `doc`. Not only does it shorten the lines, but getting rid of the underscore precents that variable from visually competing with the other snake-cased names in the code. Overall, it reads smoother without giving up much:
+```C#
+Document createDocument(ItemEventForSearchIndex item_event)
+{
+  var doc = new Document();
+
+  doc.Add(new Field(_FIELD_item_event_id,...
+  doc.Add(new Field(_FIELD_item_id, ...
+  doc.Add(new Field(_FIELD_project_id, ...
+  doc.Add(new Field(_FIELD_creator_id, ...
+  doc.Add(new Field(_FIELD_created_on, ...
+  doc.Add(new Field(_FIELD_is_convo_thread, ...
+  doc.Add(new Field(_FIELD_is_non_convo_creation,...
+  ...
+}
+```
+Here’s a final example. In this method, `systemTimeZones` represents a collection of objects each describing a time zone. The method loops through this collection, then extracts time zone information to build a list of `DropDownComponents` while marking the passed-in time zone as `Selected`:
 ```C#
 public List<DropDownComponent> BuildTimeZonesDropDownList(string selectedTimeZone)
 {
@@ -98,7 +106,6 @@ public List<DropDownComponent> BuildTimeZonesDropDownList(string selectedTimeZon
   return result;
 }
 ```
-
 The issue with the shape of this code is how repetitive some of the variable names look. There are several names in this method that all look similar at a glance:
 
 * The `systemTimeZones` collection
@@ -141,7 +148,6 @@ public List<DropDownComponent> BuildTimeZonesDropDownList(string selectedTimeZon
   return result;
 }
 ```
-
 I like this change already. Now, the details of the `foreach` loop are much easier to scan. In addition, all of the other similarly-named constructs benefit. They're given more room so that the similarity in their names aren’t as distracting on the eyes as they were before.
 
 Just like our prior example, the variable `tz` feels sized appropriately. Conceptually, a small name like `tz` feels like just one element in a longer-named collection like `systemTimeZones`. These are the kinds of subtle visual cues that all lend themselves to good code shape.
@@ -169,7 +175,6 @@ public List<DropDownComponent> BuildTimeZonesDropDownList(string selectedTimeZon
   return result;
 }
 ```
-
 I could go further and rename the other variables more uniquely, but I don't feel it's necessary. When I read the updated method, I don't feel that dizzying effect of all those similarly named variables that I did earlier.
 
 When we edit names, we shouldn't look at them in isolation. That habit can drive naming decisions that don’t actually benefit the overall readability of the surrounding code. 
