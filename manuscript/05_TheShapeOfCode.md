@@ -14,7 +14,7 @@ for (int i=0; i < tokens.length; i++)
 }
 ```
 
-To me, this code has good shape. Yes, the indents and spacing are consistent.  But there's something else I notice--the importance of the variables are roughly equal to their size. When I read this code, it doesn't take me long to figure out that there is some `tokens` array, and elements in that araray are added to a `usedTokens` list if they are used. 
+To me, this code has good shape. Yes, the indents and spacing are consistent.  But there's something else I notice--the importance of the variables are roughly equal to their size. When I read this code, it doesn't take me long to figure out that there is some `tokens` array, and elements in that array are added to a `usedTokens` list if they are used. 
 
 Here's that same code block again with a few name changes. In each case, I substitute a name with an even more precise name.
 
