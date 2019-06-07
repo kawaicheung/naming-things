@@ -4,7 +4,11 @@ Most of us like to think of a codebase as a collection of distinct little module
 
 That's certainly achievable. But, when we're running an app, the reality is everything is running under the same ecosystem, as a single unit. A typical request that pushes data from a browser to the database and returns a response probably traverses hundreds of components---ones we've built, ones we've inherited, and ones that live in the depths of frameworks we don't even think about. Our split modules may not know about each other, but they often work with the same data as workers in a request chain.
 
+Here's a great little example by Brandon Rhodes.
+[Brandon Rhodes -- naming]
+
 * * *
+
 
 There was a major change I had to make when I was building the new version of DoneDone. Whereas I was previously storing all user-generated content in Markdown format, I now realized that it would be far more beneficial to store content as HTML. I didn't make this change lightly--in fact, doing so impacted things up and down the layers of the codebase.
 
