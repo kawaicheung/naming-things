@@ -10,6 +10,31 @@ There's a tendency in writing code, particularly when we're in a rush, to implem
 
 You see this happen inside of conditional statements a lot, where logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass.  The name hunt is where we can fix that.
 
+
+[TODO: Vue example]
+
+<div v-if="harvestEnabled && !['xs', 'sm', 'md'].includes($mq)">
+    
+    
+    computed {
+    harvestEnabled: get('projects/task/details@harvestEnabled'),
+    }
+    
+    
+    to...
+    
+    
+<div v-if="showHarvest">
+    
+    
+     showHarvest(): boolean {
+      const harvestEnabled = get('projects/task/details@harvestEnabled')
+      const isDesktop = !['xs', 'sm', 'md'].includes(this.$mq)
+      return harvestEnabled && isDesktop
+    },
+
+(moving that ugly "includes check 
+
 [TODO: Collab/Outreach or CG webhook or better example]
 
 * * *
