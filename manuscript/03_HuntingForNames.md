@@ -6,38 +6,30 @@ The good news is, you don't need a day or two of heads-down work to make positiv
 
 The way this works is pretty simple: I hunt for bits of business logic that I can extract and define with a name. I can start anywhere in my codebase, wherever I'm feeling eager to clean some code up.
 
-When we code something for the first time, we naturally write the "how" before we write the "what". 
+When we code something for the first time, we naturally write the "how" before we write the "what". You see this happen inside of conditional statements a lot, where "how" logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass. The name hunt is where we can fix that--where we can replace directl logic with a name that explains what the code means.
 
-There's a tendency in writing code, to implement logic directly where it's being used, rather than wrap the concept up in a property, and then use the property where its needed. 
+On the new DoneDone, I implement a conditional on a Vue element that looks like this:
+```HTML
+<div v-if="!['xs', 'sm', 'md'].includes($mq)">
+    ...
+</div>
+```
+If you're unfamiliar with Vue's syntax, no big deal. the `v-if` attribute is a piece of Vue syntax that accepts a boolean value. On an HTML element, it determines if that element should be rendered. In this case, I have a `<div>` element that I only want to show if the statement `!['xs', 'sm', 'md'].includes($mq)` is true.
 
-You see this happen inside of conditional statements a lot, where logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass.  The name hunt is where we can fix that.
+But, what is this mess? It evaluates to true if neither the "extra small", "small", or "medium" media query breakpoints are met based on the size of the browser. All that's to say, it checks that the current browser width is sized at the width of a normal desktop screen.
 
-
-[TODO: Vue example]
-
-<div v-if="harvestEnabled && !['xs', 'sm', 'md'].includes($mq)">
-    
-    
-    computed {
-    harvestEnabled: get('projects/task/details@harvestEnabled'),
+In playing the "name hunt", I can spot a line of code like this from a mile away--a messy, overly "technical" bit of code lying inside a conditional. If it takes you a minute to read and digest _what_ it's actually saying, then it's really a "how" statement. I can quickly push the "how" into its own variable and name the variable to something far more intuitive.
+```HTML
+<div v-if="isDesktopWidth">
+    ...
+</div>
+```
+```TypeScript
+isDesktopWidth(): boolean {
+      return !['xs', 'sm', 'md'].includes(this.$mq)
     }
-    
-    
-    to...
-    
-    
-<div v-if="showHarvest">
-    
-    
-     showHarvest(): boolean {
-      const harvestEnabled = get('projects/task/details@harvestEnabled')
-      const isDesktop = !['xs', 'sm', 'md'].includes(this.$mq)
-      return harvestEnabled && isDesktop
-    },
-
-(moving that ugly "includes check 
-
-[TODO: Collab/Outreach or CG webhook or better example]
+```
+I not only get the benefit of reuse, I also get the benefit of code that's much easier to read at a glance.
 
 * * *
 
