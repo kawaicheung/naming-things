@@ -2,9 +2,9 @@
 
 Here's a little insight into what I'm thinking about when I write code.
 
-So, I'm working on--what I'll call for now--a data migration feature. It's for a brand new version of an issue tracking and customer support tool called DoneDone. For the past handful of years, I've been its sole developer. Being the lone developer on a product for that long has some drawbacks, but for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away endlessly at a large piece of stone. 
+So, I'm working on--what I'll call for now--a data migration feature. It's for a brand new version of an issue tracking and customer support tool called DoneDone. For the past handful of years, I've been its sole developer. Being the lone developer on a product for this long has some drawbacks, but for someone like me, I crave this kind of quiet, sustained work--like a scupltor chiseling away endlessly at a large piece of stone. 
 
-The goal of this feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call _Classic_) over to this new version. I wish I could tell you the process is a simple mapping of database tables and columns from Classic over to the new version, but it's not. The new DoneDone is markedly different than its predecessor: Some data maps simply, other data requires some massaging, and some stuff simply can't be mapped at all.
+The goal of this feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call _Classic_) over to this new version. I wish I could tell you this is a simple mapping of database tables and columns from Classic over to the new version, but it's not. The new DoneDone is markedly different than its predecessor: Some data maps simply, other data requires some massaging, and some stuff simply can't be mapped at all.
 
 For the next six days, I work away at this feature--the whole bit. I develop a screen to sign in to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On the backend, I work on a number of database updates to store these requests. I then write an out-of-band service that picks up these requests to perform the dirty work of moving this data over cleanly. There are other tangential pieces I build along the way, like emailing the requester when the migration is complete and broadcasting error notifications.
 
@@ -52,8 +52,10 @@ And though there are no metrics for good names, it deserves as much attention as
 
 On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things a programmer sees when digging into new code. They make code instantly more approachable. You can change the name of something and instantly improve your codebase.
 
+This is a book about how names can impact how well our code reads. This isn't a "styleguide". For instance, I'm not going to tell you that all strings have to be prefaced by `str`. My hope is you can apply the thought process I went through in your own code, regardless of language or development environment.
+
 * * *
 
 Mike asked me why I cared so much about naming when I happen to be working on code that only I'm going to see (as I mentioned earlier, I've been working on DoneDone as a solo developer for quite some time). Most codebases are touched by a multitude of people---where establishing good names is arguably more important than on a codebase managed by just one person.
 
-My answer is simple: Naming better makes me want to code better. Being the lone programmer on an app motivates me even more because it's a reflection of the quality I like to put into my work. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put into it.
+My answer is simple: Naming better makes me want to code better. Being the lone programmer on an app motivates me even more because it's a reflection of the quality I like to put into my work. When I revisit code I worked on a long time ago, I get the satisfaction of seeing that quality still present. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put into it.
