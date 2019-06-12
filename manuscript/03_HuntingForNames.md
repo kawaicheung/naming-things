@@ -2,11 +2,13 @@
 
 One of the things I like to do routinely is clean up the code I'm working on. I know, I know--there are many of you out there who would love to devote a day or two just to clean up code at your company. But, that wouldn't sit well with management or your clients.
 
-The good news is, you don't need a day or two to make positive impacts on your code. You can get a lot done even in a thirty minute session. One of my favorite ways to do this is with an exercise I'll call "the name hunt". 
+The good news is, you don't need a day or two of heads-down work to make positive impacts on your code. You can get a lot done  in a thirty minute session. One of my favorite ways to do this is with an exercise I'll call "the name hunt". 
 
-The way this works is pretty simple: I hunt for bits of business logic that I can extract and define with a name. 
+The way this works is pretty simple: I hunt for bits of business logic that I can extract and define with a name. I can start anywhere in my codebase, wherever I'm feeling eager to clean some code up.
 
-There's a tendency in writing code, particularly when we're in a rush, to implement a concept directly where it's being used, rather than wrap the concept up in a property, and then use the property where its needed. 
+When we code something for the first time, we naturally write the "how" before we write the "what". 
+
+There's a tendency in writing code, to implement logic directly where it's being used, rather than wrap the concept up in a property, and then use the property where its needed. 
 
 You see this happen inside of conditional statements a lot, where logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass.  The name hunt is where we can fix that.
 
