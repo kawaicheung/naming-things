@@ -8,3 +8,4 @@ NamingOpposites.md
 TautologousNameTrap.md
 AbstractingTooSoon.md
 NamesAreFickle.md
+NamingToTeach.md
