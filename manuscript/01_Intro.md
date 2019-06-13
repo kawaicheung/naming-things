@@ -40,7 +40,7 @@ My obsession with naming started from a quote I read some time ago. If you've wr
 
 > There are only two hard things in Computer Science: cache invalidation and naming things. - Phil Karlton
 
-Karlton was a developer at Netscape back in the day and I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
+Karlton was a developer at Netscape back in its heyday. I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
 
 Exactly when I first heard it, I do not recall--I just remember chuckling to myself. First, because I can think of many other things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming things as inherently _hard_.
 
