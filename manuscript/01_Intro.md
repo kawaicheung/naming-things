@@ -42,7 +42,7 @@ My obsession with naming started from a quote I read some time ago. If you've wr
 
 Karlton was a developer at Netscape back in its heyday. I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
 
-Exactly when I first heard it, I do not recall--I just remember chuckling to myself. First, because I can think of many other things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming things as inherently _hard_.
+Exactly when I first heard it, I do not recall--I just remember chuckling to myself. First, because I can think of many things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming as a difficult exercise.
 
 Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. So, how do you name things well? Unlike so many other things in programming, a bad name won't be caught by the compiler. There are no metrics for naming. A bad name won't break your code. A good name won't speed up your build.
 
