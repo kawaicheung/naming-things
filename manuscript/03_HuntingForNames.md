@@ -1,12 +1,11 @@
 # Hunting For Names
 
-One of the things I like to do routinely is clean up the code I'm working on. I know, I know--there are many of you out there who would love to devote a day or two just to clean up code at your company. But, that wouldn't sit well with management or your clients.
+We all have this fantasy of devoting an entire week to just cleaning up code. But, that wouldn't sit well with 99% of managers and 100% of clients out there. The fact is, we have to clean up--surreptitiously--as we go. 
 
-The good news is, you don't need a day or two of heads-down work to make positive impacts on your code. You can get a lot done  in a thirty minute session. One of my favorite ways to do this is with an exercise I'll call "the name hunt". 
+The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is to _find_ things to name. 
 
-The way this works is pretty simple: I hunt for bits of business logic that I can extract and define with a name. I can start anywhere in my codebase, wherever I'm feeling eager to clean some code up.
+The way this works is pretty simple: I hunt for bits of exposed logic that I can define with a name, then replace the logic with the name. I can start anywhere in my codebase, wherever I feel eager to clean some code up.
 
-When we code something for the first time, we naturally write the "how" before we write the "what". You see this happen inside of conditional statements a lot, where "how" logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass. The name hunt is where we can fix that--where we can replace directl logic with a name that explains what the code means.
 
 On the new DoneDone, I implement a conditional on a Vue element that looks like this:
 ```HTML
@@ -29,6 +28,10 @@ isDesktopWidth(): boolean {
       return !['xs', 'sm', 'md'].includes(this.$mq)
     }
 ```
+
+
+When we code something for the first time, we naturally write the "how" before we write the "what". You see this happen inside of conditional statements a lot, where "how" logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass. The name hunt is where we can fix that--where we can replace directl logic with a name that explains what the code means.
+
 I not only get the benefit of reuse, I also get the benefit of code that's much easier to read at a glance.
 
 * * *
