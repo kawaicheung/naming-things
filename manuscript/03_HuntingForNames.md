@@ -16,10 +16,6 @@ But, when you scan this statement, it looks complicated.
 
 What does this mess mean? Well, it evaluates to `true` if the "extra small", "small", or "medium" media query breakpoints are not hit based on the size of the browser. Put more simply, it checks that the current browser width is sized at least to the width of a normal desktop screen.
 
-I can spot a line of code like this from a mile away--a messy, overly technical bit of code lying inside a conditional. I often write code like this on a feature's first pass, when I'm just trying to get the feature to work right. But, if I never make a second pass after I've tested that it works, then stuff like this pollutes my code. Code quickly gets ugly.
-
-It's that second pass where I get to put a name to a piece of logic. Where I get to say _what_ rather than _how_. Where the readability of code improves dramatically.
-
 I can quickly fix this line by defining the mess with a meaningful name. 
 ```TypeScript
 isDesktopWidth(): boolean {
@@ -32,9 +28,14 @@ And, now I get the satisfaction of cleaning up my original code with something s
     ...
 </div>
 ```
-Now, not only does this read better, but I have a property I can potentially reuse again in other parts of the code.
+Not only does this read better, but I have a property I can potentially reuse again in other parts of my code.
+
+I can spot a line of code like this from a mile away--a messy, overly technical bit of code lying inside a conditional. I often write code like this on a feature's first pass, when I'm just trying to get the feature to work right. But, if I never make a second pass after I've tested that it works, then stuff like this pollutes my code. Code quickly gets ugly.
+
+It's that second pass where I get to put a name to a piece of logic. Where I get to say _what_ rather than _how_. Where the readability of code improves dramatically.
 
 * * *
+
 
 There's a slightly more advanced version of "the name hunt" that helps you build better objects. Specifically, I look for bits of business logic using only the properties of a single object outside of its class definition. There's usually an easy way to name that piece of logic and push it _back_ into the class definition. 
 
