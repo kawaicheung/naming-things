@@ -10,13 +10,13 @@ On the new DoneDone, I notice a conditional on a Vue element that looks like thi
     ...
 </div>
 ```
-If you're unfamiliar with Vue's syntax, no big deal. the `v-if` attribute is Vue syntax that works just like a normal `if` statement. On an HTML element, it determines if that element should be rendered. In this case, I have a `<div>` element that I only want to show if the statement `!['xs', 'sm', 'md'].includes($mq)` is true.
+If you're unfamiliar with Vue's syntax, no big deal. the `v-if` attribute is Vue syntax that works just like a normal `if` statement, with a Typescript expression inside of it. On an HTML element, it determines if that element should be rendered. In this case, I have a `<div>` element that I only want to show if the Typescript statement `!['xs', 'sm', 'md'].includes($mq)` is true.
 
 But, when you scan this statement, it looks complicated. 
 
 What does this mess mean? Well, it evaluates to `true` if the "extra small", "small", or "medium" media query breakpoints are not hit based on the size of the browser. Put more simply, it checks that the current browser width is sized at least to the width of a normal desktop screen.
 
-I can quickly fix this line by defining the mess with a meaningful name. 
+I can quickly fix this line by defining the mess with a meaningful name.
 ```TypeScript
 isDesktopWidth(): boolean {
   return !['xs', 'sm', 'md'].includes(this.$mq)
@@ -30,14 +30,17 @@ And, now I get the satisfaction of cleaning up my original code with something s
 ```
 Not only does this read better, but I have a property I can potentially reuse again in other parts of my code.
 
-I can spot a line of code like this from a mile away--a messy, overly technical bit of code lying inside a conditional. I often write code like this on a feature's first pass, when I'm just trying to get the feature to work right. But, if I never make a second pass after I've tested that it works, then stuff like this pollutes my code. Code quickly gets ugly.
+I can spot a line of code like this from a mile away--a messy, overly technical bit of code without a proper home. I often write code like this on the first pass, when I'm just trying to get a feature to work right. But, if I never make that second pass, after testing the code works, then code quickly gets ugly.
 
-It's that second pass where I get to put a name to a piece of logic. Where I get to say _what_ rather than _how_. Where the readability of code improves dramatically.
+It's that second pass where I get to put a name to a piece of logic. Where I get to say _what_ rather than _how_. Where the readability of code improves dramatically. This is among the most basic ways we can improve code.
+
+Take a moment to look at your own code--especially in the "highest" areas of your stack where the semantics really _should_ be more human-readable. You might be surprised how many bits of logic are sprinkled about that could be wrapped up into a meaningful name.
 
 * * *
 
+There are situations where logic that's seemingly full of good names can also be improved by taking things a step further. 
 
-There's a slightly more advanced version of "the name hunt" that helps you build better objects. Specifically, I look for bits of business logic using only the properties of a single object outside of its class definition. There's usually an easy way to name that piece of logic and push it _back_ into the class definition. 
+I also look for bits of business logic using only the properties of a single object outside of its class definition. There's usually an easy way to name that piece of logic and push it _back_ into the class definition. 
 
 The object, in turn, gets more powerful and self-sufficient. Done repeatedly, your objects start to _do_ a lot more than they once did. It helps prevent repeated code, and makes those objects more useful to any other code interacting with them down the road.
 
