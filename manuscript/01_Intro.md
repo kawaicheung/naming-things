@@ -53,12 +53,3 @@ And though there are no metrics for good names, it deserves as much attention as
 On the other hand, there's an immediate payoff to a codebase with good names. They are the first things a programmer sees when digging into new code. They make your code more approachable. You can change the name of something and instantly improve your codebase.
 
 This is a book about how names can impact how well our code reads. This isn't a "styleguide". For instance, I'm not going to tell you that all strings have to be prefaced by `str` or camelCase is better than kebab-case. This is about adding meaning into the code we write, regardless of language or development environment.
-
-
-[Is this necessary?]
-
-* * *
-
-Mike asked me why I cared so much about naming when I happen to be working on code that only I'm going to see (as I mentioned earlier, I've been working on DoneDone as a solo developer for quite some time). Most codebases are touched by a multitude of people---where establishing good names is arguably more important than on a codebase managed by just one person.
-
-My answer is simple: Naming better makes me want to code better. Being the lone programmer on an app motivates me even more because it's a reflection of the quality I like to put into my work. When I revisit code I worked on a long time ago, I get the satisfaction of seeing that quality still present. And when the day comes when someone else contributes to the codebase, they'll benefit from the care I've already put into it.
