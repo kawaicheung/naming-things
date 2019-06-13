@@ -4,7 +4,7 @@ I'm sure you've had dreams of devoting an entire week to just cleaning up code f
 
 The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is one of the simplest: _Find_ things to name. Look for bits of exposed logic you can define with a name, then replace the logic with the name. 
 
-On the new DoneDone, I notice a conditional on a Vue element that looks like this:
+On the new DoneDone, I notice a conditional on a Vue.js element that looks like this:
 ```HTML
 <div v-if="!['xs', 'sm', 'md'].includes($mq)">
     ...
@@ -34,7 +34,7 @@ I can spot a line of code like this from a mile away--a messy, overly technical 
 
 It's that second pass where I get to put a name to a piece of logic. Where I get to say _what_ rather than _how_. Where the readability of code improves dramatically. This is among the most basic ways we can improve code.
 
-Take a moment to look at your own code--especially in the "highest" areas of your stack where the semantics really _should_ be more human-readable. You might be surprised how many bits of logic are sprinkled about that could be wrapped up into a meaningful name.
+Take a moment to look at your own code--especially in the "higher" areas of your stack where the semantics really _should_ be more human-readable. You might be surprised how many bits of logic are sprinkled about that could be wrapped up into a meaningful name.
 
 * * *
 
