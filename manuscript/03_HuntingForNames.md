@@ -1,38 +1,36 @@
 # Hunting For Names
 
-We all have this fantasy of devoting an entire week to just cleaning up code. But, that wouldn't sit well with 99% of managers and 100% of clients out there. The fact is, we have to clean up--surreptitiously--as we go. 
+We all have this fantasy of devoting an entire week to just cleaning up code. But, that wouldn't sit well with exactly 99% of managers and 100% of clients out there. The fact is, we have to clean up--surreptitiously--as we go. 
 
-The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is to _find_ things to name. 
+The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is one of the simplest: _Find_ things to name. Look for bits of exposed logic you can define with a name, then replace the logic with the name. 
 
-The way this works is pretty simple: I hunt for bits of exposed logic that I can define with a name, then replace the logic with the name. I can start anywhere in my codebase, wherever I feel eager to clean some code up.
-
-
-On the new DoneDone, I implement a conditional on a Vue element that looks like this:
+On the new DoneDone, I notice a conditional on a Vue element that looks like this:
 ```HTML
 <div v-if="!['xs', 'sm', 'md'].includes($mq)">
     ...
 </div>
 ```
-If you're unfamiliar with Vue's syntax, no big deal. the `v-if` attribute is a piece of Vue syntax that accepts a boolean value. On an HTML element, it determines if that element should be rendered. In this case, I have a `<div>` element that I only want to show if the statement `!['xs', 'sm', 'md'].includes($mq)` is true.
+If you're unfamiliar with Vue's syntax, no big deal. the `v-if` attribute is Vue syntax that works just like a normal `if` statement. On an HTML element, it determines if that element should be rendered. In this case, I have a `<div>` element that I only want to show if the statement `!['xs', 'sm', 'md'].includes($mq)` is true.
 
-But, what is this mess? It evaluates to true if neither the "extra small", "small", or "medium" media query breakpoints are met based on the size of the browser. All that's to say, it checks that the current browser width is sized at the width of a normal desktop screen.
+When you scan this statement, it looks complicated. 
 
-In playing the "name hunt", I can spot a line of code like this from a mile away--a messy, overly "technical" bit of code lying inside a conditional. If it takes you a minute to read and digest _what_ it's actually saying, then it's really a "how" statement. I can quickly push the "how" into its own variable and name the variable to something far more intuitive.
+What does this mess mean? Well, it evaluates to `true` if the "extra small", "small", or "medium" media query breakpoints are not hit based on the size of the browser. Put more simply, it checks that the current browser width is sized at least to the width of a normal desktop screen.
+
+I can spot a line of code like this from a mile away--a messy, overly technical bit of code lying inside a conditional. I often write code like this on a feature's first pass, when I'm just trying to get the feature to work right. But, if I fail to make a second pass of my code, then stuff like this is left polluting my code. It's that second pass where I get to put a name to a piece of logic, where I get to say _what_ rather than _how_ that improves the code dramatically. 
+
+I can quickly fix this line by defining the mess with a meaningful name. 
+```TypeScript
+isDesktopWidth(): boolean {
+  return !['xs', 'sm', 'md'].includes(this.$mq)
+}
+```
+And, now I get the satisfaction of cleaning up my original code with something so much more approachable.
 ```HTML
 <div v-if="isDesktopWidth">
     ...
 </div>
 ```
-```TypeScript
-isDesktopWidth(): boolean {
-      return !['xs', 'sm', 'md'].includes(this.$mq)
-    }
-```
-
-
-When we code something for the first time, we naturally write the "how" before we write the "what". You see this happen inside of conditional statements a lot, where "how" logic is jammed right in the `ifs` and `elses`. Often, it's because that first implementation of logic--when the programmer was just trying to get the thing to work--never gets the benefit of a second pass. The name hunt is where we can fix that--where we can replace directl logic with a name that explains what the code means.
-
-I not only get the benefit of reuse, I also get the benefit of code that's much easier to read at a glance.
+Now, not only does this read better, but I have a property I can potentially reuse again in other parts of the code.
 
 * * *
 
