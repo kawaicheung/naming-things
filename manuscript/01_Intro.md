@@ -54,6 +54,9 @@ On the other hand, there's an immediate payoff to a codebase with good names. Th
 
 This is a book about how names can impact how well our code reads. This isn't a "styleguide". For instance, I'm not going to tell you that all strings have to be prefaced by `str` or camelCase is better than kebab-case. This is about adding meaning into the code we write, regardless of language or development environment.
 
+
+[Is this necessary?]
+
 * * *
 
 Mike asked me why I cared so much about naming when I happen to be working on code that only I'm going to see (as I mentioned earlier, I've been working on DoneDone as a solo developer for quite some time). Most codebases are touched by a multitude of people---where establishing good names is arguably more important than on a codebase managed by just one person.
