@@ -50,7 +50,7 @@ Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics.
 
 And though there are no metrics for good names, it deserves as much attention as all the other skills we preach in programming---like good architecture, writing "clean code", or rigid testing. While all the other best practices are critical, they share the common drawback that you cannot see these things right away. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
 
-On the other hand, there's an immediate payoff to a codebase with well-intentioned names. They are the first things a programmer sees when digging into new code. They make code instantly more approachable. You can change the name of something and instantly improve your codebase.
+On the other hand, there's an immediate payoff to a codebase with good names. They are the first things a programmer sees when digging into new code. They make your code more approachable. You can change the name of something and instantly improve your codebase.
 
 This is a book about how names can impact how well our code reads. This isn't a "styleguide". For instance, I'm not going to tell you that all strings have to be prefaced by `str`. My hope is you can apply the thought process I went through in your own code, regardless of language or development environment.
 
