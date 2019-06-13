@@ -34,17 +34,15 @@ I can spot a line of code like this from a mile away--a messy, overly technical 
 
 It's that second pass where I get to put a name to a piece of logic. Where I get to say _what_ rather than _how_. Where the readability of code improves dramatically. This is among the most basic ways we can improve code.
 
-Take a moment to look at your own code--especially in the "higher" areas of your stack where the semantics really _should_ be more human-readable. You might be surprised how many bits of logic are sprinkled about that could be wrapped up into a meaningful name.
+Take a moment to look at your own code--especially in the "higher" areas of your stack where the semantics really _should_ be more human-readable. You might be surprised how many bits of messy logic are sprinkled about that could be wrapped up into a meaningful name.
 
 * * *
 
-There are situations where logic that's seemingly full of good names can also be improved by taking things a step further. 
+Logic bits don't always have to look overly technical to benefit from a name. 
 
-I also look for bits of business logic using only the properties of a single object outside of its class definition. There's usually an easy way to name that piece of logic and push it _back_ into the class definition. 
+You may see business logic using the already well-named properties of an object. Even in these cases, there's usually a way to name that piece of logic and push it _back_ into the class definition. 
 
-The object, in turn, gets more powerful and self-sufficient. Done repeatedly, your objects start to _do_ a lot more than they once did. It helps prevent repeated code, and makes those objects more useful to any other code interacting with them down the road.
-
-In this example, I have a `Person` class that houses some basic information used throughout my codebase.
+For instance, I have a `Person` class that houses some basic information used throughout my codebase.
 
 ```C#
 public class Person
@@ -59,8 +57,7 @@ public class Person
 ```
 Instances of `Person` naturally spring up all over the place.
 
-For example, on a person's profile page, I have an instance named `AuthedPerson` used to display an authenticated user's name and a few links to other sections of the application they have access to, if they are an admin or owner in the account.
-
+For example, on a person's profile template, I have an instance named `AuthedPerson` used to display an authenticated user's name and a few links to other sections of the application they have access to, only if they are an admin or owner in the account.
 ```HTML
 <div>
   <h2>@AuthedPerson.FirstName @AuthedPerson.LastName</h2>
@@ -84,15 +81,9 @@ if ((person.LastAccessTimestamp - DateTime.UtcNow).TotalMinutes > 60)
     // Log out and send to the login screen.
 }
 ```
-Throughout the application, whereever the `Person` object is used, little bits of business logic against its properties are sprinkled about. Most of these bits feel so inconsequentually minor--simple, one-line constructions and statements--you might not even consider them to be real business logic at all.
+Throughout the application, whereever an instance of the `Person` class is used, little bits of business logic against its properties are sprinkled about. Most of these bits feel so inconsequentually minor--simple, one-line constructions and statements--you might not even consider them to be real business logic at all.
 
-I see code like this all the time. I write code like this all the time. 
-
-When we write code against an object's properties, it makes sense to do so where it's currently needed. For instance, it was _when_ I was writing the security class method that I needed to find out how long the person has been idle. So, it made sense to code their idle time inside the security method and move onto other things.
-
-But, leaving the code that way costs you an opportunity to better name these bits of logic. You also can't organize them in a place more conducive to reuse: Namely, back inside the class where all the properties are already defined.
-
-For instance, in the view example, displaying a person's first and last name might not seem like _logic_, but it is--it represents a person's _full name_. I can easily push this bit of logic back to the `Person` class itself. This also gives me the opportunity to name it something meaningful. 
+For instance, in the profile template example, displaying a person's first and last name might not seem like _logic_, but it is--it represents a person's _full name_. I can push this bit of logic back to the `Person` class itself. This also gives me the opportunity to name it something meaningful. 
 
 ```C#
 public string FullName
@@ -113,8 +104,7 @@ public string AbbreviatedName
   }
 }
 ```
-Back to the view example, I can move the check for whether this person is an admin or owner as a property of the object itself, and give it a meaningful name. In this case, the check is answering the question, "Does this person have administrative access?". `HasAdminAccess` is a sound name.
-
+Back to the profile template, I can move the check for whether a person is an admin or owner as a property of the object itself, and give it a meaningful name. In this case, the check is answering the question, "Does this person have administrative access?". `HasAdminAccess` is a sound name.
 ```C#
 public bool HasAdminAccess
 {
@@ -239,6 +229,4 @@ It's not a bad option--it replaces the business logic (`MinutesIdle > 60`) with 
 
 The best part of this work is that, once you get accustomed to the game, it's not a heavy effort. You can make these simple refactorings quickly and you can stop whenever the time you've devoted is up (or your manager's come back from lunch).
 
-Keep hunting for places where you can corral bits of logic back into the objects they're derived from. It will do wonders to the clarity of your code.
-
-_By the way, if you are familiar with the "anemic domain model" anti-pattern, what I've described in this chapter is essentially an approach to circumventing this. This is a phrase first introduced by Martin Fowler, one of my favorite technical authors. If you've never read his take, [I recommend taking a few minutes to read it](https://www.martinfowler.com/bliki/AnemicDomainModel.html)._ 
+Keep hunting for places where you can corral bits of logic into meaningful names, whether as standalone properties or back into the objects they derived from. It will do wonders to the clarity of your code.
