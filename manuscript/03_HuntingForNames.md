@@ -1,6 +1,6 @@
 # Hunting For Names
 
-We all have this fantasy of devoting an entire week to just cleaning up code. But, that wouldn't sit well with exactly 99% of managers and 100% of clients out there. The fact is, we have to clean up--surreptitiously--as we go. 
+I'm sure you've had dreams of devoting an entire week to just cleaning up code for a work project. But, that wouldn't sit well with exactly 99% of managers and 100% of clients out there. The fact is, we have to clean up--surreptitiously--as we go. 
 
 The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is one of the simplest: _Find_ things to name. Look for bits of exposed logic you can define with a name, then replace the logic with the name. 
 
