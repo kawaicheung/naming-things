@@ -12,11 +12,13 @@ On the new DoneDone, I notice a conditional on a Vue element that looks like thi
 ```
 If you're unfamiliar with Vue's syntax, no big deal. the `v-if` attribute is Vue syntax that works just like a normal `if` statement. On an HTML element, it determines if that element should be rendered. In this case, I have a `<div>` element that I only want to show if the statement `!['xs', 'sm', 'md'].includes($mq)` is true.
 
-When you scan this statement, it looks complicated. 
+But, when you scan this statement, it looks complicated. 
 
 What does this mess mean? Well, it evaluates to `true` if the "extra small", "small", or "medium" media query breakpoints are not hit based on the size of the browser. Put more simply, it checks that the current browser width is sized at least to the width of a normal desktop screen.
 
-I can spot a line of code like this from a mile away--a messy, overly technical bit of code lying inside a conditional. I often write code like this on a feature's first pass, when I'm just trying to get the feature to work right. But, if I fail to make a second pass of my code, then stuff like this is left polluting my code. It's that second pass where I get to put a name to a piece of logic, where I get to say _what_ rather than _how_ that improves the code dramatically. 
+I can spot a line of code like this from a mile away--a messy, overly technical bit of code lying inside a conditional. I often write code like this on a feature's first pass, when I'm just trying to get the feature to work right. But, if I never make a second pass after I've tested that it works, then stuff like this pollutes my code. Code quickly gets ugly.
+
+It's that second pass where I get to put a name to a piece of logic, where I get to say _what_ rather than _how_ that improves the code dramatically. 
 
 I can quickly fix this line by defining the mess with a meaningful name. 
 ```TypeScript
