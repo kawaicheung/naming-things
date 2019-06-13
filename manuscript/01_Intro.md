@@ -52,7 +52,7 @@ And though there are no metrics for good names, it deserves as much attention as
 
 On the other hand, there's an immediate payoff to a codebase with good names. They are the first things a programmer sees when digging into new code. They make your code more approachable. You can change the name of something and instantly improve your codebase.
 
-This is a book about how names can impact how well our code reads. This isn't a "styleguide". For instance, I'm not going to tell you that all strings have to be prefaced by `str`. My hope is you can apply the thought process I went through in your own code, regardless of language or development environment.
+This is a book about how names can impact how well our code reads. This isn't a "styleguide". For instance, I'm not going to tell you that all strings have to be prefaced by `str` or camelCase is better than kebab-case. This is about adding meaning into the code we write, regardless of language or development environment.
 
 * * *
 
