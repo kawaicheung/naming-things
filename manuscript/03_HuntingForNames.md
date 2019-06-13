@@ -18,7 +18,7 @@ What does this mess mean? Well, it evaluates to `true` if the "extra small", "sm
 
 I can spot a line of code like this from a mile away--a messy, overly technical bit of code lying inside a conditional. I often write code like this on a feature's first pass, when I'm just trying to get the feature to work right. But, if I never make a second pass after I've tested that it works, then stuff like this pollutes my code. Code quickly gets ugly.
 
-It's that second pass where I get to put a name to a piece of logic, where I get to say _what_ rather than _how_ that improves the code dramatically. 
+It's that second pass where I get to put a name to a piece of logic. Where I get to say _what_ rather than _how_. Where the readability of code improves dramatically.
 
 I can quickly fix this line by defining the mess with a meaningful name. 
 ```TypeScript
