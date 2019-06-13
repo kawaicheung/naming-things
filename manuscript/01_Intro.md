@@ -24,7 +24,7 @@ Migrate is misleading. Using that word in the application copy might make custom
 
 I contemplate replacing _migration_ with _copy_. It's clear that copying doesn't mean removing the original. But, this isn't quite right either. As I mentioned earlier, this data transfer isn't a literal copy. There are some things that don't translate perfectly, or at all. Copying also seems like a fast, mindless operation--a simple `CTRL+C` `CTRL+V` exercise. That's not what this is.
 
-I told Mike about my conundrum. Immediately, he suggested using the word _import_ instead. Ah hah!
+I tell Mike about my conundrum. Immediately, he suggests using the word _import_ instead. Ah hah!
 
 There's a heftiness to the word _import_, isn't there? Whenever I think about importing data, I think metal gear icons spinning and CPU graphs spiking. Even when you import things in the real world, it has that same feeling of heft--huge cargo ships meandering across the ocean lugging thousands of tons of goods.
 
