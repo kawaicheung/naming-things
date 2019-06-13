@@ -10,7 +10,7 @@ For the next six days, I work away at this feature--the whole bit. I develop a s
 
 It's intense work but I get it all done and tested. Things go suprisingly smoothly for such a large addition.
 
-When the dust settles, I give my code another onceover--it's like re-reading a manuscript from the beginning again with a fresh set of eyes. You tend to pick out things you don't like about your code best that way.
+When the dust settles, I give my code another onceover--like re-reading a manuscript from the beginning again with a fresh set of eyes. You tend to pick out things you don't like about your code best that way.
 
 I always try to use the same terms when I write code as when I talk about a feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with the word _migration_ now. There's a `ClassicMigrator` project in my solution, methods named `QueueMigrationRequest()` and `MigrateClassicProjects()`, object properties like `EligibleForMigration` and `HasMigratableProjects`. There are models, views, and controllers with the derivatives of `Migrate` sprinkled around. The copy on the application uses the words _migrate_ and _migration_ too.
 
@@ -22,7 +22,7 @@ Migrate has this connotation that something is leaving one place to go to anothe
 
 Migrate is misleading. Using that word in the application copy might make customers apprehensive about their existing data. Using that word in code might confuse future developers.
 
-So, next, I think about replacing migration with _copy_. It's clear that copying doesn't mean removing the original. But, it isn't right either. As I mentioned, this data transfer isn't a literal copy. There are some things that don't translate perfectly, or at all. Copying also seems like a fast, mindless operation--a simple `CTRL+C` `CTRL+V` exercise. That's not what this is.
+So, next, I think about replacing migration with _copy_. It's clear that copying doesn't mean removing the original. But, this isn't quite right either. As I mentioned earlier, this data transfer isn't a literal copy. There are some things that don't translate perfectly, or at all. Copying also seems like a fast, mindless operation--a simple `CTRL+C` `CTRL+V` exercise. That's not what this is.
 
 I told Mike about my conundrum. Immediately, he suggested using the word _import_ instead. Ah hah!
 
