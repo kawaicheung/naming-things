@@ -6,6 +6,7 @@
 05_TheShapeOfCode.md
 NamingOpposites.md
 TautologousNameTrap.md
+DRYing_the_wrong_thing.md
 AbstractingTooSoon.md
 NamesAreFickle.md
 NamingToTeach.md
