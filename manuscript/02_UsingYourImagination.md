@@ -72,4 +72,6 @@ Ask me today what the class `EmailOfficer` does in the DoneDone codebase, and I 
 
 _sqs_courier? wrapper for pulling and adding things to the queue, better than 'helper' or 'manager' as it implies someone transporting things to and from.
 
+_permit_for.... (token stuff)
+
 _David Heinemeier Hannson goes through a similar exercise in his blog post "[Hunting for Great Names In Programming](https://medium.com/signal-v-noise/hunting-for-great-names-in-programming-16f624c8fc03)", where he discusses his naming choices for a module used to prevent specific IP addresses as user inputs. It's a great read._ 
