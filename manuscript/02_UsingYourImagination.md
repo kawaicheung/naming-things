@@ -2,19 +2,22 @@
 
 I think the term _object-oriented programming_ is a bit of a misnomer.
 
-Most objects don't have a direct representation in the physical world. Introductory textbooks on the subject all seem to use examples involving dogs, cats, and birds (or cars, boats, and planes) as a way of describing how to code classes and interfaces. But, unless you're a programmer at PetSmart, these aren't realistic examples.
+Most "objects" in code don't have a direct representation in the physical world. Introductory textbooks on the subject all seem to use examples involving dogs, cats, and birds (or cars, boats, and planes) as a way of describing how to code classes and interfaces. But, unless you're a programmer at PetSmart, these aren't realistic examples.
 
 We should call it _noun-oriented_ programming because a noun can be a person, place, thing, or idea. And most classes really are ideas...with functionality. 
 
 Classes manifest because a set of functions and properties all have a common purpose and we want to wrap them up in a neat little bundle. But, these classes don't always have an obvious physical translation. This is where wishy-washy names like `UserManager`, `MessagingHelper`, and `AppHandler` are born. 
 
-Working through a codebase littered with class names like these is a helpless feeling. When we're reading code, we have to dig more to figure out what these things actually mean. When we know there's some property or method we want to leverage, we have a harder time remembering where it lives. _Was it in the helper doohickey or in the other manager thingy?_
+Working through a codebase littered with class names is like working in a bloated organization where everyone is some form of middle-management. What exactly do you do, _Regional Account Manager Vice Principal_? When we're reading code, we have to dig more to figure out what these things actually mean. When we know there's some property or method out there we want to leverage, we have a harder time remembering where it lives. _Was it in the helper doohickey or in the other manager thingy?_
 
-There are ways around this. Generic names might be a sign that the guts of the class belong elsewhere. For instance, maybe the methods inside that `UserManager` can be moved into that `User` class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. Perhaps there are natural groupings inside that `AppHandler` class--one that handles initialization, one that handles routing, one that deals with exception handling, and so forth.
+There are ways around this. Generic names might be a sign that the guts of the class belong elsewhere. For instance, maybe the methods inside that `UserManager` can be moved into the `User` class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. Perhaps there are natural groupings inside that `AppHandler` class--one that handles initialization, one that handles routing, one that deals with exception handling, and so forth. More specific names can be derived from there.
 
-If it's neither of those cases, sometimes we just have to face the reality: A class can be hard to name because it does something that doesn't exist in the real world.
+If it's neither of those cases, sometimes we just have to face the reality: A class can be hard to name because it does something that doesn't easily translate in the real world. That's when a little imagination helps. Even when a class is responsible for something that only makes sense in your own code, there's usually some metaphorical noun we can apply to it to make it memorable, and make it easier to recall when you need to revisit the "object" again.
 
-That's when a little imagination helps.
+* * *
+
+I was looking at some 
+
 
 * * *
 
