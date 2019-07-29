@@ -86,11 +86,29 @@ The last hurdle, however, is a big one--what do I name this thing? My first atte
 * **Does this object really represent the encrypted token?** Kind of. It really represents the data within it along with the ability to produce the encrypted token. Calling it an `AuthToken` while also having a property with the name `EncryptedToken` is confusing. 
 * **What is it supposed to be used for?** In the lexicon of object naming, `AuthToken` is about as generic as `UserManager`.
 
-The problem is it's hard to think of a name for something like this. What thing in the real world is analagous to a piece of code that.... [finish]
+This isn't the right name. What comparable thing possibly exists in the real world like this? 
 
-[PERMIT!]
+I think about something that an authority creates for someone, and that person can later exchange for access to do whatever the authority agreed they can do. There's a quality of _redeeming_ this thing. 
+
+A _ticket_ comes to mind. But, that conjurs up thoughts of going to a sporting event or movie, as if there's a specific time and place to redeem it. Not quite right.
+
+A _permit_? Now that feels promising. A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a _permit_ is something given to you usually by a governing body, not your local movie theater or sporting venue. It doesn't evoke the excitement of having a "ticket". And, let's be honest, password resets and user registrations feel more like the DMV than a rock concert.
+
+I end up with the name `PermitForUserUpdate`. Implementing the class with this name feels right. It's memorable and even the method `IssuedWithinMinutes()` feels like such a natural method name. Permits in the real world are normally issued. Here's how I can validate a password reset permit hasn't expired yet.
+
+```C#
+
+var passwordResetPermit = new PermitForUserUpdate(encrypted_token);
+
+if (!passwordResetPermit.IssuedWithinMinutes(10))
+{
+  throw new Exception("This permit is expired!");
+}
+```
 
 ## The pigeon express
+
+Now for a second example.
 
 ## Let me...
 
