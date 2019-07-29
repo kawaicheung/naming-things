@@ -16,7 +16,77 @@ If it's neither of those cases, sometimes we just have to face the reality: A cl
 
 * * *
 
-I was looking at some 
+The other day, I was looking at some code I wrote awhile back that allows users to reset their password. As was usually the case, I grimaced at the look of the code in its current state. It wasn't horrendous, but there were clear signs a little rethinking could make things better.
+
+The way the reset password function works is not unlike most other apps: A user enters their email address in a "forgot password" form from the app. Then, they receive a link with an encrypted token in the querystring. The information inside the token determines whether the reset link is still valid and which user originally requested the reset.
+
+The way DoneDone handles encrypting and decrypting the token was untidy. The token was encrypted on one layer of the stack and decrypted on a completely different layer. Even further, the same token strategy was also used for completing a user's initial registration, but the encryption and decryption logic had been written twice. 
+
+After a bit of chin-scratching and experimentation, I determined the best refactoring was to wrap up this "token" concept in one object. Let the object handle both the encryption and decryption of the token. The guts of the object looked something like this. 
+
+_I've omitted the detail around how the encryption and decryption work since they are unimportant here._
+
+```C#
+public sealed class AuthToken
+{
+  private readonly DateTime _utc_date_issued;
+
+  public readonly int UserID;
+  public readonly string EmailAddress;
+  public readonly string EncryptedToken;
+
+  public AuthToken(int user_id, string email)
+  {
+    UserID = user_id;
+    EmailAddress = email.ToLower().Trim();
+    _utc_date_issued = DateTime.UtcNow;
+    EncryptedToken = // Omitted for simplicity...
+  }
+
+  public AuthToken(string encrypted_token)
+  {
+    try
+    {
+       // Omitted to save trees and unnecessary scrolling...
+       UserID = // Deduced from the token...
+       EmailAddress = // Deduced from the token...
+       _utc_date_issued = // Deduced from the token...
+    }
+    catch
+    {
+      throw new InvalidInput("This token could not be decrypted.");
+    }
+  }
+
+  public bool IssuedWithinMinutes(int minutes)
+  {
+    if (_utc_date_issued.AddMinutes(minutes) < DateTime.UtcNow)
+    {
+      return false;
+    }
+    
+    return true;
+  }
+}
+```
+
+Taking a quick walkthrough of this object, you'll notice that there are two constructors. One hydrates the properties of the object with a `user_id` and `email` of the user when a password reset (or registration completion request) is initiated. The timestamp of the token is the moment the object instance is created. 
+
+The other hydrates the same object after a user clicks on the emailed link. The token is decrypted and the same properties are deduced from the decryption process.
+
+The `IssueWithinMinutes` public method allows code elsewhere to decide whether to honor the request. For instance, we might set a password reset link to be valid for only ten minutes, whereas a user registration link could be valid for a few hours.
+
+I'm giddy with the promises of such an object. I'm able to cleanup some duplicate logic used by both the password reset and registration completion functionality. And, whereas the encryption and decryption process once lived in random helper methods on different layers of the stack, they now have a comfortable home.
+
+The last hurdle, however, is a big one--what do I name this thing? My first attempt of `AuthToken` was a half-hearted one to get something down just so I can finish the implementation. But, reading this back again, brings up all sorts of questions and lackluster answers.
+
+* **Does "Auth" mean "Authorization" or "Authentication"?** In this case, it kind of means _both_. That doesn't really help.
+* **Does this object really represent the encrypted token?** Kind of. It really represents the data within it along with the ability to produce the encrypted token. Calling it an `AuthToken` while also having a property with the name `EncryptedToken` is confusing. 
+* **What is it supposed to be used for?** In the lexicon of object naming, `AuthToken` is about as generic as `UserManager`.
+
+The problem is it's hard to think of a name for something like this. What thing in the real world is analagous to a piece of code that.... [finish]
+
+[PERMIT!]
 
 
 * * *
