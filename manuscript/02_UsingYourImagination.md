@@ -1,4 +1,4 @@
-# Using Your Imagination
+# Naming Objects with Imagination
 
 I think the term _object-oriented programming_ is a bit of a misnomer.
 
@@ -14,7 +14,9 @@ There are ways around this. Generic names might be a sign that the guts of the c
 
 If it's neither of those cases, sometimes we just have to face the reality: A class can be hard to name because it does something that doesn't easily translate in the real world. That's when a little imagination helps. Even when a class is responsible for something that only makes sense in your own code, there's usually some metaphorical noun we can apply to it to make it memorable, and make it easier to recall when you need to revisit the "object" again.
 
-* * *
+Here are three personal examples.
+
+## "May I see your ticket please?"
 
 The other day, I was looking at some code I wrote awhile back that allows users to reset their password. As was usually the case, I grimaced at the look of the code in its current state. It wasn't horrendous, but there were clear signs a little rethinking could make things better.
 
@@ -88,8 +90,9 @@ The problem is it's hard to think of a name for something like this. What thing 
 
 [PERMIT!]
 
+## The pigeon express
 
-* * *
+## Let me...
 
 In a DoneDone project, whenever issues are added or updated, the app assembles email objects and pushes them to a queue, each object representing a single email that should be sent to a user. A separate messaging service takes care of popping these objects off of the queue and delivering the messages.
 
@@ -103,7 +106,7 @@ You see, by default, anyone assigned to or mentioned on the issue receives an em
 
 So whenever an issue is added or updated, these extra notification settings need to be accounted for before the email objects are pushed to the queue.
 
-You can imagine coding a straightforward implementation of this: You query the database for all  custom notification settings for users in this project and store the information in some lists. For instance, you could have three lists that each represent one of the options above, containing the user IDs that opted into each one. Then, at the point in code where these issue emails are assembled, you would reference these lists to decide which users to suppress and which additional users to add, just before they're sent to the email queue.
+You can imagine coding a straightforward implementation of this: You query the database for all custom notification settings for users in this project and store the information in some lists. For instance, you could have three lists that each represent one of the options above, containing the user IDs that opted into each one. Then, at the point in code where these issue emails are assembled, you would reference these lists to decide which users to suppress and which additional users to add, just before they're sent to the email queue.
 
 This is precisely the approach I took. 
 
