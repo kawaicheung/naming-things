@@ -83,7 +83,7 @@ I'm giddy with the promises of such an object. I'm able to cleanup some duplicat
 The last hurdle, however, is a big one--what do I name this thing? My first attempt of `AuthToken` was a half-hearted one to get something down just so I can finish the implementation. But, reading this back again, brings up all sorts of questions and lackluster answers.
 
 * **Does "Auth" mean "Authorization" or "Authentication"?** In this case, it kind of means _both_. That doesn't really help.
-* **Does this object really represent the encrypted token?** Kind of. It really represents the data within it along with the ability to produce the encrypted token. Calling it an `AuthToken` while also having a property with the name `EncryptedToken` is confusing. 
+* **Does this object really represent the encrypted token?** Kind of. It really represents the encrypted token _in addition to_ the data the token represents. Calling it an `AuthToken` while also having a property with the name `EncryptedToken` is confusing. It's more than just the token. It's easy to get into the trap of naming an object on only part of its reason for being.
 * **What is it supposed to be used for?** In the lexicon of object naming, `AuthToken` is about as generic as `UserManager`.
 
 This isn't the right name. What comparable thing possibly exists in the real world like this? 
