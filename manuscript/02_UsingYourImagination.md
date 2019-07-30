@@ -92,7 +92,9 @@ I think about something that an authority creates for someone, and that person c
 
 A _ticket_ comes to mind. But, that conjurs up thoughts of going to a sporting event or movie, as if there's a specific time and place to redeem it. Not quite right.
 
-A _permit_? Now that feels promising. A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a _permit_ is something given to you usually by a governing body, not your local movie theater or sporting venue. It doesn't evoke the excitement of having a "ticket". And, let's be honest, password resets and user registrations feel more like the DMV than a rock concert.
+A _permit_? Now that feels promising. A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a _permit_ is something given to you usually by a governing body, not your local movie theater or sporting venue. 
+
+It doesn't evoke the excitement of having a "ticket". And, let's be honest, password resets and user registrations feel more like the DMV than a rock concert. If you're going to name something unconventional, it's better to have the name provoke similar feelings.
 
 I end up with the name `PermitForUserUpdate`. Implementing the class with this name feels right. It's memorable and even the method `IssuedWithinMinutes()` feels like such a natural method name. Permits in the real world are normally issued. Here's how I can validate a password reset permit hasn't expired yet.
 
@@ -108,7 +110,11 @@ if (!passwordResetPermit.IssuedWithinMinutes(10))
 
 ## The pigeon express
 
-Now for a second example.
+I did another refactoring recently prior to adding some new functionality to DoneDone. I ran into that similar problem of a beautiful object lacking a meaningful name.
+
+My refactoring was an extraction of a part of the process we use to deliver emails. 
+
+[hmm we talk about queues below. should i do this last so we already introduced queues...or probably move that first paragraph up here and rework the intro to the last example]
 
 ## Let me...
 
