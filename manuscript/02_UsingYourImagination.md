@@ -22,9 +22,9 @@ The other day, I was looking at some code I wrote awhile back that allows users 
 
 The way the reset password function works is not unlike most other apps: A user enters their email address in a "forgot password" form from the app. Then, they receive a link with an encrypted token in the querystring. The information inside the token determines whether the reset link is still valid and which user originally requested the reset.
 
-The way DoneDone handles encrypting and decrypting the token was untidy. The token was encrypted on one layer of the stack and decrypted on a completely different layer. Even further, the same token strategy was also used for completing a user's initial registration, but the encryption and decryption logic had been written twice. 
+The token was encrypted on one layer of the stack and decrypted on a completely different layer. Even further, the same token strategy was also used for completing a user's initial registration, but the encryption and decryption logic had been written twice. The code for encrypting, decrypting, and evaluating the token was spread in a few too many places. 
 
-After a bit of chin-scratching and experimentation, I determined the best refactoring was to wrap up this "token" concept in one object. Let the object handle both the encryption and decryption of the token. The guts of the object looked something like this. 
+After a bit of chin-scratching and experimentation, I determined the best refactoring was to wrap up this "token" concept in one object. Let the object handle both the encryption and decryption of the token. I got to a place I was very happy with--the guts of the object looked something like this. 
 
 _I've omitted the detail around how the encryption and decryption work since they are unimportant here._
 
