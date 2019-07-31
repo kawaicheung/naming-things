@@ -110,11 +110,13 @@ if (!passwordResetPermit.IssuedWithinMinutes(10))
 
 ## The pigeon express
 
-I did another refactoring recently prior to adding some new functionality to DoneDone. I ran into that similar problem of a beautiful object lacking a meaningful name.
+When you add a comment in DoneDone, we may send out several email notifications, add alerts to user notification lists, and post a Slack message. But, none of that stuff has to be done the moment you press "Add". To keep the app as scalable as possible, we use a queue service to push off the work that doesn't have to be done in sync with a request. This keeps things speedy on the app-side. 
 
-My refactoring was an extraction of a part of the process we use to deliver emails. 
+I have some code that pushes and pulls objects off of these various queues. The app might push a `Messaging` object in response to a comment, and a few moments later, a worker process somewhere else is pulling that object off the queue and handing it off to another process to ship emails or send Slack messages.
 
-[hmm we talk about queues below. should i do this last so we already introduced queues...or probably move that first paragraph up here and rework the intro to the last example]
+Up until now, the queue code was baked into the same namespace as the email and notification shipping code because it didn't need to be anywhere else. But, recently, I added a new and unrelated feature that seemed like a perfect fit to re-introduce the queue concept.
+
+[Continue]
 
 ## Let me...
 
