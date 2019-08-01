@@ -12,22 +12,38 @@ Each of these email groups are treated differently for a few tactical reasons.
 
 One reason is the order of the services we try to send out these emails. There are three different ways we attempt to send out emails. If, on the very rare occasion, an email service is down, the system will try the next service, and the following service. 
 
-Specifically, we can send email through a service called Postmark. The beauty of Postmark is these emails are logged for a certain period of time, so we can see exactly that the email has been sent and the content of those emails. The other benefit is Postmark will handle all the deliverability issues involved with sending emails from a custom domain that doesn't belong to us. They take care of all the icky DNS setup through a simple verification process. The downside is it's more expensive per send than our other options.
-
-The second service is through AWS's simple email service (SES). It's cheaper per email than Postmark and gives us basic global metrics (like bounce and deliverability rates), but it doesn't log emails so we can't review the contents nor can we 100% guarantee the emails were ultimately delivered.
-
-The final approach is through a local SMTP server sitting on our own internal network. It's the worst of all options because there's no out-of-the-box logging of anything. That's why it's a last resort option for us--and the odds of the first two services both failing are exceedingly rare.
+* First, we can send email through a service called Postmark. The beauty of Postmark is these emails are logged for a certain period of time, so we can see exactly that the email has been sent and the content of those emails. The other benefit is Postmark will handle all the deliverability issues involved with sending emails from a custom domain that doesn't belong to us. They take care of all the icky DNS setup through a simple verification process. The downside is it's more expensive per send than our other options.
+* The second service is through AWS's simple email service (SES). It's cheaper per email than Postmark and gives us basic global metrics (like bounce and deliverability rates), but it doesn't log emails so we can't review the contents nor can we 100% guarantee the emails were ultimately delivered.
+* The final approach is through a local SMTP server sitting on our own internal network. It's the worst of all options because there's no out-of-the-box logging of anything. That's why it's a last resort option for us--and the odds of the first two services both failing are exceedingly rare.
 
 Given our three use cases, I apply a unique order to the email services we try when sending email.
 
-With in-app emails, we try AWS first, then try Postmark, then resort to our local SMTP. Why? Well, All in-app emails are sent from donedone.com, so there's no need to allow for custom domains. Secondly, in-app emails are sent very often -- we're saving money by using the AWS solution first.
+* With in-app emails, **we try AWS first**, then try Postmark, then resort to our local SMTP. Why? Well, all in-app emails are sent from donedone.com, so there's no need to allow for custom domains. Secondly, in-app emails are sent very often -- we're saving money by using the AWS solution first. It makes more business sense for us to use AWS first.
+* With system emails, **we try Postmark first**, then AWS, then resort to our local SMTP. Why? System emails aren't sent nearly as often as our in-app emails, so cost is much less of an issue. On the other hand, the system emails are critical to our business -- if a user can't reset their password or register because email delivery failed, that's a big deal. Since Postmark logs the contents of the emails, we can better assist the occasional customer that write us because they never received an email. It makes more business sense for us to use Postmark first.
+* With external emails, **we also try Postmark first**, then AWS, then resort to our local SMTP. Why? This allows our customers to use their own custom domain as the "from" address of emails they send out to their customers -- who likely have no idea what DoneDone is. On the rare occasion this fails, we'll try AWS (using a donedone.com address as the from address) and then local SMTP.
 
-With system emails, we try Postmark first, then AWS, then resort to our local SMTP. Why?
+Naturally, I ended up making two methods that controlled the sending order of emails and applied them to their requisite use cases. I had originally written one for in-app emails...
 
-1) Try Postmark, then try AWS, then resort to our local SMTP.
-2) 
+```C#
+public void SendInAppEmails(...)
+{
+  // Attempt to send via AWS first, then Postmark, then local SMTP...
+}
+```
 
+...then one for external emails.
 
+```C#
+public void SendExternalUserEmails(...)
+{
+  // Attempt to send via Postmark first, then AWS, then local SMTP...
+}
+```
+
+Notice that the system emails use the same exact methodology as the external emails. So, from a technical vantage point, it made complete sense to leverage that method again.
+
+[Show representative code snippet]
+[Explain the rub...and how i couldn't figure out how to fix this because it technically made sense to re-leverage this...otherwise i'd be either duplicating the logic out or needlessly wrapping... but this is worthwhile for the logical sense]
 
 
 https://www.sandimetz.com/blog/2016/1/20/the-wrong-abstraction
