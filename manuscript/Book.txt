@@ -4,6 +4,7 @@
 03_HuntingForNames.md
 04_SurfacingMethodParameters.md
 05_TheShapeOfCode.md
+0_TheWrongAbstraction.md
 NamingOpposites.md
 TautologousNameTrap.md
 DRYing_the_wrong_thing.md
