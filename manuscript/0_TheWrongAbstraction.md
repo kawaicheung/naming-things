@@ -1,3 +1,5 @@
+# The Wrong Abstraction
+
 You've probably noticed by now that a large number of examples I discuss in this book started from refactorings. It makes sense. Refactorings aren't just about shifting code around and removing duplicate bits of logic, they can also fundamentally change the meaning of changed objects and methods. That's why the names have to change.
 
 We have to be careful though. Sometimes a refactoring makes technical sense but not logical sense. I want to talk about a refactoring I did once that, honestly, bothered me for _years_. It always felt off to me but I couldn't articulate why. I couldn't easily spot the problem because the technical rework was completely correct.
