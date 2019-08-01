@@ -80,7 +80,9 @@ The `IssueWithinMinutes` public method allows code elsewhere to decide whether t
 
 I'm giddy with the promises of such an object. I'm able to cleanup some duplicate logic used by both the password reset and registration completion functionality. And, whereas the encryption and decryption process once lived in random helper methods on different layers of the stack, they now have a comfortable home.
 
-The last hurdle, however, is a big one--what do I name this thing? My first attempt of `AuthToken` was a half-hearted one to get something down just so I can finish the implementation. But, reading this back again, brings up all sorts of questions and lackluster answers.
+The last hurdle, however, is a big one--what do I name this thing? This "object" is not a dog or cat. I don't really know what this thing is. 
+
+My first attempt of `AuthToken` was a half-hearted one to get something down just so I can finish the implementation. But, reading this back again, brings up all sorts of questions and lackluster answers.
 
 * **Does "Auth" mean "Authorization" or "Authentication"?** In this case, it kind of means _both_. That doesn't really help.
 * **Does this object really represent the encrypted token?** Kind of. It really represents the encrypted token _in addition to_ the data the token represents. Calling it an `AuthToken` while also having a property with the name `EncryptedToken` is confusing. It's more than just the token. It's easy to get into the trap of naming an object on only part of its reason for being.
