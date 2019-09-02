@@ -1,0 +1,2074 @@
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Lora:400,400i,700,700i|Raleway:400,600,800|Roboto+Mono&display=swap" rel="stylesheet">
+	<link href="styles-2.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="menu">
+ <a href="">On Naming Things.</a>
+ <ul>
+    <li><a href="#ch-introduction">Introduction</a></li>
+    <li><a href="#ch-imagining-objects">Imagining Objects</a></li>
+    <li><a href="#ch-hunting-for-names">Hunting for Names</a></li>
+    <li><a href="#ch-surfacing-parameters">Surfacing Parameters</a></li>
+    <li><a href="#ch-shape-of-code">The Shape of Code</a></li>
+    <li><a href="#ch-naming-opposites">Naming Opposites</a></li>
+    <li><a href="#ch-tautologous-name-trap">The Tautologous Name Trap</a></li>
+    <li><a href="#ch-names-are-fickle">Names are Fickle</a></li>
+    <li><a href="#ch-abstracting-to-soon">Abstracting too Soon</a></li>
+    <li><a href="#ch-speaking-the-native-tongue">Speaking the Native Tongue</a></li>
+    <li><a href="#ch-naming-to-teach">Naming to Teach</a></li>
+    <li>Naming Completely?</li>
+    <li>Making Names Memorable?</li>
+    <li class="extended"><a href="#ch-acknowledgements">Acknowledgements</a></li>
+  </ul>
+</div>
+
+<div class="bookmark">
+</div>
+<div class="grid-cover">
+  <div class="cover">
+    <h1>On Naming Things.</h1>
+    <h2>A short book dedicated to one of coding's most elusive tasks.</h2>
+    <h3>By Ka Wai Cheung of <a href="https://www.donedone.com" target="_blank">DoneDone</a>.</h3>
+    <h4><a href="#" id="btn-cover-click">Start reading...</a></h4>
+  </div>  
+</div>
+
+<div class="chapter" id="ch-introduction">
+  <div class="grid-content">
+    <div class="content">
+      <h2>Introduction</h2>
+      <p class="emphasis">
+      Here's a little insight into what I'm thinking about when I write code.
+      </p>
+      <p>
+      So, I'm working on&mdash;what I'll call for now&mdash;a data migration feature. It's for a brand new version of an issue tracking and customer support tool called <a href="https://www.donedone.com">DoneDone</a>. For the majority of its life, I've been its sole developer. Being the lone developer on a product for this long has some drawbacks, but for someone like me, I crave this kind of quiet, sustained work&mdash;like a scupltor chiseling away endlessly at a large piece of stone. I get to be intimately familiar with the code. It becomes personal.
+      </p>
+      <p>
+      The goal of this feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call <em>Classic</em>) over to this new version. I wish I could tell you this is a simple mapping of database tables and columns from Classic over to the new version, but it's not. The new DoneDone is markedly different than its predecessor: Some data maps simply, other data requires some massaging, and some stuff simply can't be mapped at all.
+      </p>
+      <p>
+      For the next six days, I work away at this feature&mdash;the whole nine yards. I develop a screen to sign in to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On the backend, I work on a number of database updates to store these requests. I then write an out-of-band service that picks up these requests to perform the dirty work of moving this data over cleanly. There are other tangential pieces I build along the way, like emailing the requester when the migration is complete and broadcasting error notifications.
+      </p>
+      <p>
+      It's intense work but I get it all done and tested. Things go suprisingly smoothly for such a large addition.
+      </p>
+      <p>
+      When the dust settles, I give my code another onceover&mdash;like re-reading a manuscript from the beginning again with a fresh set of eyes. You tend to pick out things you don't like about your code best that way.
+      </p>
+      <p>
+      I always try to use the same terms when I write code as when I <em>talk</em> about a feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with the word <em>migration</em> now.
+      </p><ul>
+        <li>There's a <code>ClassicMigrator</code> project in my solution.</li>
+      <li>Methods named <code>QueueMigrationRequest()</code> and <code>MigrateClassicProjects()</code>.</li>
+      <li>Class properties like <code>EligibleForMigration</code> and <code>HasMigratableProjects</code>.</li>
+      <li>There are models, views, and controllers with every derivative of <em>Migrate</em> sprinkled around. The copy on the application uses the words <em>migrate</em> and <em>migration</em> too.
+      </li>
+      </ul>
+      <p>
+      <strong>On this re-read, however, the word is really eating at me</strong>. Mike (my business partner) and I have been using the word "migration" in reference to this feature the whole time. It's an important word to get right. 
+      </p>
+      <p>
+      Sometimes you use a word so much that you no longer think about what it actually means; You just know what it's <em>supposed</em> to mean. Here's the problem: We aren't actually migrating data. 
+      </p>
+      <p>
+      Migrate has this connotation that something is leaving one place to go to another, like a flock of birds migrating south for the winter. In our case, data isn't leaving the Classic version. That data is still there&mdash;untouched&mdash;after the migration. I wrote it this way so existing customers can try the new system using their existing data, but if they don't like it, they can just go back to Classic.
+      </p>
+      <p>
+      Migrate is misleading. Using that word in the application copy might make customers apprehensive about their existing data. Using that word in code might confuse future developers.
+      </p>
+      <p>
+      I contemplate replacing <em>migration</em> with <em>copy</em>. It's clear that copying doesn't mean removing the original. But, this isn't quite right either. As I mentioned earlier, this data transfer isn't a literal copy. There are some things that don't translate perfectly, or at all. Copying also seems like a fast, mindless operation&mdash;a simple 
+      <span class="key">CTRL</span>+<span class="key">C</span> <span class="key">CTRL</span>+<span class="key">V</span> exercise. That's not what this is.
+      </p>
+      <p>
+      I tell Mike about my conundrum. Immediately, he suggests using the word <em>import</em> instead. Ah hah!
+      </p>
+      <p>
+      There's a heftiness to the word <em>import</em>, isn't there? Whenever I think about importing data, I think of metal gear icons spinning and CPU graphs spiking. Even when you import things in the real world, it has that same feeling of heft&mdash;huge cargo ships meandering across the ocean lugging thousands of tons of goods.
+      </p>
+      <p>
+      And unlike migrate, the word import doesn't feel like data is leaving one place and going to another. In the technical sense, I think of importing data from a file I've uploaded, where I know that data isn't being removed from the file. I also don't necessarily expect this one-to-one mapping between my data and the imported data. Import seems like the perfect word to use.
+      </p>
+      <p>
+      So, I end up substituting <em>migrate</em>, and all its various derivatives, with <em>import</em>.
+      </p>
+      <hr />
+      <p>
+      I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. Finding that just-right name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
+      </p>
+      <p>
+      My obsession with naming started from a quote I read some time ago. If you've written code long enough, there's a good chance you've heard it as well.
+      </p>
+      <blockquote>
+      &ldquo;There are only two hard things in Computer Science: cache invalidation and naming things.&rdquo;
+      </blockquote>
+      <div class="quoter">
+        Phil Karlton
+      </div>
+      <p>
+      Karlton was a developer at Netscape back in its heyday. I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
+      </p>
+      <p>
+      Exactly when I first heard it, I do not recall&mdash;I just remember chuckling to myself. First, because I can think of many things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming as a difficult exercise.
+      </p>
+      <p>
+      Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. So, how do you name things well? Unlike so many other things in programming, a bad name won't be caught by the compiler. There are no metrics for naming. A bad name won't break your code. A good name won't speed up your build.
+      </p>
+      <p>
+      Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics. It is, in my humble opinion, the most non-technical of technical subjects. Naming is an art. Good naming has a whole lot of subjectivity.
+      </p>
+      <p>
+      And though there are no metrics for good names, it deserves as much attention as all the other skills we preach in programming&mdash;like good architecture, writing "clean code", or rigid testing. While all the other best practices are critical, they share the common drawback that you cannot see these things right away. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
+      </p>
+      <p>
+      On the other hand, there's an immediate payoff to a codebase with good names. They are the first things a programmer sees when digging into new code. They make your code more approachable. You can change the name of something and instantly improve your codebase.
+      </p>
+      <p>
+      This book isn't a "styleguide". For instance, I'm not going to tell you that all strings have to be prefaced by <code>str</code> or <code>camelCase</code> is better than <code>kebab-case</code>. This book is about how names can influence how well our code reads&mdash;sometimes in surprising ways&mdash;regardless of the languages, tools, or development environment you use.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="chapter" id="ch-imagining-objects">
+  <div class="grid-content">
+    <div class="content">
+      <h2>Imagining Objects</h2>
+      <p class="emphasis">
+      The term <em>object-oriented programming</em> is misleading.
+      </p><p>
+      Most "objects" in code don't have a direct representation in the physical world. Introductory textbooks on the subject all seem to use examples involving dogs, cats, and birds (or cars, boats, and planes) as a way of describing how to code classes and interfaces. But, unless you're a programmer at PetSmart, these aren't realistic examples.
+      </p><p>
+      We should call it <em>noun-oriented</em> programming because a noun can be a person, place, thing, or idea. And most classes really are ideas...with functionality. 
+      </p><p>
+      Classes manifest because a set of functions and properties all have a common purpose and we want to wrap them up in a neat little bundle. But, these classes don't always have an obvious physical translation. This is where wishy-washy names like <code>UserManager</code>, <code>MessagingHelper</code>, and <code>AppHandler</code> are born. 
+      </p><p>
+      Working through a codebase littered with class names is like working in a bloated organization where everyone is some form of middle-management. What exactly do you do, <em>Regional Account Manager Vice Principal</em>? When we're reading code, we have to dig more to figure out what these things actually mean. When we know there's some property or method out there we want to leverage, we have a harder time remembering where it lives. <em>Was it in the helper doohickey or in the other manager thingy?</em>
+      </p>
+      <p>
+There are ways around this. Generic names might be a sign that the guts of the class belong elsewhere. For instance, maybe the methods inside that <em>UserManager</em> can be moved into the <em>User</em> class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. Perhaps there are natural groupings inside that <code>AppHandler</code> class--one that handles initialization, one that handles routing, one that deals with exception handling, and so forth. More specific names can be derived from there.
+</p>
+<p>
+If it's neither of those cases, sometimes we just have to face the reality: A class can be hard to name because it does something that doesn't easily translate in the real world. That's when a little imagination helps. Even when a class is responsible for something that only makes sense in your own code, there's usually some metaphorical noun we can apply to it to make it memorable, and make it easier to recall when you need to revisit the "object" again.
+</p>
+<p>
+Here's an example.
+</p>
+<h3>May I see your ticket please?</h3>
+<p>
+The other day, I was looking at some code I wrote awhile back that allows users to reset their password. As was usually the case, I grimaced at the look of the code in its current state. It wasn't horrendous, but there were clear signs a little rethinking could make things better.
+</p><p>
+The way the reset password function works is not unlike most other apps: A user enters their email address in a "forgot password" form from the app. Then, they receive a link with an encrypted token in the querystring. The information inside the token determines whether the reset link is still valid and which user originally requested the reset.
+</p><p>
+The token was encrypted on one layer of the stack and decrypted on a completely different layer. Even further, the same token strategy was also used for completing a user's initial registration, but the encryption and decryption logic had been written twice. The code for encrypting, decrypting, and evaluating the token was spread in a few too many places. 
+</p> <p>
+      After a bit of chin-scratching and experimentation, I determined the best refactoring was to wrap up this "token" concept in one object. Let the object handle both the encryption and decryption of the token. I got to a place I was very happy with&mdash;the guts of the object looked something like this. 
+      </p>
+    </div>
+  </div>
+  <div class="grid-right-code">
+    <div class="content">
+      <p>
+      <em>I've omitted the detail around how the encryption and decryption work since they are unimportant here.</em>
+      </p>
+      <p>
+Taking a quick walkthrough of this object, you'll notice that there are two constructors. One hydrates the properties of the object with a <code>user_id</code> and <code>email</code> of the user when a password reset (or registration completion request) is initiated. The timestamp of the token is the moment the object instance is created. 
+</p><p>
+The other hydrates the same object after a user clicks on the emailed link. The token is decrypted and the same properties are deduced from the decryption process.
+</p><p>
+The <code>IssueWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request. For instance, we might set a password reset link to be valid for only ten minutes, whereas a user registration link could be valid for a few hours.
+</p>
+    </div>
+    <div class="code-block">
+<pre>
+public sealed class AuthToken
+{
+  private readonly DateTime _utc_date_issued;
+
+  public readonly int UserID;
+  public readonly string EmailAddress;
+  public readonly string EncryptedToken;
+
+  public AuthToken(int user_id, string email)
+  {
+    UserID = user_id;
+    EmailAddress = email.ToLower().Trim();
+    _utc_date_issued = DateTime.UtcNow;
+    EncryptedToken = // Omitted for simplicity...
+  }
+
+  public AuthToken(string encrypted_token)
+  {
+    try
+    {
+       // Omitted to save trees and unnecessary scrolling...
+       UserID = // Deduced from the token...
+       EmailAddress = // Deduced from the token...
+       _utc_date_issued = // Deduced from the token...
+    }
+    catch
+    {
+      throw new InvalidInput("This token could not be decrypted.");
+    }
+  }
+
+  public bool IssuedWithinMinutes(int minutes)
+  {
+    if (_utc_date_issued.AddMinutes(minutes) < DateTime.UtcNow)
+    {
+      return false;
+    }
+    
+    return true;
+  }
+}
+</pre>
+    </div>
+  </div>
+<div class="grid-content">
+  <div class="content">
+    <p>
+    I'm giddy with the promises of such an object. I'm able to cleanup some duplicate logic used by both the password reset and registration completion functionality. And, whereas the encryption and decryption process once lived in random helper methods on different layers of the stack, they now have a comfortable home.
+    </p>
+    <p>
+The last hurdle, however, is a big one&mdash;what do I name this thing? This "object" is not a dog or cat. I don't really know what this thing is. 
+</p><p>
+My first attempt of <code>AuthToken</code> was a half-hearted one to get something down just so I can finish the implementation. But, reading this back again, brings up all sorts of questions and lackluster answers.
+</p>
+<ul>
+  <li><strong>Does "Auth" mean "Authorization" or "Authentication"?</strong> In this case, it kind of means _both_. That doesn't really help.</li>
+<li><strong>Does this object really represent the encrypted token?</strong> Kind of. It really represents the encrypted token <em>in addition to</em> the data the token represents. Calling it an <code>AuthToken</code> while also having a property with the name <code>EncryptedToken</code> is confusing. It's more than just the token. It's easy to get into the trap of naming an object on only part of its reason for being.
+</li>
+<li><strong>What is it supposed to be used for?</strong> In the lexicon of object naming, <code>AuthToken</code> is about as generic as <code>UserManager</code>.
+</li>
+</ul>
+<p>
+This isn't the right name. What comparable thing possibly exists in the real world like this? 
+</p><p>
+I think about something that an authority creates for someone, and that person can later exchange for access to do whatever the authority agreed they can do. There's a quality of <em>redeeming</em> this thing. 
+</p><p>
+A <em>ticket</em> comes to mind. But, that conjurs up thoughts of going to a sporting event or movie, as if there's a specific time and place to redeem it. Not quite right.
+</p><p>
+A <em>permit</em>? Now that feels promising. A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a permit is something given to you usually by a governing body, not your local movie theater or sporting venue. 
+</p><p>
+It doesn't evoke the excitement of having a "ticket". And, let's be honest, password resets and user registrations feel more like the DMV than a rock concert. If you're going to name something unconventional, it's better to have the name provoke similar feelings.
+</p>
+</div>
+</div>
+<div class="grid-right-code">
+  <div class="content">
+    <p>
+    I end up with the name <code>PermitForUserUpdate</code>. Implementing the class with this name feels right. It's memorable and even the method <code>IssuedWithinMinutes()</code> feels like such a natural method name. Permits in the real world are normally issued. 
+    </p>
+ </div>
+ <div class="code-block">
+  <pre>
+public sealed class <em>PermitForUpdate</em>
+{
+  private readonly DateTime _utc_date_issued;
+
+  public readonly int UserID;
+  public readonly string EmailAddress;
+  ...
+}
+  </pre>
+  </div>
+</div>
+<div class="grid-content">
+  <div class="content">
+<p>
+Here's how I can validate a password reset permit hasn't expired yet.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+<div class="code-block">
+  <pre>
+var passwordResetPermit = new PermitForUserUpdate(encrypted_token);
+
+if (!passwordResetPermit.IssuedWithinMinutes(10))
+{
+  throw new Exception("This permit is expired!");
+}</pre>
+</div>
+</div>
+</div>
+
+
+<div class="chapter" id="ch-hunting-for-names">
+  <div class="grid-content">
+    <div class="content">
+    <h2>Hunting For Names</h2>
+<p class="emphasis">
+I'm sure you've had dreams of devoting an entire week to just cleaning up code for a work project.</p>
+<p>But, that wouldn't sit well with exactly 99% of managers and 100% of clients out there. The fact is, we have to clean up&mdash;surreptitiously&mdash;as we go.</p>
+<p>
+The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is one of the simplest: <em>Find</em> things to name. Look for bits of exposed logic you can define with a name, then replace the logic with the name. 
+</p>
+<p>
+On the new DoneDone, I notice a conditional on a Vue.js element that looks like this:
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+&lt;div v-if="!['xs', 'sm', 'md'].includes($mq)"&gt;
+    ...
+&lt;/div&gt;</pre>
+</div>
+</div>
+ <div class="grid-content">
+    <div class="content">
+      <p>
+If you're unfamiliar with Vue's syntax, no big deal. the <code>v-if</code> attribute is Vue syntax that works just like a normal <code>if</code> statement, with a Typescript expression inside of it. On an HTML element, it determines if that element should be rendered. In this case, I have a <code>&lt;div&gt;</code> element that I only want to show if the Typescript statement <code>!['xs', 'sm', 'md'].includes($mq)</code> is true.
+</p>
+<p>
+But, when you scan this statement, it just looks complicated. 
+</p>
+<p>
+What does this mess mean? Well, it evaluates to <code>true</code> if the "extra small", "small", or "medium" media query breakpoints are not hit based on the size of the browser. Put more simply, <em>it checks that the current browser width is sized at least to the width of a normal desktop screen</em>.
+</p>
+<p>
+I can quickly fix this line by defining the mess with a meaningful name.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+isDesktopWidth(): boolean {
+  return !['xs', 'sm', 'md'].includes(this.$mq)
+}
+</pre>
+</div>
+</div>
+ <div class="grid-content">
+    <div class="content">
+      <p>
+And, now I get the satisfaction of cleaning up my original code with something so much more approachable.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+&lt;div v-if="isDesktopWidth"&gt;
+    ...
+&lt;/div&gt;</pre>
+</div>
+</div>
+ <div class="grid-content">
+    <div class="content">
+      <p>
+Not only does this read better, but I have a property I can potentially reuse again in other parts of my code.
+</p>
+<hr />
+<p>
+You can spot things like this from a mile away&mdash;a messy, overly technical bit of code lying around without a proper home. I often write code like this on the first pass, when I'm just trying to get a feature to work right. But, if I never make that second pass, after testing the code works, then code quickly gets ugly.
+</p><p>
+It's that second pass where I get to put a name to a piece of logic. Where I get to say <em>what</em> rather than <em>how</em>. Where the readability of code improves dramatically. This is among the most basic and important ways we can improve code.
+</p><p>
+Take a moment to look at your own code&mdash;especially in the "higher" areas of your stack where the semantics really <em>should</em> be more human-readable. You might be surprised how many bits of messy logic are sprinkled about that could be wrapped up into a meaningful name.
+</p>
+<h3>Empowering your objects</h3>
+<p>
+Now, logic bits don't always have to look overly technical to benefit from a name. 
+</p>
+<p>
+You may see business logic using the already well-named properties of an object. Even in these cases, there's usually a way to name that piece of logic and push it <em>back</em> into the class definition. 
+</p>
+
+</div>
+</div>
+<div class="grid-content">
+  <div class="content">
+    <p>
+For instance, I have a <code>Person</code> class that houses some basic information used throughout my codebase.
+</p>
+</div>
+</div>
+
+<div class="grid-code-only">
+ <div class="code-block">
+    <pre>
+public class Person
+{
+    public string FirstName;
+    public string LastName;
+    public DateTime LastAccessTimestamp;
+    public AccountRole Role;
+    
+    ...
+}
+</pre>
+</div>
+</div>
+
+ <div class="grid-content">
+    <div class="content">
+      <p>
+Instances of <code>Person</code> naturally spring up all over the place.
+</p>
+</div>
+</div>
+ <div class="grid-left-code">
+    <div class="content">
+     <p>
+For example, on a person's profile screen, I have an instance of <code>Person</code> named <code>authedPerson</code> used to display an authenticated user's name and a few links to other sections of the application they have access to, only if they are an admin or owner in the account.</p>
+</div>
+<div class="code-block">
+  <pre>
+&lt;div&gt;
+  &lt;h2&gt;@<em>authedPerson</em>.FirstName @<em>authedPerson</em>.LastName&lt;/h2&gt;
+  @if (<em>authedPerson</em>.Role == AccountRole.ADMIN || 
+       <em>authedPerson</em>.Role == AccountRole.OWNER)
+  {
+      &lt;a href="..."&gt;Edit&lt;/a&gt; | &lt;a href="..."&gt;Cancel&lt;/a&gt;
+  }
+&lt;/div&gt;
+</pre>
+</div>
+</div>
+ <div class="grid-content">
+    <div class="content">
+      <p>
+In another part of the application, I use a person's first name and last initial to prep notification messages when they update an issue.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+// e.g. "Mary D. updated the issue."
+var subject = person.FirstName + " " +  person.LastName.Substring(0,1) + "." + " updated the issue.";
+</pre>
+</div>
+</div>
+
+<div class="grid-right-code">
+    <div class="content">
+      <p>
+I also have a method inside of a security class that checks if a person has accessed the application within an hour. If not, I require them to log in again.
+</p>
+</div>
+   <div class="code-block">
+      <pre>
+if ((person.LastAccessTimestamp - DateTime.UtcNow).TotalMinutes > 60)
+{
+    // Log out and send to the login screen.
+}
+</pre>
+</div>
+</div>
+<div class="grid-content">
+    <div class="content">
+      <p>
+There are a handful of other occurences like the examples above, where little bits of business logic against a <code>Person</code>'s properties are sprinkled about. Most of these bits feel so inconsequentually minor&mdash;simple, one-line constructions and statements&mdash;you might not even consider them to be real business logic at all.
+</p>
+</div>
+</div>
+<div class="grid-right-code">
+  <div class="content">
+    <p>
+For instance, in the profile screen example, displaying a person's first and last name might not seem like <em>logic</em>, but it is&mdash;it represents a person's <em>full name</em>. I can push this bit of logic back to the <em>Person</em> class itself. This also gives me the opportunity to name it something meaningful. 
+</p>
+</div>
+<div class="code-block">
+  <pre>
+public string FullName
+{
+  get
+  {
+    return FirstName + " " + LastName;
+  }
+}</pre>
+</div>
+</div>
+<div class="grid-left-code">
+  <div class="content">
+    <p>
+Likewise, the same can be done for the person's name in the subject line of the notification message. I can call this an <em>abbreviated name</em>.
+</p>
+</div>
+<div class="code-block">
+  <pre>
+public string AbbreviatedName
+{
+  get
+  {
+    return FirstName + " " + LastName.Substring(0,1) + ".";
+  }
+}</pre>
+</div>
+</div>
+<div class="grid-right-code">
+  <div class="content">
+    <p>
+Back to the profile screen, I can move the check for whether a person is an admin or owner as a property of the <code>Person</code> class and, again, give it a meaningful name. In this case, the check is answering the question, "Does this person have administrative access?". <code>HasAdminAccess</code> is a sound name.
+</p>
+</div>
+<div class="code-block">
+  <pre>
+public bool HasAdminAccess
+{
+  get
+  {
+    return Role == AccountRoleType.ADMIN || Role == AccountRoleType.OWNER;
+  }
+}</pre>
+</div>
+</div>
+
+<div class="grid-content">
+    <div class="content">
+      <p>
+The logic against the <code>Person</code> object within the security class can be pushed back to the class in a couple of ways. Let's take a closer look at the conditional statement again.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+if ((person.LastAccessTimestamp - DateTime.Now).TotalMinutes > 60)...
+</pre>
+</div>
+</div>
+<div class="grid-content">
+    <div class="content">
+      <p>
+There are a few ways I could go about moving this logic. I could take this entire statement and turn it into a boolean property off <code>Person</code> like so:
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+public bool <em>HasPersonBeenIdleForMoreThan60Minutes</em>
+{
+  get
+  {
+    return person.LastLoggedIn - DateTime.Now).TotalMinutes > 60;
+  }
+}  
+</pre>
+</div>
+</div>
+<div class="grid-content">
+    <div class="content">
+      <p>
+This cleans up <em>all</em> of the logic from the security method. But, the name feels way too specific. If someone were just inspecting the <code>Person</code> class, they might ask why such a specific property exists. In addition, if I change the requirements around the idle time, I might easily forget to change the name of the property. I don't like this trade off.
+</p>
+</div>
+</div>
+
+<div class="grid-content">
+    <div class="content">
+      <p>
+I could push just the calculation of the idle minutes into the object.
+</p>
+</div>
+</div>
+
+<div class="grid-code-only">
+<div class="code-block">
+<pre>
+public int MinutesIdle
+{
+  get
+  {
+    return (person.LastAccessTimestamp - DateTime.Now).TotalMinutes;
+  }
+}</pre>
+</div>
+</div>
+
+<div class="grid-content">
+    <div class="content">
+      <p>
+Or, I could convert the logic to a method and allow the caller to pass in the time.
+</p>
+</div>
+</div>
+
+<div class="grid-code-only">
+<div class="code-block">
+<pre>
+public bool IdleLongerThanMinutes(int minutes)
+{
+  return (person.LastAccessTimestamp - DateTime.Now).TotalMinutes > minutes;
+}</pre>
+</div>
+</div>
+
+
+<div class="grid-right-code">
+    <div class="content">
+      <p>
+These two examples are both decent options. But, I like the first option&mdash;it feels more straightforward and slightly less awkward.
+</p>
+<p>
+With these updates, our <code>Person</code> class now evolves into something a lot more powerful. Here's what the full class now looks like with these additional, well-named properties.
+</p>
+</div>
+<div class="code-block">
+<pre>
+public class Person
+{
+    public string FirstName;
+    public string LastName;
+    public DateTime LastLoggedIn;
+    public AccountRoleType Role;
+    
+    public string FullName
+    {
+      get
+      {
+        return FirstName + " " + LastName;
+      }
+    }  
+    
+    public string AbbreviatedName
+    {
+      get
+      {
+        return FirstName + " " + LastName.Substring(0,1) + ".";
+      }
+    } 
+    
+    public bool HasAdminAccess
+    {
+      get
+      {
+        return Role == AccountRoleType.ADMIN || 
+               Role == AccountRoleType.OWNER;
+      }
+    } 
+    
+    public int MinutesIdle
+    {
+      get
+      {
+        return (person.LastAccessTimestamp - DateTime.Now).TotalMinutes;
+      }
+    } 
+    ...
+}</pre>
+</div>
+</div>
+<div class="grid-content">
+  <div class="content">
+    <p>
+By moving this logic into the <code>Person</code> class, it's now easier to DRY up my codebase. There will likely be other places that require displaying a person's full name or knowing whether they have administrative privileges. Those answers are already baked into the object itself.
+</p>
+</div>
+</div>
+<div class="grid-right-code">
+  <div class="content">
+    <p>
+And besides reuse, the biggest gain comes from the improved readability of my code. Here's how the improved implementations look like. In my HTML markup, the business logic below competes far less with the HTML around it.
+</p>
+</div>
+<div class="code-block">
+<pre>
+&lt;div&gt;
+  &lt;h2&gt;@authedPerson.FullName&lt;/h2&gt;
+  @if (authedPerson.HasAdminAccess)
+  {
+      &lt;a href="..."&gt;Edit&lt;/a&gt; | &lt;a href="..."&gt;Cancel&lt;/a&gt;
+  }
+&lt;/div&gt;</pre>
+</div>
+</div>
+<div class="grid-right-code">
+  <div class="content">
+    <p>
+The subject of the email notification can also be interpreted with one glance. You don't spend time focusing on the details of how the person's name is being displayed anymore.
+</p>
+</div>
+<div class="code-block">
+  <pre>
+var subject = person.AbbreviatedName + " added a comment";</pre>
+</div>
+</div>
+<div class="grid-right-code">
+  <div class="content">
+    <p>
+Finally, the conditional check on the person's login date can be understood instantly, instead of having to parse (even if for a brief moment) through the date math.
+</p>
+</div>
+<div class="code-block">
+  <pre>
+if (person.MinutesIdle > 60)
+{
+  // Log out and send to the login screen.
+}</pre>
+</div>
+</div>
+
+<div class="grid-content">
+  <div class="content">
+   <p>
+The best part of this work is that, once you get accustomed to the game, it's not a heavy effort. You can make these simple refactorings quickly and you can stop whenever the time you've devoted is up (or your manager's come back from lunch).
+</p>
+<p>
+  [TODO: Martin Fowler's anemic domain models.]
+
+</p>
+<p>
+Keep hunting for places where you can corral bits of logic into meaningful names, whether as standalone properties or back into the objects they derived from. It will do wonders to the clarity of your code.
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="chapter" id="ch-surfacing-parameters">
+  
+  <div class="grid-content">
+    <div class="content">
+      <h2>Surfacing Method Parameters</h2>
+      <p class="emphasis">
+        When you think about it, method calls are a syntactically odd-looking thing. 
+      </p>
+      <p>
+        The more parameters the method requires, the harder it is to understand what that method does without digging into its definition. 
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+void Update(int id, string name, string address, int status...</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Of course, we can get around this mess by rounding up all of these parameters into a single object, building up the object, and then passing that to the method. 
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+void Update(<em>UpdateParams params</em>) { ... }</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        While this acts as a nice tidying mechanism, it doesn't help you understand what the method actually <em>does</em>. This is when I like to look for ways I can push more meaning into the method name. 
+      </p>
+      <p>
+        I'll start with an example of a feature addition I'm working on for account cancellations in DoneDone. 
+      </p>
+      <hr />
+      <p>
+        For years, we've only allowed our customers the option to cancel an account immediately&mdash;it was instantaneous and irreversible. That worked for the vast majority of customers.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-right-code">
+    <div class="content">
+      <p>
+        I have a method off of a billing repository class that's responsible for invoking the cancellation when requested. The guts of the method are involved, but the method signature is about as simple a read as you can imagine.
+      </p>
+    </div>
+    <div class="code-block">
+      <pre>
+public class BillingRepository
+{
+  ...
+  <em>public void CancelAccount(int account_id) { ... }</em>;
+  ...
+}</pre>
+    </div>
+  </div>
+  
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        However, some customers want to cancel their account at the end of their term, which could be several months out. Rather than require them to remember to cancel the account in a few months, they want the account to <em>automatically</em> cancel on the last day of their term.
+      </p>
+      <p>
+        I start implementing this by tacking on a parameter to the current <code>CancelAccount()</code> repository method. Since there are now two cancellation options, cancelling immediately <em>or</em> at the end of their current billing period, I choose the simplest parameter type that fills the need, a boolean. 
+      </p>
+      <p>
+        I decide to name it <code>cancel_at_period_end</code>. Now, I can pass in <code>true</code> to handle this new special case, and <code>false</code> to handle the original case.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+public void CancelAccount(int account_id, <em>bool cancel_at_period_end</em>);
+</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+       After I've implemented the new code to handle the update, I now update all existing references to this method that handle immediate cancellations.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+_billing_repository.CancelAccount(account_id, <em>false</em>);
+</pre>
+    </div>
+  </div> 
+
+  <div class="grid-content">
+  <div class="content">
+    <p>
+However, something feels awkward about this method signature.
+</p><p>
+At a glance, it's hard to tell what the <code>false</code> parameter means. Having just written the updates, it makes sense to me now, but it won't to someone else (or to myself in a few days). They'll have to look at the method signature and perhaps even drill into the method to be sure. 
+</p>
+    <p>
+I feel compelled to add the comment above each call to <code>CancelAccount()</code> for clarity.  It also helps differentiate between the new code I'll be adding later to handle the additional option of canceling at the end of the period.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+<div class="code-block">
+<pre>
+// Cancel the account immediately...
+_billing_repository.CancelAccount(account_id, false);
+</pre>
+</div>
+</div>
+
+<div class="grid-content">
+  <div class="content">
+ <p>
+<em>Better</em>. But the method call still feels strange. The standard cancellation case (canceling immediately) accepts the <code>false</code> parameter. 
+Passing in <code>false</code> as the default just feels odd&mdash;I have to suppress something to perform the default action.
+</p>
+</div>
+</div>
+
+<div class="grid-right-code">
+  <div class="content">
+   
+<p>
+I can get around this pretty quickly though. Since I'm working with a boolean parameter, I can simply flip the name of the option around so that the standard case passes in <code>true</code> and update my code accordingly. I swap the <code>cancel_at_period_end</code> parameter with <code>cancel_now</code>, modify the implementation, and nod to myself in approval.
+  </p>
+</div>
+<div class="code-block">
+<pre>
+public void CancelAccount(int account_id, bool <em>cancel_now</em>);
+
+...
+
+// Cancel the account immediately...
+_billing_repository.CancelAccount(account_id, <em>true</em>);
+</pre>
+</div>
+</div>
+
+
+<div class="grid-content">
+  <div class="content">
+ <p>
+Now, the default case passes in <code>true</code>. But, I've introduced a more onerous problem. By simply reading the <code>CancelAccount()</code> method signature, I can't quite tell what passing in <code>false</code> would do. What would it mean for <code>cancel_now</code> to be <code>false</code>? Would it cancel in a day? In a month? At the end of the period? 
+</p><p>
+At this point, I've exhausted my options with the boolean parameter. While it allows for both options, the options aren't clear from the method signature.
+</p><p>
+I often find this is the case with booleans when the concept it describes is binary but the options aren't strict <em>opposites</em>. That's the case here&mdash;the natural opposite of <code>cancel_now</code> isn't <code>cancel_at_period_end</code> in the way the natural opposite of <code>open</code> is <code>closed</code>.
+</p>
+ <p>
+      To improve, I could try an <code>enum</code> instead.
+    </p>
+</div>
+</div>
+
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+enum CancelationType 
+{
+  NOW,
+  AT_PERIOD_END
+}
+...
+
+public void CancelAccount(int account_id, CancelationType cancel_type);
+
+...
+
+_billing_repository.CancelAccount(account_id, CancelationType.NOW);
+</pre>
+</div>
+</div>
+
+<div class="grid-content">
+  <div class="content">
+ <p>
+This is an improvement. I've gotten rid of the ambiguity issues we had with the boolean parameter. It also leaves me better positioned to introduce additional cancelation types in the future.
+</p><p>
+But, this just doesn't feel like one of those features we'd continually augment in the near future. 
+</p><p>
+Weighing this factor in, an even more readable approach is to directly convey the type of cancelation in the method name. I ultimately decide to create two distinct cancelation methods.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+public void CancelAccountNow(int account_id);
+public void CancelAccountAtPeriodEnd(int account_id);
+</pre>
+</div>
+</div>
+
+<div class="grid-content">
+  <div class="content">
+    <p>
+With this update, now both the standard and unique cancelation implementations read as informatively. There's no ambiguity in either what the method does or what parameters I'm passing in.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+_billing_repository.CancelAccountNow(account_id);
+...
+_billing_repository.CancelAccountAtPeriodEnd(account_id);
+</pre>
+</div>
+</div>
+<div class="grid-content">
+  <div class="content">
+    <p>
+I also get an additional benefit from this approach. Breaking the method out into two methods allows me to separate the implementations of each. In the original approach, I'd have to do something like this.
+</p>
+</div>
+</div>
+
+<div class="grid-left-code">
+  <div class="content">
+<p> 
+The method body would not only be much longer, but it would have more than one responsibility. Breaking the methods apart not only clarify their use, but will make finding and updating their implementations easier down the road.
+</p>
+</div>
+<div class="code-block">
+<pre>
+void CancelAccount(int account_id, bool cancel_at_period_end)
+{
+  if (cancel_at_period_end)
+  {
+    // Implementation for canceling at period end
+  }
+  else
+  {
+    // Implementation for canceling immediately
+  }
+}
+</pre>
+</div>
+</div>
+<div class="grid-content">
+  <div class="content">
+    
+<hr />
+<p>
+Another place you'll come across a golden opportunity to create a new method is whenever <code>null</code>  values are passed to your method. Usually, it's a sign that a new method name ought to be created to handle the passing of the <code>null</code> to the original method.
+</p>
+<p>
+In DoneDone, I have a series of bulk editing methods that live in a services layer. They accept a list of <code>item_ids</code> and perform some action on each of them. One of these is a function to bulk update item due dates. Here's the signature.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+<div class="code-block">
+  <pre>
+public void UpdateDueDates(List&lt;long&gt; item_ids, DateTime? due_date, string comment, User requester);
+</pre>
+</div>
+</div>
+<div class="grid-right-code">
+<div class="content">
+<p>
+Crawling up to the application layer, here's a snippet of the controller method that calls the bulk edit methods depending on the user's input:
+</p>
+</div>
+<div class="code-block">
+  <pre>
+switch (input.ActionChangeType)
+{
+  ...
+      
+  case BulkActions.UPDATE_DUE_DATE:
+    _items_service.UpdateDueDates(input.ItemIDs, 
+      DateTime.Parse(input.Value), input.comment, _LoggedInUser);
+          
+    success_alert = "The due date has been updated for these items.";
+    break;
+    
+    ... 
+}
+</pre>
+</div>
+</div>
+<div class="grid-right-code">
+<div class="content">
+<p>
+Due dates are optional&mdash;hence the nullable <code>DateTime?</code> object representing the due date in the parameter list.
+</p>
+<p>In a recent feature update, we wanted to explicitly add an option to <em>remove</em> due dates from all items. Because the <code>UpdateDueDates()</code> method already gives the option to pass in a <code>null</code> value, the update was easy:
+</p>
+</div>
+<div class="code-block">
+  <pre>
+switch (input.ActionChangeType)
+{
+    ...
+        
+    case BulkActions.UPDATE_DUE_DATE:
+        _items_service.UpdateDueDates(input.ItemIDs, DateTime.Parse(input.Value), input.comment, _LoggedInUser);
+        success_alert = "The due date has been updated for these items.";
+        break;
+        
+    <em>case BulkActions.REMOVE_DUE_DATE:
+        _items_service.UpdateDueDates(input.ItemIDs, null, input.comment, _LoggedInUser);
+        success_alert = "The due date has been removed for these items.";
+        break;</em>
+        
+    ... 
+}
+</pre>
+</div>
+</div>
+<div class="grid-content">
+  <div class="content">
+    <p>
+But, explicitly passing <code>null</code> makes the method invocation less readable. When I inevitably revisit this line of code down the road, I have to trickle into the method to be certain of what it means. Also, in this case, there would never be a reason to pass anything other than a hard-coded <code>null</code>&mdash;so why not eliminate the need altogether?
+</p>
+<p>
+Back on the service layer, I create a new method. It's nothing more than a wrapper to the original <code>UpdateDueDates()</code> method:
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+<div class="code-block">
+  <pre>
+public void RemoveDueDates(List&lt;long&gt; item_ids, string comment, User requester)
+{
+  UpdateDueDates(item_ids, null, comment, requester);
+}
+</pre>
+</div>
+</div>
+
+<div class="grid-content">
+  <div class="content">
+    <p>
+But with this small addition, I now get to tidy up where I invoke the method on the application layer. Not only do I dissolve the <code>null</code> parameter, I also benefit from the name of the new method. In context, the two actions around due dates are much more distinct and clearer to parse.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+<div class="code-block">
+  <pre>
+case BulkActions.UPDATE_DUE_DATE:
+  _items_service.UpdateDueDates(input.ItemIDs, DateTime.Parse(input.Value), input.comment, _LoggedInUser);
+  success_alert = "The due date has been updated for these items.";
+  break;
+        
+case BulkActions.REMOVE_DUE_DATE:
+  _items_service.RemoveDueDates(input.ItemIDs, input.comment, _LoggedInUser);
+  success_alert = "The due date has been removed for these items.";
+  break;
+</pre>
+</div>
+</div>
+
+<div class="grid-content">
+  <div class="content">
+    <hr />
+    <p>
+In both examples, adding a <em>new</em> method rather than relying on the parameters of an existing method were fairly easy decisions. In both cases, there was only one variant to the parameters&mdash;requiring one additional method. If the amount of variations are small (say, 3 or less), and these variations are unlikely to change over time, surfacing parameters into method names makes sense.
+</p>
+<p>
+However, you may find yourself in situations where there are dozens or more variations to a method, and new variations are added to relatively frequently. In those cases, it might be best to lay off creating new methods to avoid such a large increase in methods and adding the burden of making updates to them too often.
+</p>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+<div class="chapter" id="ch-shape-of-code">
+  <div class="grid-content">
+    <div class="content">
+      <h2>The Shape of Code</h2>
+      <p class="emphasis">Code has a certain <em>shape</em> to it.</p>
+      <p>
+        It's spacing and indentation. Where line breaks are made. How it flows down a page. These are important to how we consume the code. Sometimes names can disturb that shape dramatically.
+      </p>
+      <p>
+        Consider this simple <code>for</code> loop.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-right-code">
+    <div class="content">
+      <p>
+        To me, this code has good shape. And it's not just the consistent indentation and spacing.  But there's something else I notice.
+      </p>
+      <p>The importance of the variables are roughly equal to their size. When I read this code, it doesn't take me long to figure out that there is some <code>tokens</code> array, and elements in that array are added to a <code>usedTokens</code> list if they are used. 
+      </p>
+    </div>
+    <div class="code-block large">
+      <pre>
+for (int i=0; i < tokens.length; i++)
+{
+  if (tokens[i].Used)
+  {
+    usedTokens.Add(tokens[i]);
+  }
+}</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Here's that same code block again with a few name changes. In each case, I substitute a name with an even more precise name.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+for (int curIndexOfTokenArray=0; curIndexOfTokenArray < tokensArray.length; curIndexOfTokenArray++)
+{
+ if (tokensArray[curIndexOfTokenArray].Used)
+ {
+   usedTokensList.Add(tokensArray[curIndexOfTokenArray]);
+ }
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        If we think only in terms of clarity, then the code should be an improvement. Certainly,  
+        <code>curIndexOfTokenArray</code> is clearer than <code>i</code>. The names <code>tokensArray</code> and <code>usedTokensList</code> now tell me the object's type without having to dig into them. The names are far more clear. 
+      </p>
+      <p>
+        While the current index is a critical anchor of a <code>for</code> loop, representing it in a verbally meaningful way isn’t. For one thing, an index is common to <em>every</em> kind of <code>for</code> loop. In addition, it's scope is small &mdash; it only exists for the duration of a few lines inside the loop. If someone were really confused about the variable name, they only need to look around a small visual radius to get refamiliarized.
+      </p>
+      <p>
+        The stars of the show here ought to be the <code>tokens</code> array and <code>usedTokens</code> list. Adding more description to <code>i</code> brings a peripheral stage crew member into the spotlight. Couple this with the additional suffix <code>Array</code> to <code>tokens</code> and the line <code>if (tokensArray[curIndexOfTokenArray].Used)</code> takes much longer to parse through it.
+      </p>
+      <p>
+        The original version values the shape of the entire statement more the level of description each variable brings. There are certain times where this is a better trade-off. This example is one of them.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="chapter" id="ch-naming-opposites">
+  <div class="grid-content">
+    <div class="content">
+      <h2>Naming Opposites</h2>
+
+<p class="emphasis">
+  Usually, the English language has enough breadth that most concepts have a meaningful opposite.
+</p>
+<p>For a piece of functionality that allows us to move a file from the trash, we don't have to say <em>undelete</em>; <em>Restore</em> makes perfect sense. It's clear that a file that can be restored is already in the state of being deleted.
+</p>
+<p>
+But, this isn't always the case. Take this example.
+</p>
+<hr />
+<p>
+There's this concept in DoneDone called <a href="#">Workflows</a>. A workflow defines a series of statuses available for an issue. A typical workflow might have states like "Open", "In Progress", "Not Reproducible", "Closed" and so forth. We let users create workflows to tailor them to their particular business processes. 
+</p>
+<p>
+A workflow can have its own status too. It starts as unpublished, and when a user is ready to use the workflow, it becomes published. That's simple enough.
+</p>
+<p>
+But, once a workflow is published, a user can still <em>unpublish</em> the workflow. The requirements for a workflow to be unpublishable are more than just that it's already been published&mdash;there are a few other caveats as well. So, I decide to wrap this logic inside of a convenient little method. My first attempt at a method name is <code>IsWorkflowUnpublishable()</code>.
+</p>
+<p>
+Quickly, I realize there's something unsavory about this name. Someone could easily mistake this as a check that a workflow *cannot be published* rather than a check that a workflow *can be unpublished*. Those are, indeed, two very different things.
+</p>
+<p>
+The problem is that there just isn't a good adjective that means the opposite of published. _Draft_ might be the best way to describe this concept. It's something I've seen before in blogging tools for instance. But a method name like <code>IsWorkflowDraftable()</code> or <code>IsWorkflowAbleToBeInDraftMode()</code> feels like we're headed in the wrong direction fast.
+</p>
+<p>
+In cases like these, I try to look for a completely different angle to the name. After staring at my options for a few minutes, I realize the obstacle lies with the initial word <em>is</em>. It corners us into having to come up with an adjective to describe the state of the workflow we want to achieve&mdash;and there aren't any good ones that make the method name read clearly.
+</p>
+<p>
+Instead of starting the name with the adjective-requiring "is", I start with the verb-requiring "can." <code>CanUnpublishWorkflow()</code>
+</p>
+<p>
+Now I might be onto something! Notice I still use the word <em>unpublish</em>, but as a verb the intent is no longer ambiguous. It's clear we are checking whether this <em>workflow can be unpublished</em> as opposed to checking whether the <em>workflow can't be published</em>.
+</p>
+<p>
+If the opposite version of a name makes your method ambiguous, instead of pushing harder on finding a different name, see if you can reword the method altogether. You might already have all the pieces you need without knowing it.
+</p>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="chapter" id="ch-tautologous-name-trap">
+  <div class="grid-content">
+    <div class="content">
+      <h2>The Tautologous Name Trap</h2>
+      <p class="emphasis">
+        It's always a good habit to look for business logic that we can extract into a method or variable. 
+        Consistently doing this infuses better meaning into our code. It makes it easier to understand our intentions later on. 
+      </p>
+      <p>
+        But, naming these extractions appropriately can be more elusive than it initially appears.
+      </p>
+      <hr />
+      <p>
+        I'm working on a piece of code that processes incoming emails for DoneDone. One of its responsibilities is to send an auto-response email back to the original sender if certain conditions are met.
+      </p>
+      <p>
+        In the first iteration of this feature, I initiate the auto-response only if the original email was received outside of a company's office hours. 
+      </p>
+    </div>
+  </div>
+  <div class="grid-right-code">
+    <div class="content">
+      <p>
+        I've written a method responsible for this work, querying the company's work hours and comparing these date ranges to the current time to answer the question. 
+      </p>
+    </div>
+    <div class="code-block">
+      <pre>
+private bool isCurrentlyOutsideOfficeHours()
+{
+  //...
+}</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        In my incoming email handler, I call this method to determine if an auto-response is necessary.
+      </p>
+      <p>
+        The method name <code>isCurrentlyOutsideOfficeHours()</code> makes the conditional statement read coherently. Even a non-programmer can read the statement above and deduce it's saying the following: "If we are currently outside the office hours, then send an auto-response."
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+if (isCurrentlyOutsideOfficeHours()) 
+{
+  sendAutoResponse();
+}</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        A few weeks later, we receive some requests from our customers to allow them to configure company holidays as well as office hours. This way, the auto-response will always be triggered during a company holiday regardless of the time of day.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-left-code">
+    <div class="content">
+      <p>
+       Back under the hood, we add the new functionality. I then update the auto-response logic to check whether today is a holiday, and adjust my auto-response logic accordingly. This requires another method that handles the dirty work. I call it <code>isCompanyHoliday()</code>.
+      </p>
+    </div>
+    <div class="code-block">
+      <pre>
+bool isCurrentlyOutsideOfficeHours();
+bool isCompanyHoliday();
+
+...
+
+if (isCurrentlyOutsideOfficeHours() || isCompanyHoliday()) 
+{ 
+  sendAutoResponse(); 
+}</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Now, I've added more complexity to the auto-response logic&mdash;enough to make me consider consolidating the conditional expression into its own method, then calling the new method in place of the expression. At first, a name like <code>shouldSendAutoResponse()</code> sounds sensible. Here's what that would look like:
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+private bool <em>shouldSendAutoResponse()</em>
+{
+  return isOutsideOfficeHours() || isCompanyHoliday();
+}
+      </pre>
+    </div>
+  </div>
+
+  <div class="grid-right-code">
+    <div class="content">
+      <p>
+        With the new method extracted, the conditional, once again, feels tidy. But, now we have a new problem. The conditional statement is tautologous. <strong>
+        If we should send an auto-response, then we should send an auto-response. 
+        </strong>
+      </p>
+    </div>
+    <div class="code-block">
+      <pre>
+if (shouldSendAutoResponse()) 
+{ 
+  sendAutoResponse(); 
+}
+      </pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        That's not a particularly helpful statement for the code reader. 
+      </p>
+      <p>
+        When we read the conditional in isolation, we don't know <em>why</em> we're sending the auto-response. We need to trickle into the <code>shouldSendAutoResponse()</code> method to find out. The extraction doesn't give us better comprehension; It merely tucks away some logic that we likely will have to drill into later anyways.
+      </p>
+      <p>
+        I find this happens a lot with these quick extraction exercises. Our immediate inclination is to name the newly extracted method (or variable) after the outcome of the conditions being met rather than the meaning of the conditions. We name the method after the <em>effect</em> rather than the <em>cause</em>.
+      </p>
+      <p>
+        Not only does this create tautalogous statements, but it's less likely we'll reuse the new construct somewhere else. At a glance, we wouldn't think to employ <code>shouldSendAutoResponse()</code> anywhere else besides the place in code where we want to send auto-responses. If we named the method after what's <em>causing</em> the sending of the auto-response, we better our chances of reuse later.
+      </p>
+      <p>
+        So, why are we sending the auto-response? In this case, the cause of sending an auto-response message is because, quite simply, the office is closed. Let's try that.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+bool isOfficeClosed()
+{
+  return isOutsideOfficeHours() || isCompanyHoliday();
+}
+
+...
+
+if (isOfficeClosed()) 
+{ 
+  sendAutoResponse(); 
+}
+      </pre>  
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+      The conditional now reads more meaningfully. In addition, <code>isOfficeClosed()</code> is a method that has far more obvious applications than <code>shouldSendAutoReponse()</code> does. For instance, I could call it to determine if a chat application should be disabled on the application's help site. This has nothing to do with the auto-response feature.
+      </p>
+      <p>
+      Tautologous conditionals aren't necessarily bad, though. There are times where describing the <em>effect</em> is the cleanest option. Let's continue with this example. 
+      </p>
+      <p>
+      Suppose that we introduce a few more conditions to determine whether to send an auto-response. Namely, we let a user toggle auto-responses altogether and we also want to exclude auto-responses to emails that are flagged as spam. My first step is to augment the conditional one more time.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+if (isOfficeClosed() && autoResponseEnabled && !_email.IsSpam) 
+{ 
+  sendAutoResponse(); 
+}</pre>
+  </div>
+</div>
+<div class="grid-content">
+    <div class="content">
+<p>
+The conditional expression bloats up again and it seems ripe for packaging things up. But, I have trouble finding an elegant solution. Is there a meaningful name that could consolidate all or some of the expression? <code>isOfficeClosed()</code>, <code>autoResponseEnabled</code>, and <code>!_email.IsSpam</code> don't appear to have any relationship to one another other than determining whether we should send an auto-response.
+</p>
+</div>
+</div>
+
+<div class="grid-left-code">
+  <div class="content">
+    <p>
+    I can decide to either leave things as is, or name the entire expression for what it affects. I choose the latter.
+    </p>
+    <p>In this case, there's far less chance there would be any another meaning given to 
+    <code>isOfficeClosed() && autoResponseEnabled && !_email.IsSpam</code> being true. We live with the tautologous argument to keep the statement succinct, and we're also unlikely to miss an opportunity to reuse this method elsewhere.
+    </p>
+  </div>
+  <div class="code-block">
+    <pre>
+bool isOfficeClosed()
+{
+  return isOutsideOfficeHours() || isCompanyHoliday();
+}
+
+bool shouldSendAutoResponse()
+{
+  return isOfficeClosed() && autoResponseEnabled && !_email.IsSpam;
+}
+
+...
+
+if (shouldSendAutoResponse()) 
+{ 
+  sendAutoResponse(); 
+}
+    </pre>
+  </div>
+</div>
+
+<div class="grid-content">
+  <div class="content">
+    <p>
+    This brings up an important general idea we see throughout all programming concepts, particularly with naming. We make tradeoffs depending on how a section of code evolves. When I can find an apt name for the <em>cause</em>, I choose it. When I can't, I can convince myself that naming an extraction for its <em>effect</em> is still better than not extracting it at all. In the end, the goal is to continually rename things to produce the most coherency given each situation.
+    </p>
+  </div>
+</div>
+</div>
+
+
+<div class="chapter" id="ch-names-are-fickle">
+  <div class="grid-content">
+    <div class="content">
+      <h2>Names are Fickle</h2>
+<p class="emphasis">
+Keeping a codebase with well-intentioned names is often just about <em>remembering</em> to do so. 
+</p>
+<p>
+Everytime we make a change to a codebase, we have to consider the names of things over again. It's easy to leave working code as-is, without considering the debt you've just handed over the next reader. 
+</p>
+<p>
+Awhile back, I had a method that updated various pieces of account data:
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+public void UpdateAccountInfo(string account_name, int account_owner_id, byte[] logo_image);
+</pre>
+</div>
+</div>
+<div class="grid-content">
+    <div class="content">
+      <p>
+As you can probably tell by the signature, this method lets you change the name of the account, the owner of the account, and the logo tied to the account.
+</p>
+<p>
+At some point, it became advantageous to handle the uploading of the logo somewhere else. As part of this update, I pulled the <code>logo_image</code> parameter out of this method.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+public void UpdateAccountInfo(string account_name, int account_owner_id);
+</pre>
+</div>
+</div>
+
+<div class="grid-content">
+    <div class="content">
+      <p>
+Down the road, we also decided that an account could have multiple owners. Since the change was fairly large, we decided it was best to manage owners in an entirely separate part of the application. Part of this update naturally required removing the <code>account_owner_id</code> from this method.
+</p>
+</div>
+</div>
+
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+public void UpdateAccountInfo(string account_name);
+</pre>
+</div>
+</div>
+
+<div class="grid-content">
+    <div class="content">
+      <p>
+In the flurry of updating code, it's easy to leave the <code>UpdateAccountInfo</code> method named as is. But, stripped of most of its original responsibilities, this method is much better named <code>UpdateAccountName</code>. That's all it's doing anymore. It also doesn't hurt to shorten the parameter <code>account_name</code> to just <code>name</code>, since it's obvious at this point what the parameter refers to.
+</p>
+</div>
+</div>
+
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+public void UpdateAccountName(string name);
+</pre>
+</div>
+</div>
+    <div class="grid-content">
+        <div class="content">
+          <p>
+          This change sounds obvious to make, but it's only because I've isolated the discussion of what changed to just this lone method--not the other myriad of method additions, refactorings, and adjustments that come as a natural part of every kind of software change.
+          </p><p>
+          When you’ve moved code around your application to get the pieces fitting just right, revisit how you’ve named the methods, properties, and classes that have undergone the facelift. Do these names still make sense? Do the comments around these methods still apply?
+          </p>
+<blockquote>
+  &ldquo;One of the biggest sins you can commit is to stop programming when it works.&rdquo;
+</blockquote>
+<div class="quoter">
+  Brandon Rhodes
+</div>
+          <p>
+          When you're in the same code daily, you might not even notice that the name of a variable or method is misleading because you're so familiar with it. But, to someone coming into the codebase fresh (or, if you happen to take a few weeks off and come back later), misleading names will be detrimental to their understanding of the system.
+          </p><p>
+          There won't be a failed unit test or compiler warning telling us that a construct's name is no longer relevant. That's why they're so often left unchanged. So, remember to look for opportunties to tighten a construct's name everytime something changes about that construct. Nothing else will automatically remind you to do so.
+          </p>
+        </div>
+    </div>
+</div>
+
+<div class="chapter" id="ch-abstracting-to-soon">
+  <div class="grid-content">
+  <div class="content">
+    <h2>Abstracting Too Soon</h2>
+    <p>
+      [Combine with "The Wrong Abstraction" in book-on-naming-things?....system/inappemail method naming]
+    <p>
+As I write code, I usually start with names that describe their constructs concretely before gradually iterating toward something more abstract. Proper abstractions need to be made at the right pace. Abstract too slowly and it will be the feature creep that steers the ship. Abstract too soon and the boat will soon be sinking under its own weight.
+</p>
+<p>
+[Maybe Sandi Metz bit here about championing the idea of duplicate code better than the wrong abstraction?]
+</p>
+<p>
+Naming should also undergo the same kind of scrutiny. The gradual reshaping of our codebase also warrants constant re-evaluation of the names we give to the constructs in our code. 
+</p><p>
+It's taxing work. And I think it leads programmers (including myself) to abstract the meaning of a name too early in the process - a desparate attempt to get a name right, once and forever. But I've never found prematurely abstracting a name helpful. In fact, it often inflicts more pain than comfort, just like premature code abstraction does.
+</p>
+<hr />
+<p>
+I'm going through a refactoring in DoneDone's codebase to consolidate a few data objects that hold very similar kinds of information in slightly different ways. They all revolve around the history of actions applied to an issue.
+</p><p>
+Ultimately, the properties of these objects manifest in a few different places. On an issue's detail page, the collection of history for a single issue is written out from an <code>IssueDetailHistory</code> collection. On the activity dashboard, a list of history on all issues in a given day is extracted from a list of <code>ActivityHistory</code> items. When activity occurs on an issue, yet another "history" object is packaged up in a class with a list of emails to send to specific users. A mailing service unpacks the data and formats the right bits of information into emails.
+</p><p>
+Each of these objects look nearly identical. They all could derive from a single class, but they've all been written separately from each other over time. It's time to consolidate them.
+</p><p>
+After a fair amount of hair-pulling, I've reduced these classes into a single <code>IssueHistory</code> class that can support the needs of each of these three distinct use cases, and more going forward. This also gives me an opportunity to consolidate similar names in the old objects like <code>CreatedOn</code>, <code>CreatedDate</code>, or <code>CreateDate</code> into one consistent name (I like <code>CreatedOn</code>, for what it's worth).
+</p><p>
+In the process of the consolidation, I discover one particular string off of the old history object used by the mailing service. It's a terse description used as the beginning of the email subject, like "New fixer" or "Priority Update" or "Closed". (The rest of the subject is composed of the issue number and title). 
+</p><p>
+The dilemma I face here is what exactly to call this string. At present moment, it's <em>only</em> used by the mailing service and not by either the detail page or activity dashboard. But, since I've done all the pruning to get toward a single object, I feel compelled to come up with a name that can satisfy all future implementers.
+</p><p>
+My natural inclination is to call this something like <code>AbbreviatedAction</code>, especially because it juxtaposes nicely with the <code>Action</code> attribute that stores a more verbose description of the action ("John Doe was assigned to fix the issue" or "The priority was updated to Critical") I go with this name.
+</p><p>
+After a few days of refactoring the rest of the code, I find myself going back to this name a couple of times not entirely remembering what it's being used for. I even decide to comment the name to remind me it's only being used by the mailing service as part of the subject of the email. 
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+// Note: Only being used by the mailing service right now as part of the email subject, but I'm sure it will have other uses one day.
+public string AbbreviatedAction
+{
+  get { … }
+}
+</pre>
+</div>
+</div>
+
+ <div class="grid-content">
+  <div class="content">
+    <p>
+Whenever I have to remind myself what a name means (and eventually surrender to the commenting devils) there's a good chance I've prematurely abstracted the name.
+</p><p>
+Instead of finding a name that simultaneously fits anything but nothing in particular, it's best I reduce the scope of the name's meaning to fit how it's being used right now. A name like <code>EmailSubjectAction</code> ends up working a lot better.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+    <pre>
+public string EmailSubjectAction
+{
+  get { … }
+}
+</pre>
+</div>
+</div>
+ <div class="grid-content">
+  <div class="content">
+    <p>
+Some might worry that a name that's too specific like this might hide the full capabilities of that construct. That, one day, I'll need the very thing that <code>EmailSubjectAction</code> brings to the table (a terse description of an issue action) for something entirely unrelated to email subjects and I will never realize it existed. Instead, I'll create a near-identical version of that construct and name it something else.
+</p><p>
+In my experience, I rarely find this to be the case. If I'm familiar enough with the codebase, I recall some part of it that replicates (or nearly replicates) what I'm trying to implement by thinking about the particular feature ("What I need is just like that first part of that subject line of the emails that are sent when issues are updated!") rather than the particular name of the relevant construct (<code>EmailSubjectAction</code>). The more specific name just helps me find where that construct lives, faster.
+</p><p>
+Others might argue that I really should move this particular property to its own class and inherit the <code>IssueHistory</code> class. This way, I can use this class specifically for the emailing case. But, to me, the additional overhead of managing another class just for the sanctity of keeping the name exposed only to those who need it isn't worth the tradeoff. I'm OK with exposing this property to the other use cases especially if it's the only one of its kind. If this starts becoming a theme with other properties, then I might sway the other way. But, it's too early now.
+</p><p>
+Once that construct is being used in multiple different ways, then I can justifies the broader name change. In my case, <code>AbbreviatedAction</code> may eventually be the best name one day, but only when its set of use cases warrants it.
+</p>
+</div>
+</div>
+</div>
+
+<div class="chapter" id="ch-speaking-the-native-tongue">
+<div class="grid-content">
+  <div class="content">
+    <h2>Speaking the Native Tongue</h2>
+
+
+**Pattern Hypnosis**
+
+Unearthing patterns is one of the most fundamental mental exercises in coding. When we can trivialize a procedure that once required a lot of thought into something seemingly automatic, we can move onto solving other problems. 
+
+On the other hand, automation can bias our thinking. We end up forcing a pre-conceived solution every time we encounter what feels like a similar problem without the careful examination we once gave it before we discovered a pattern. The reasoning becomes dogmatic -- it fits this pattern so this must be the way forward!
+
+Let's call this phenomenon "pattern hypnosis." Even the task of naming can fall prey to this pattern hypnosis. I notice I fall into the trap quite frequently when naming tables in a relational database model.
+
+If you're familiar with relational data modeling, you'll know one of the more common modeling concepts is the associative table. 
+
+An associative table's core characteristic is that it contains two or more foreign keys to tables that have a "many-to-many" relationship, like a table that links a `tbl_Students` table to a `tbl_Classes` table. A student enrolls in many classes and a class has many students. The associative table would hold the relationship between those two tables alongside any other data relevant to that relationship (like a student's current grade in that class).
+
+A common pattern is to name such an associative table by gluing the adjacent table names together. This approach usually creates a unique table name that's palatable. `tbl_StudentsClasses` feels like a reasonable name for this table. It reads decently.
+
+Let's take another example. I have a table that links a `tbl_Users` table with a `tbl_Accounts` table.  A single user can belong to many accounts and an account can have many users. If I'm blindly naming an associative table that links these two tables together, I'd call it `tbl_UsersAccounts`. 
+
+Down the road, I add other attributes to the model, like a date for when a user was added to the account. That column would fit naturally in the `tbl_UsersAccounts` table. But, saying "Nora's user account began on June 3rd, 2016" sounds obnoxiously technical. It sounds much more natural to say "Nora's membership began on June 3rd, 2016." 
+
+So, I decide to update the table name to `tbl_Memberships`. 
+ 
+Later on, I want to add a third association to the table -- a relationship to a set of available roles. This way, I can model a particular user with an account and a level within the account (Nora has Gold status). If I'm blindly following convention, I'd name my table to something like `tbl_UsersAccountRoles`.
+
+Meanwhile, the name `tbl_Memberships` still holds up. "Nora has a gold-access membership to the Acme account." 
+
+This kind of pattern hypnosis isn't relegated to just table naming. Object-relational mappers usually map directly to tables, so it's common to see the same name patterns appear in data transfer or business domain objects as well.  A `UserPublication` class might be better served as a `Subscription` class. `CustomerProduct` could be a `PurchaseOrder`. `PassengerFlight`? A `Booking`.
+
+This isn't to say that the default pattern never works. Lots of times, it is the most sensible way to describe an association. But, in the end, to name things well, I sometimes have to fight the hypnosis of the easy route.
+
+**Profession-speak**
+
+People that write code today are often the same ones making business decisions or collaborating directly with clients. This makes it even more critical that programmers understand the business reasons behind their work. One of the best ways we can encourage this is to infuse the language of the business directly into our code.
+
+If I were building internal software to track the organizational aspects of a law firm, I'd want the names of the constructs in my software system to be as closely aligned to the words law professionals use to describe their own concepts. `PracticeAreas` instead of `Topics`. `PracticeGroups` instead of `Teams`. `Attorneys` and `Paralegals` instead of `Users`. This way, I don't have to make the mental mapping between what the client calls Concept X with what I call Concept Y.
+
+Business concepts can also dictate the kind of structures we introduce to a codebase. Consider this example.
+
+If I were building a patient management system for a medical clinic, I might define a doctor's patient list with a structure like `List&lt;Patient&gt;`. It seems reasonable enough. Plus, I get all the normal functions associated with a `List` out-of-the-box, like `Add()`, `Remove()`, `Count()` and so forth.
+
+But, doctors don't call these things patient lists, they call them _panels_. Doctors talk about how full their panels are or when new openings in their panel will open up. Knowing this, I'd opt to create a `Panel` class instead which houses the `List&lt;Patient&gt;` collection as its own property.
+
+```
+public class Panel
+{
+  private List&lt;Patient&gt; _patients;  
+  ...
+}
+```
+
+Because medical professionals have defined a specific concept called panels, it's almost certain that there are specific attributes tied to a panel -- it's not just a convenient alias to a collection of patients. 
+
+As it turns out, panels aren't just assigned to doctors, but to medical assistants and health educators. Panels also have a certain optimal number of patients (so that all clinicians generally see the same number of patients). Panels can have openings or be closed. It turns out there's a lot of other attributes tied to the concept of a panel. 
+
+```
+public class Panel
+{
+  private List&lt;Patient&gt; _patients;  
+  
+  private Doctor _doctor;
+  private HealthEducator _healthEducator;
+  private List&lt;MedicalAssistant&gt; _medicalAssistants;
+  
+  private bool hasOpening;
+  ...
+}
+```
+
+To add a patient to a panel, my first attempt at a method signature might be something like:
+
+```
+public class Panel
+{
+  ...
+
+  public void Add(Patient p)
+  {
+    patients.Add(p);
+  }
+}
+```
+
+Certainly, `Add` is clear, and it follows directly from the `Add()` method associated to the `List`. But, doctors usually talk about patients _subscribing_ to a panel. So, `Subscribe` is a far more fluent approach.
+
+```
+public class Panel
+{
+  ...
+
+  public void Subscribe(Patient p)
+  {
+    patients.Add(p);
+  }
+}
+```
+
+These name and construct choices seem small at first. But, as the codebase grows and the functionality gets more complex, the benefits become more significant.
+
+By naming concepts in code the way in which software users would talk about them, we remove a layer of unnecessary interpretation. Our code becomes less foreign to people that aren't directly working with it. Software writers can have more productive discussions with other teams within the organization. And, most importantly, we have a better grasp of the business concepts we have to maintain.
+
+---
+
+A> The law firm example has a particular place in my brain because many moons ago, I worked at a company that specialized in building software for law firms (websites, intranets, and "extranets").
+
+A> At some point, we did some pro-bono work for the CEO's old grade school by building their website and content management system. But, instead of building a custom database for them, we "leveraged" the existing database schema we'd been using for many of our corporate law client clients. I guess there were enough similarities in the organizational structures of a school that we could get by with our pre-built software for law firms.
+
+A> This, naturally, led to some pretty entertaining naming translations. The `tbl_Employees` table held teachers and students. A column normally reserved for law firm employee types was now re-purposed for the school. Teachers became attorneys; Principals became partners. The `tbl_PracticeAreas` table was repurposed for the course curriculum.
+
+A> It was funny to have to write code against a bunch of third-grade paralegals.
+
+A> Talk about Fowler's/Eric evans Ubiquitous Language concept? At least touch upon it. 
+
+---
+
+
+</div>
+</div>
+</div>
+
+
+
+<div class="chapter" id="ch-naming-to-teach">
+  <div class="grid-content">
+    <div class="content">
+      <h2>Naming to Teach</h2>
+      <p>
+I have a very simple thing to say about how code is taught. The more advanced you are, the more likely you teach the craft poorly. As you become more advanced in a field, more basic concepts in that field become so familiar that it becomes harder to recall what it was like before you understood those concepts. 
+</p><p>
+Assuming you actually know how to ride a bike&mdash;and have known how to do so for years&mdash;imagine the feeling you had of getting on a bike for the very first time. You tried to pedal and keep the handlebars straight, but you <em>still</em> fell down. I can remember this struggle when I was five years old. 
+</p><p>
+If I got on a bike today, I would have to fight my instincts to try to pedal and fall down. It would actually be <em>hard</em> for me to fall off my bike now. The old saying "it's like riding a bike" isn't just about something being intuitive; it's about how hard it is to recall the feeling of that thing not being intuitive.
+</p><p>
+Having worked with object-oriented programming languages for over twenty years, to me, the concept of a class constructor is obvious&mdash;it's a method which instantiate an instance of the object a class defines. Like riding a bike.
+</p><p>
+But, when I was first taught about class construction, I was at a complete and utter loss. The concept was one of those fancy italian racing bikes with those clip-on pedals. I was a mermaid. 
+</p><p>
+Looking back, it was unclear to me because I couldn't differentiate a class definition from an instance of the class&mdash;that these were two entirely different things. I couldn't visualize "instantiation". Is this a term ever used outside of programming?
+</p><p>
+A large part of the problem was how the concept was introduced. I recall seeing one of these example lines of code in my introductory class. While it's easy for me to understand now, I remember vividly the feeling of confusion staring at this kidn of code. I remember having to parse through it a dozen times to finally <em>get it</em>. The next day, it became completely foreign again.
+</p>
+</div>
+</div>
+
+<div class="grid-code-only">
+  <div class="code-block">
+<pre>
+Object myObject = new Object();
+myObject.DoSomething();
+</pre>
+</div>
+</div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+A line of code like this has no relatable concept outside of the programming world to latch onto. The word <code>Object</code> appears three times in one line. It creates that dizzying effect I mentioned in <a href="#ch-shape-of-code">The Shape of Code</a>. A knowledgeable programmer knows that they each stand for something different.
+</p>
+<ul>
+  <li>The first <code>Object</code> refers to the type of the instance we're instantiating.</li>
+<li>The second <code>Object</code> is part of the name of this instance <code>MyObject</code>.</li>
+<li>The third <code>Object</code> is invoking the constructor.</li>
+<li>The fourth <code>Object</code> is part of the now-instantiated instance <code>myObject</code>, which is now performing the very detailed action of <code>DoSomething()</code>.</li>
+</ul>
+<p>
+But, for a programming newbie, this made as much sense as this equally sensible line.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+<pre>
+Xy8lksp0 myXy8lksp0 = new Xy8lksp0();
+myXy8lksp0.DoSomething();
+</pre>
+</div>
+</div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+Some code writers will "improve" upon this example by introducing meaningless variable names&mdash;<code>foo</code>, <code>bar</code>, <code>baz</code>, and so forth.
+</p>
+</div>
+</div>
+<div class="grid-code-only">
+  <div class="code-block">
+<pre>
+Object foo = new Object();
+foo.DoSomething();
+</pre>
+</div>
+</div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+This helps rid some of the dizzying effects. At least the instance name is more readily discernable. But, the newbie is still left wondering what this all means. What is a <code>foo</code>? I'd come to find that it's intentionally meant to mean nothing specific--a way of ensuring the novice understands that the concept can be pplicable to nearly every kind of a "thing". 
+</p><p>
+But, at such an early step in the process, concreteness is exactly what the novice needs. The mental bridge to the abstract is far easier to cross this way, than to immediately start with the abstract. 
+</p><p>
+Then there are the "concrete" examples that are easy to visualize, but unrelatable to the vast majority of real programming tasks. This makes the bridge from the example to something a novice might actually need to do, still, a difficult one to cross. I see this in many writeups when demonstrating how an interface is used, with the classic example always revolving around domesticated household pets.
+</p>
+</div>
+</div>
+```C#
+interface IAnimal
+{
+    string Speak();
+}
+
+class Dog : IAnimal
+{
+    public string Speak()
+    {
+        return "Bark!";
+    }
+}
+
+class Cat : IAnimal
+{
+    public string Speak()
+    {
+        return "Meow!";
+    }
+}
+```
+The example is certainly _concrete_, but when's the last time you worked on a video game with anima superheroes or for a pet store supply chain? . Imagine a newbie attempting to parlay the knowledge gained from this example of interfaces into a generic integration engine or a file export tool. 
+
+It may be second nature for a seasoned programmer, but for someone who's just learning these new concept of inheritance and intefaces, it takes a large leap to correlate a method like `Speak()` with animals to `ExportFile()` with various file types. At the same time, it's not as if a newbie doesn't understand the concept that a document can be exported as a PDF, plain-text file, Word doc, and so forth.
+
+So, why not skip the animal stuff and just start with a more relatable example -- you know, the ones you find when you're trying to do things with _software_. Then, it's imperative to name the constructs in our examples as _concretely_ as possible. Let the novice anchor their understanding around something real. This will make the bridge to other similar examples easy to cross. With confidence and momentum behind their newfound knowledge, it will make the further reaching bridges quicker to cross as well.
+
+[Deitel and Deitel example of gradebook...concrete, and more real world -- we might be building some system...but still using myGradebook1 and myGradebook2]
+
+A better example of constructors and class instantiation may be something like this:
+
+```C#
+User requester = new User(username, password);
+requester.AttemptLogin();
+```
+
+Most all software these days require logins and users. This would be an instantly relatable example to the vast majority of novices. 
+
+Nearly every programming book I know will start with an example of a default constructor method that always has no parameters. Now, I know technical authors do this to prove the point that a constructor's unique quality -- the thing that differentiates it from any other method of a class -- is that it instantiates the object. We want to show the newbie that the mere act of calling this thing -- the one with the same name as the class but with two parentheses at the end -- creates an instance. Adding parameters to that method would just get in the way of that point.
+
+But, I remember thinking that for some reason, constructors _couldn't_ have parameters attached to them -- that somehow this made a constructor no longer a constructor. 
+
+Instead, if we showed early examples of constructors with parameters, the whole idea of a constructor makes much more sense. 
+
+```C#
+var date_of_birth = new DateTime(1980,1,3);
+Person mary = new Person("Mary", date_of_birth);
+
+```
+
+Ah, I see... we're creating a person named Mary born on January 3rd, 1980.
+
+Of course, we know that constructors can have parameters. In fact, most well-written objects will have parameterized constructors that, in particular, accept data that can only be given during the instance's construction. This leads to all sorts of other concepts that bring out the empassioned object-oriented audience like immutability and hiding implementation details.
+
+--
+
+Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
+
+(string myText) doesnt have to pass something called myText. Show SCOPE. Silly things we take for granted but a newbie wouldnt.
+
+[Finish]
+
+
+
+
+</div>
+
+<div class="chapter" id="ch-acknowledgements">
+<div class="grid-content">
+  <div class="content">
+    <h2>Acknowledgements</h2>
+    <p>Does anybody read this stuff? Anyways, I'd like to thank a few (well-known) folks in the programming industry that provided some valuable insights into how they write code. Their thoughts gave me direction in my own thinking while writing this book.
+    </p>
+    <ul>
+      <li>Eric Evans</li>
+      <li>Martin Fowler</li>
+      <li>David Heinemeier Hansson</li>
+      <li>Sandi Metz</li>
+      <li>Brandon Rhodes</li>
+    </ul>
+<p>Also, a special thanks to <a href="https://www.tartworkshop.com/">Tart Workshop</a>, the creator of the excellent handwritten font <a href="https://fonts.google.com/specimen/Fredericka+the+Great" style="font-family:'Fredericka the Great' !important">Frederika the Great</a> that I've used for the title and headings. I had no idea what "character" this book would have when I began designing the layout. This font became a lot of that character.</p>
+  </div>
+</div>
+</div>
+
+<div id="grid-prev-next">
+  <div class="prev"></div>
+  <div class="next"></div>
+</div>
+
+</body>
+
+<script>
+  
+
+  $(function() {
+
+    var assetOriginal = "";
+    var hasAssetRolloverPad = "0";
+    var curChapterId = "";
+
+    $("body").fadeIn(1000);
+
+    $("div.chapter").each(function(i) {
+      $(this).children("div.grid-content").first().children("div.content").first().prepend("<h4>Chapter " + (i + 1) + "</h4>");
+    });
+
+    showInitialChapter();
+
+    $(window).scroll(function (event) {
+
+
+        if ($(curChapterId).offset().top - 1 <= $(window).scrollTop())
+        {
+          $("div.menu").fadeIn(200);
+        }
+        else
+        {
+          $("div.menu").hide();
+        }
+
+        // Do something
+    });
+
+    $("#btn-cover-click").click(function(e) {
+        scrollToChapter(e);
+    });
+
+    $("body").on("click", "a:not('#btn-cover-click')", function(e) {
+      if ($(this).attr("href").startsWith("#"))
+      {
+        showChapter($(this).attr("href"));
+      }
+    });
+
+    $("div.menu > a").hover(function(e) {
+      $("div.menu > ul").show();
+      $(this).addClass("exposed");
+    });
+
+    $("div.menu").mouseleave(function(e) {
+      $("div.menu > ul").hide();
+      $("div.menu > a").removeClass("exposed");
+    });
+
+    $("div.menu > ul > li > a").click(function(e) {
+      $("div.menu > ul").hide();
+    });
+
+    function showChapter(chapterId)
+    {
+      curChapterId = chapterId;
+
+      if (chapterId == "#ch-introduction")
+      {
+        $("#btn-cover-click").html("Start reading...");
+      }
+      else
+      {
+        $("#btn-cover-click").html("Keep reading...");
+      }
+
+
+      $("div.chapter").hide();
+
+      $("div.menu > ul > li > a").removeClass("selected");
+      $("div.menu > ul > li").find("a[href='" + chapterId + "']").addClass("selected");
+
+      $(chapterId).fadeIn(200);
+
+      var prevChapter = $(chapterId).prev(".chapter");
+      var nextChapter = $(chapterId).next(".chapter");
+      var prevLinkHolder = $("#grid-prev-next").find("div").first();
+      var nextLinkHolder = $("#grid-prev-next").find("div").last();
+
+      if (prevChapter.length !== 0)
+      {
+        prevLinkHolder.html("<a href=\"#" + prevChapter.attr("id") + "\">&larr; " + prevChapter.find("h2").first().html() + "</a></div>");
+      }
+      else
+      {
+        prevLinkHolder.html("");
+      }
+
+      if (nextChapter.length !== 0)
+      {
+        nextLinkHolder.html("<a href=\"#" + nextChapter.attr("id") + "\">" + nextChapter.find("h2").first().html() + " &rarr;</a></div>");
+      }
+      else
+      {
+        nextLinkHolder.html("");
+      }
+    }
+
+    function showInitialChapter()
+    {
+      var url = window.location.href;
+
+      if (url.indexOf("#") <= 0 || url.indexOf("#") == url.length - 1)
+      {
+        showChapter("#" + $("div.chapter").first().attr("id"));
+        return;
+      }
+
+      curChapterId = url.substring(url.indexOf("#"));
+      showChapter(curChapterId);
+    }
+
+    function scrollToChapter(e)
+    {
+      e.preventDefault();
+
+      $("body,html").animate(
+        {
+          scrollTop: $(curChapterId).offset().top
+        },
+        500 //speed
+      );
+    }
+
+  });
+
+</script>
+
+</html>
