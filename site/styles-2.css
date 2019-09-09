@@ -5,7 +5,7 @@
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
 }
 
-body { display:none; }
+body { display:none;}
 a, em, strong { font: inherit; }
 a:visited {color: #fd5634;}
 a:hover {color: #f5360f !important; }
@@ -52,7 +52,7 @@ strong { font-weight: bold; }
 .grid-code-only {
 	display: grid;
 	grid-template-areas: ". code-block .";
-	grid-template-columns: 1fr 6fr 2fr;
+	grid-template-columns: 1fr 6fr 3fr;
 }
 
 .grid-cover > div,
@@ -60,7 +60,7 @@ strong { font-weight: bold; }
 .grid-right-code  > div,
 .grid-left-code > div,
 .grid-code-only > div {
-	margin-bottom: 1.5rem;
+	/*margin-bottom: 1.5rem;*/
 }
 
 #grid-prev-next {
@@ -96,9 +96,11 @@ strong { font-weight: bold; }
 
 /* code-block */
 .code-block {
-	background-color: #2b4dff;
+	/*background-color: #2b4dff;*/
+	background-color: #006ea5;
 	border-radius: .5rem;
 	padding: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
 .code-block.large pre {
@@ -106,12 +108,10 @@ strong { font-weight: bold; }
 	line-height: 1.4rem;
 }
 
-.grid-code-only .code-block pre {
-	font-size: 0.8rem;
-}
 
-pre {
-	color: #fff;
+
+pre, pre span {
+	color: #c3eaff;
 	font-family: 'Roboto Mono', monospace;
 	font-size: 0.7rem;
 	white-space: pre-wrap;       /* css-3 */
@@ -122,12 +122,9 @@ pre {
  	line-height: 1.1rem;
 }
 
-pre em {
+pre span.emphasis {
 	font: inherit;
-	background-color: #bfcaff;
-	padding: .02rem .2rem;
-	color: #000;
-	border-radius: .2rem;
+	color: #fff !important;
 }
 
 /* menu */
@@ -174,9 +171,6 @@ pre em {
 }
 
 .menu > ul > li.extended {
-	margin-top: .8rem;
-	border-top: solid 1px #ccc;
-	padding-top: .8rem;
 	font-family: 'Lora', sans-serif;
 	font-size: .7rem;
 }
@@ -259,7 +253,6 @@ pre em {
 .content > h4 {
 	font-family: 'Lora', serif;
 	padding: 0 2rem;
-	padding-bottom: .5rem;
 	font-size: .8rem;
 	text-transform: uppercase;
 	letter-spacing: .1rem;
@@ -271,34 +264,37 @@ pre em {
 }
 .content > h2 {
 	padding: 2rem;
-	padding-top: 0;
-	font-size: 2.8rem;
+	padding-top: 1rem;
+	font-size: 3rem;
 	line-height: 3rem;
 }
 
 .content > h3 {
 	padding: 1rem 2rem;
-	font-size: 1.4rem;
+	font-size: 2rem;
 }
 
 .content > p {
 	font-size: 1rem;
 	line-height: 1.6rem;
-	padding: 0 2rem 1.5rem 2rem;
+	padding: 0 2rem;
+	margin-bottom: 1.5rem;
 	font-family: 'Lora', serif;
 }
 
+.content > p.bookmark { 
+	color: red;
+}
+
+
 .grid-right-code > .content > p {
 	padding-left: 0;
-}
-.content > p:last-child {
-	padding-bottom: 0rem;
 }
 
 .content > p.emphasis { font-size: 1.2rem; }
 
 .content > ul {
-	padding: 0 2rem 1.5rem 3rem;
+	padding: 0 2rem .5rem 3rem;
 }
 
 .content > ul li {
@@ -308,11 +304,12 @@ pre em {
 }
 
 .content > blockquote {
-	padding: 1rem 2.5rem 0rem 2.5rem;
-	font-family: 'Fredericka the Great', sans-serif;
+	padding: 1rem 3.5rem 0rem 3.5rem;
+	font-family: 'Lora', serif;
 	letter-spacing: -0.02rem;
-	line-height: 2.2rem;
+	line-height: 2.4rem;
 	font-size: 2rem;
+	font-style: italic;
 }
 
 .content > div.quoter {
@@ -321,6 +318,17 @@ pre em {
 	font-family: 'Lora', sans-serif;
 	font-style: italic;
 	font-size: .8rem;
+}
+
+.content a.code-ref {
+	color: #006ea5;
+	text-decoration: none;
+	cursor: context-menu;
+}
+
+.content a.code-ref:hover {
+	color: #006ea5 !important;
+	border-bottom: none;
 }
 
 code {
@@ -335,8 +343,7 @@ code {
 }
 
 span.key {
-	display: inline-block;
-	padding: 0px 14px;
+	padding: .2rem .4rem;
 	margin: 0 .2rem;
 	border-radius: .2rem;
 	border-bottom: solid 2px #ccc;
@@ -369,9 +376,9 @@ hr:after {
     font-size: 18px;
   }
 
-  .grid-content {
+.grid-content {
 	grid-template-columns: 1fr 6fr 2fr;
-	}
+}
 
 .grid-right-code {
 	grid-template-columns: 1fr 4fr 5fr 1fr;
@@ -455,6 +462,15 @@ hr:after {
 	padding-right: 0;
 }
 
+.content > ul {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+.content > blockquote {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
 
 
 /*.content > p {
