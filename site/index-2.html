@@ -22,6 +22,7 @@
     <li><a href="#ch-naming-to-teach">Naming to Teach</a></li>
     <li>Naming Completely?</li>
     <li>Making Names Memorable?</li>
+    <li class="extended"><a href="#ch-about-the-author">About the Author</a></li>
     <li class="extended"><a href="#ch-acknowledgements">Acknowledgements</a></li>
   </ul>
 </div>
@@ -176,11 +177,13 @@ The token was encrypted on one layer of the stack and decrypted on a completely 
       <em>I've omitted the detail around how the encryption and decryption work since they are unimportant here.</em>
       </p>
       <p>
-Taking a quick walkthrough of this object, you'll notice that there are two constructors. One hydrates the properties of the object with a <code>user_id</code> and <code>email</code> of the user when a password reset (or registration completion request) is initiated. The timestamp of the token is the moment the object instance is created. 
+Taking a quick walkthrough of this object, you'll notice that there are two constructors. 
+</p>
+<p><a href="#" class="code-ref" data-code-ref="1-d1">One hydrates the properties of the object with a <code>user_id</code> and <code>email</code> of the user when a password reset (or registration completion request) is initiated</a>. The timestamp of the token is set to the moment the object instance is created. 
 </p><p>
-The other hydrates the same object after a user clicks on the emailed link. The token is decrypted and the same properties are deduced from the decryption process.
+<a href="#" class="code-ref" data-code-ref="1-d2">The other hydrates the same object after a user clicks on the emailed link. The token is decrypted and the same properties are deduced from the decryption process</a>.
 </p><p>
-The <code>IssueWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request. For instance, we might set a password reset link to be valid for only ten minutes, whereas a user registration link could be valid for a few hours.
+<a href="#" class="code-ref" data-code-ref="1-d3">The <code>IssueWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request</a>. For instance, we might set a password reset link to be valid for only ten minutes, whereas a user registration link could be valid for a few hours.
 </p>
     </div>
     <div class="code-block">
@@ -193,15 +196,15 @@ public sealed class AuthToken
   public readonly string EmailAddress;
   public readonly string EncryptedToken;
 
-  public AuthToken(int user_id, string email)
+  <span class="1-d1">public AuthToken(int user_id, string email)
   {
     UserID = user_id;
     EmailAddress = email.ToLower().Trim();
     _utc_date_issued = DateTime.UtcNow;
     EncryptedToken = // Omitted for simplicity...
-  }
+  }</span>
 
-  public AuthToken(string encrypted_token)
+  <span class="1-d2">public AuthToken(string encrypted_token)
   {
     try
     {
@@ -214,17 +217,12 @@ public sealed class AuthToken
     {
       throw new InvalidInput("This token could not be decrypted.");
     }
-  }
+  }</span>
 
-  public bool IssuedWithinMinutes(int minutes)
+  <span class="1-d3">public bool IssuedWithinMinutes(int minutes)
   {
-    if (_utc_date_issued.AddMinutes(minutes) < DateTime.UtcNow)
-    {
-      return false;
-    }
-    
-    return true;
-  }
+    return (_utc_date_issued.AddMinutes(minutes) > DateTime.UtcNow);
+  }</span>
 }
 </pre>
     </div>
@@ -262,12 +260,12 @@ It doesn't evoke the excitement of having a "ticket". And, let's be honest, pass
 <div class="grid-right-code">
   <div class="content">
     <p>
-    I end up with the name <code>PermitForUserUpdate</code>. Implementing the class with this name feels right. It's memorable and even the method <code>IssuedWithinMinutes()</code> feels like such a natural method name. Permits in the real world are normally issued. 
+    <a href="#" class="code-ref" data-code-ref="1-d4">I end up with the name <code>PermitForUserUpdate</code></a>. Implementing the class with this name feels right. It's memorable and even the method <code>IssuedWithinMinutes()</code> feels like such a natural method name. Permits in the real world are normally issued. 
     </p>
  </div>
  <div class="code-block">
   <pre>
-public sealed class <em>PermitForUpdate</em>
+<span class="1-d4">public sealed class PermitForUpdate</span>
 {
   private readonly DateTime _utc_date_issued;
 
@@ -1141,7 +1139,7 @@ However, you may find yourself in situations where there are dozens or more vari
       <p>The importance of the variables are roughly equal to their size. When I read this code, it doesn't take me long to figure out that there is some <code>tokens</code> array, and elements in that array are added to a <code>usedTokens</code> list if they are used. 
       </p>
     </div>
-    <div class="code-block large">
+    <div class="code-block">
       <pre>
 for (int i=0; i < tokens.length; i++)
 {
@@ -1914,11 +1912,21 @@ Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
 
 </div>
 
+<div class="chapter" id="ch-about-the-author">
+<div class="grid-content">
+  <div class="content">
+    <h2>About the Author</h2>
+    <p>Hey there.
+    </p>
+  </div>
+</div>
+</div>
+
 <div class="chapter" id="ch-acknowledgements">
 <div class="grid-content">
   <div class="content">
     <h2>Acknowledgements</h2>
-    <p>Does anybody read this stuff? Anyways, I'd like to thank a few (well-known) folks in the programming industry that provided some valuable insights into how they write code. Their thoughts gave me direction in my own thinking while writing this book.
+    <p>I'd like to thank a few (well-known) folks in the programming industry that provided some valuable insights into how they write code. Their thoughts gave me direction in my own thinking while writing this book.
     </p>
     <ul>
       <li>Eric Evans</li>
@@ -1958,7 +1966,6 @@ Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
 
     $(window).scroll(function (event) {
 
-
         if ($(curChapterId).offset().top - 1 <= $(window).scrollTop())
         {
           $("div.menu").fadeIn(200);
@@ -1971,8 +1978,32 @@ Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
         // Do something
     });
 
+    $("a.code-ref").hover(function(e) {
+        var codeRef = $(this).data("code-ref");
+        $("pre span." + codeRef).addClass("emphasis");
+    });
+
+    $("a.code-ref").click(function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    });
+
+    $("a.code-ref").mouseleave(function(e) {
+        var codeRef = $(this).data("code-ref");
+        $("pre span." + codeRef).removeClass("emphasis");
+    });
+
     $("#btn-cover-click").click(function(e) {
         scrollToChapter(e);
+    });
+
+    $(".content p").hover(function(e) {
+      $(this).addClass("bookmark");
+    });
+
+    $(".content p").mouseleave(function(e) {
+      $(this).removeClass("bookmark");
+      
     });
 
     $("body").on("click", "a:not('#btn-cover-click')", function(e) {
