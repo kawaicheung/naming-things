@@ -5,23 +5,13 @@
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
 }
 
-body { display:none;}
+body { display:none; background-color: #faf9f6;}
 a, em, strong { font: inherit; }
-a:visited {color: #fd5634;}
-a:hover {color: #f5360f !important; }
+a:visited { color: #fd5634; }
+a:hover { color: red !important; }
+
 em { font-style: italic; }
 strong { font-weight: bold; }
-
-/*.bookmark {
-	position: absolute;
-	top: 1600px;
-	left: 0;
-	width: 10vw;
-	height: 2rem;
-	background-color: red;
-	border-top-right-radius: .5rem;
-	border-bottom-right-radius: .5rem;
-}*/
 
 /* Grids */
 
@@ -55,14 +45,6 @@ strong { font-weight: bold; }
 	grid-template-columns: 1fr 6fr 3fr;
 }
 
-.grid-cover > div,
-.grid-content > div,
-.grid-right-code  > div,
-.grid-left-code > div,
-.grid-code-only > div {
-	/*margin-bottom: 1.5rem;*/
-}
-
 #grid-prev-next {
 	display: grid;
 	padding-top: 2rem;
@@ -82,12 +64,12 @@ strong { font-weight: bold; }
 
 #grid-prev-next a {
 	font-size: 1rem;
-	font-family: 'Fredericka the Great', sans-serif;
-	color: #fd5634;
+	font-family: 'Lora', serif;
+	font-weight: 400;
+	color: #fa6122;
 	text-decoration: none;
 	border-bottom: dotted 1px #fd5634;
 }
-
 
 .content { grid-area: content; }
 .code-block { grid-area: code-block; }
@@ -96,8 +78,8 @@ strong { font-weight: bold; }
 
 /* code-block */
 .code-block {
-	/*background-color: #2b4dff;*/
-	background-color: #006ea5;
+	background-color: #3d4e5b;
+	/*background-color: #006ea5;*/
 	border-radius: .5rem;
 	padding: 1.5rem;
 	margin-bottom: 1.5rem;
@@ -107,8 +89,6 @@ strong { font-weight: bold; }
 	font-size: 1rem;
 	line-height: 1.4rem;
 }
-
-
 
 pre, pre span {
 	color: #c3eaff;
@@ -122,9 +102,11 @@ pre, pre span {
  	line-height: 1.1rem;
 }
 
+
 pre span.emphasis {
 	font: inherit;
-	color: #fff !important;
+	color: #ffed95 !important;
+	font-weight: bold;
 }
 
 /* menu */
@@ -193,8 +175,8 @@ pre span.emphasis {
 
 .cover {
 	grid-area: cover;
-	height: 65vh;
-	padding-top: 35vh;
+	height: 68vh;
+	padding-top: 32vh;
 	vertical-align: middle;
 }
 
@@ -212,9 +194,9 @@ pre span.emphasis {
 }
 
 .cover > h3 {
-	padding-top: 1.8rem;
-	font-size: 1.4rem;
-	font-family: 'Fredericka the Great', sans-serif;
+	padding-top: 1.4rem;
+	font-size: 1.1rem;
+	font-family: 'Lora', sans-serif;
 	color: #fd5634;
 	font-weight: 400;
 }
@@ -227,7 +209,7 @@ pre span.emphasis {
 	font-weight: 400;
 }
 
-.cover h4 > a {
+.cover > h4 > a {
 	text-decoration: none;
 	background-color: #fd5634;
 	color: #fff;
@@ -238,9 +220,17 @@ pre span.emphasis {
 	display: inline-block;
 }
 
-.cover h4 > a:hover {
+.cover > h4 > a:hover {
   background-color: #fff;
 }
+
+.cover > h5 {
+  	padding-top: 2rem;
+  	font-size: 0.7rem;
+	font-family: 'Lora', sans-serif;
+	font-weight: 400;
+}
+
 
 /* chapter */
 .chapter {
@@ -282,11 +272,6 @@ pre span.emphasis {
 	font-family: 'Lora', serif;
 }
 
-.content > p.bookmark { 
-	color: red;
-}
-
-
 .grid-right-code > .content > p {
 	padding-left: 0;
 }
@@ -312,6 +297,11 @@ pre span.emphasis {
 	font-style: italic;
 }
 
+.content > blockquote.smaller {
+	font-size: 1.4rem;
+	line-height: 2rem;
+}
+
 .content > div.quoter {
 	padding: 1rem 3rem 2.5rem 0;
 	text-align: right;
@@ -321,14 +311,17 @@ pre span.emphasis {
 }
 
 .content a.code-ref {
-	color: #006ea5;
+	color: #000;
 	text-decoration: none;
 	cursor: context-menu;
+	/*background-color: #c4dfec;*/
+	background-color: #ffed95;
 }
 
-.content a.code-ref:hover {
+.content a.code-ref:hover,
+.content a.code-ref:hover > code {
 	color: #006ea5 !important;
-	border-bottom: none;
+	cursor: context-menu;
 }
 
 code {
@@ -341,6 +334,14 @@ code {
 	cursor: default;
 	background-color: #efefef;
 }
+
+a.code-ref > code {
+	background-color: inherit;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
 
 span.key {
 	padding: .2rem .4rem;
@@ -471,14 +472,5 @@ hr:after {
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
 }
-
-
-/*.content > p {
-	font-size: 1rem;
-	line-height: 1.6rem;
-	padding: 0 2rem 1.5rem 1.5rem;
-	padding-top: 0;
-	font-family: 'Lora', serif;
-}*/
 
 }
