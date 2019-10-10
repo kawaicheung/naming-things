@@ -33,7 +33,7 @@
   <div class="cover">
     <h1>On Naming Things.</h1>
     <h2>A short book dedicated to one of coding's most elusive tasks.</h2>
-    <h3>By Ka Wai Cheung, creator of <a href="https://www.donedone.com" target="_blank">DoneDone</a>.</h3>
+    <h3>By Ka Wai Cheung, creator and co-founder of <a href="https://www.donedone.com" target="_blank">DoneDone</a>.</h3>
     <h4><a href="#" id="btn-cover-click">Start reading...</a></h4>
     <h5>Copyright &copy; 2019-2020, DoneDone LLC. All rights reserved.
   </div>  
@@ -137,7 +137,7 @@
       </p>
       <hr />
       <p>
-        <em>Most of the examples in this book come directly from (or were inspired by) real code I've written and re-written for DoneDone over the past several years.</em>
+        <em>Many of the examples in this book come directly from (or were inspired by) real code I've written and re-written for DoneDone over the past several years.</em>
       </p>
     </div>
   </div>
@@ -176,20 +176,20 @@
         The other day, I was looking at some code I wrote awhile back that allows DoneDone users to reset their password. As is usually the case with code I wrote sometime ago, there were signs a little rethinking could make the code cleaner.
       </p>
       <p>
-        The reset password function works like most other apps: A user enters their email address in a "forgot password" form from the app. Then, they receive a link with an encrypted token in the querystring. The information inside the token determines whether the reset link is still valid and which user originally requested the reset.
+        The reset password function works like most other apps: A user enters their email address in a "forgot password" form from the app. Then, they receive a link with an encrypted token embedded in the querystring. The information inside the token determines whether the reset link is expired and which user originally requested the reset.
       </p>
       <p>
-        The first problem? The token was encrypted on one layer of the stack and decrypted on a completely different layer. Even further, the same token strategy was also used for completing a user's initial registration, but the encryption and decryption logic had been written twice. The code for encrypting, decrypting, and detecting whether a token is expired was spread in a few too many places. 
+        On this re-read, I didn't like how the token was created and read. It was encrypted on one layer of the stack and decrypted on a completely different layer. There were a couple of places where I was checking whether the token hadn't expired yet.
       </p> 
       <p>
-        After a bit of chin-scratching and experimentation, I determined the best refactoring was to wrap up this "token" concept in one object. Let the object handle both the encryption and decryption of the token. I got to a place I was very happy with&mdash;the guts of the object looked something like this. 
+        It became clear that a better approach was to wrap up the token concept into a single object. Let the object handle both the encryption, decryption, and validation of the token.
       </p>
     </div>
   </div>
   <div class="grid-right-code">
     <div class="content">
       <p>
-        <em>I've omitted the detail around how the encryption and decryption work since they are unimportant here.</em>
+        I got to a place I was very happy with&mdash;the guts of the object looked something like this. 
       </p>
       <p>
         Taking a quick walkthrough of this object, you'll notice that there are two constructors. 
@@ -316,7 +316,7 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
         I'm sure you've daydreamed at work about devoting an entire week to just cleaning up code for a project.
       </p>
       <p>
-        That wouldn't sit well with 99% of managers and 100% of clients out there. The fact is, we have to clean up&mdash;surreptitiously&mdash;as we go.
+        That wouldn't sit well with 99% of managers and 100% of clients out there. The fact is, we have to clean up&mdash;surreptitiously&mdash;as we go. 
       </p>
       <blockquote class="smaller">
         Of course, many [managers] say they are driven by quality but are more driven by schedule...In these cases I give my more controversial advice: Don't tell! Subversive? I don't think so. 
@@ -535,7 +535,6 @@ public bool <span class="2-d8">HasAdminAccess</span>
 }</pre>
     </div>
   </div>
-
   <div class="grid-content">
     <div class="content">
       <p>
@@ -710,7 +709,6 @@ if (person.MinutesIdle > 60)
 }</pre>
     </div>
   </div>
-
   <div class="grid-content">
     <div class="content">
       <p>
@@ -724,10 +722,7 @@ if (person.MinutesIdle > 60)
 </div>
 
 
-
-
 <div class="chapter" id="ch-surfacing-parameters">
-  
   <div class="grid-content">
     <div class="content">
       <h2>Surfacing Method Parameters</h2>
@@ -739,40 +734,33 @@ if (person.MinutesIdle > 60)
       </p>
     </div>
   </div>
-
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
 void Update(int id, string name, string address, int status...</pre>
     </div>
   </div>
-
   <div class="grid-content">
     <div class="content">
       <p>
-        Of course, we can get around this mess by rounding up all of these parameters into a single object, building up the object, and then passing that to the method. 
+        Of course, we can get around this mess by rounding up all of these parameters into a single object and passing it to the method. 
       </p>
     </div>
   </div>
-
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
 void Update(<em>UpdateParams params</em>) { ... }</pre>
     </div>
   </div>
-
   <div class="grid-content">
     <div class="content">
       <p>
-        While this acts as a nice tidying mechanism, it doesn't help you understand what the method actually <em>does</em>. This is when I like to look for ways I can push more meaning into the method name. 
-      </p>
-      <p>
-        I'll start with an example of a feature addition I'm working on for account cancellations in DoneDone. 
+        While this approach tidys your code up, it doesn't help you understand what the method actually <em>does</em>. This is when I like to look for ways I can push more meaning into the method name. 
       </p>
       <hr />
       <p>
-        For years, we've only allowed our customers the option to cancel an account immediately&mdash;it was instantaneous and irreversible. That worked for the vast majority of customers.
+        For years, we've only allowed our customers the option to cancel a DoneDone account immediately&mdash;it was instantaneous and irreversible. 
       </p>
     </div>
   </div>
@@ -780,15 +768,14 @@ void Update(<em>UpdateParams params</em>) { ... }</pre>
   <div class="grid-right-code">
     <div class="content">
       <p>
-        I have a method off of a billing repository class that's responsible for invoking the cancellation when requested. The guts of the method are involved, but the method signature is about as simple a read as you can imagine.
+        I have a method off of a billing repository class that's responsible for invoking the cancellation when requested. The guts of the method are involved, but <a href="#" class="code-ref" data-code-ref="4-d1">the method signature</a> is about as simple a read as you can imagine.
       </p>
     </div>
     <div class="code-block">
       <pre>
 public class BillingRepository
 {
-  ...
-  <em>public void CancelAccount(int account_id) { ... }</em>;
+  <span class="4-d1">public void CancelAccount(int account_id)</span> { ... };
   ...
 }</pre>
     </div>
@@ -797,10 +784,10 @@ public class BillingRepository
   <div class="grid-content">
     <div class="content">
       <p>
-        However, some customers want to cancel their account at the end of their term, which could be several months out. Rather than require them to remember to cancel the account in a few months, they want the account to <em>automatically</em> cancel on the last day of their term.
+        However, some customers want to cancel their account at the end of their term, which could be several months out. Rather than remembering to cancel their account in a few months, they want the account to automatically cancel on the last day of their term.
       </p>
       <p>
-        I start implementing this by tacking on a parameter to the current <code>CancelAccount()</code> repository method. Since there are now two cancellation options, cancelling immediately <em>or</em> at the end of their current billing period, I choose the simplest parameter type that fills the need, a boolean. 
+        I start implementing this by tacking on a parameter to <code>CancelAccount()</code>. Since there are now two cancellation options, cancelling immediately <em>or</em> at the end of their current billing period, I choose the simplest parameter type that fills the need, the trusty boolean. 
       </p>
       <p>
         I decide to name it <code>cancel_at_period_end</code>. Now, I can pass in <code>true</code> to handle this new special case, and <code>false</code> to handle the original case.
@@ -819,7 +806,7 @@ public void CancelAccount(int account_id, <em>bool cancel_at_period_end</em>);
   <div class="grid-content">
     <div class="content">
       <p>
-       After I've implemented the new code to handle the update, I now update all existing references to this method that handle immediate cancellations.
+       After I've implemented the new code to handle the update, I now update all existing references to this method that handle the immediate cancellations.
       </p>
     </div>
   </div>
@@ -833,140 +820,132 @@ _billing_repository.CancelAccount(account_id, <em>false</em>);
   </div> 
 
   <div class="grid-content">
-  <div class="content">
-    <p>
-However, something feels awkward about this method signature.
-</p><p>
-At a glance, it's hard to tell what the <code>false</code> parameter means. Having just written the updates, it makes sense to me now, but it won't to someone else (or to myself in a few days). They'll have to look at the method signature and perhaps even drill into the method to be sure. 
-</p>
-    <p>
-I feel compelled to add the comment above each call to <code>CancelAccount()</code> for clarity.  It also helps differentiate between the new code I'll be adding later to handle the additional option of canceling at the end of the period.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-<div class="code-block">
-<pre>
-// Cancel the account immediately...
-_billing_repository.CancelAccount(account_id, false);
-</pre>
-</div>
-</div>
+    <div class="content">
+      <p>
+        But something doesn't feel right about this method signature.
+      </p>
+      <p>
+        At a glance, it's hard to tell what the <code>false</code> parameter means. Having just written the updates, it makes sense to me now, but it won't to someone else (or to myself in a few days). They'll have to look at the method signature and perhaps even drill into the method to be sure. 
+      </p>
+      <p>
+        <a href="#" class="code-ref" data-code-ref="4-d2">I add a comment above each call to <code>CancelAccount()</code></a> for clarity.  It also helps differentiate between the new code I'll be adding later to handle the additional option of canceling at the end of the period.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+<span class="4-d2">// Cancel the account immediately...</span>
+_billing_repository.CancelAccount(account_id, false);</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        <em>Better</em>. But, comments never age well. The method call still feels strange. The standard cancellation case (canceling immediately) accepts the <code>false</code> parameter. Passing in <code>false</code> as the default just feels odd&mdash;It's as if I have to suppress something to perform the <em>default</em> action.
+      </p>
+      <p>
+        I can get around this pretty quickly though. Since I'm working with a boolean parameter, I can change its meaning so that the standard case passes in <code>true</code> and update my code accordingly.
+      </p>
+    </div>
+  </div>
 
-<div class="grid-content">
-  <div class="content">
- <p>
-<em>Better</em>. But the method call still feels strange. The standard cancellation case (canceling immediately) accepts the <code>false</code> parameter. 
-Passing in <code>false</code> as the default just feels odd&mdash;I have to suppress something to perform the default action.
-</p>
-</div>
-</div>
-
-<div class="grid-right-code">
-  <div class="content">
-   
-<p>
-I can get around this pretty quickly though. Since I'm working with a boolean parameter, I can simply flip the name of the option around so that the standard case passes in <code>true</code> and update my code accordingly. I swap the <code>cancel_at_period_end</code> parameter with <code>cancel_now</code>, modify the implementation, and nod to myself in approval.
-  </p>
-</div>
-<div class="code-block">
+  <div class="grid-right-code">
+    <div class="content">
+      <p>
+        <a href="#" class="code-ref" data-code-ref="4-d3">I swap the <code>cancel_at_period_end</code> parameter with <code>cancel_now</code></a> and <a href="#" class="code-ref" data-code-ref="4-d4">modify the implementation</a>.
+        Now, the default case passes in <code>true</code>. 
+      </p>
+    </div>
+    <div class="code-block">
 <pre>
-public void CancelAccount(int account_id, bool <em>cancel_now</em>);
+public void CancelAccount(int account_id, <span class="4-d3">bool cancel_now</span>);
 
 ...
 
 // Cancel the account immediately...
-_billing_repository.CancelAccount(account_id, <em>true</em>);
-</pre>
-</div>
-</div>
+_billing_repository.CancelAccount(account_id, <span class="4-d4">true</span>);</pre>
+    </div>
+  </div>
 
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        But, I've introduced a more onerous problem. By simply reading the <code>CancelAccount()</code> method signature, I can't quite tell what passing in <code>false</code> would do. Would it cancel in a day? In a month? At the end of the period? 
+      </p>
+      <p>
+        At this point, I've exhausted my options with the boolean parameter. While it allows for both options, the options aren't clear from the method signature.
+      </p>
+      <p>
+        I often find this is the case with booleans when the concept it describes has two cases but the options aren't really <em>opposites</em>. That's the case here&mdash;the natural opposite of <code>cancel_now</code> isn't <code>cancel_at_period_end</code> in the way the natural opposite of <code>open</code> is <code>closed</code>.
+      </p>
+      <p>
+        To improve, <a href="#" class="code-ref" data-code-ref="4-d5">I could try introducing an enumerated value instead</a>.
+      </p>
+    </div>
+  </div>
 
-<div class="grid-content">
-  <div class="content">
- <p>
-Now, the default case passes in <code>true</code>. But, I've introduced a more onerous problem. By simply reading the <code>CancelAccount()</code> method signature, I can't quite tell what passing in <code>false</code> would do. What would it mean for <code>cancel_now</code> to be <code>false</code>? Would it cancel in a day? In a month? At the end of the period? 
-</p><p>
-At this point, I've exhausted my options with the boolean parameter. While it allows for both options, the options aren't clear from the method signature.
-</p><p>
-I often find this is the case with booleans when the concept it describes is binary but the options aren't strict <em>opposites</em>. That's the case here&mdash;the natural opposite of <code>cancel_now</code> isn't <code>cancel_at_period_end</code> in the way the natural opposite of <code>open</code> is <code>closed</code>.
-</p>
- <p>
-      To improve, I could try an <code>enum</code> instead.
-    </p>
-</div>
-</div>
-
-<div class="grid-code-only">
-  <div class="code-block">
+  <div class="grid-code-only">
+    <div class="code-block">
     <pre>
-enum CancelationType 
+<span class="4-d5">enum CancelType 
 {
   NOW,
   AT_PERIOD_END
-}
+}</span>
 ...
 
-public void CancelAccount(int account_id, CancelationType cancel_type);
+public void CancelAccount(int account_id, <span class="4-d5">CancelType cancel_type</span>);
 
 ...
 
-_billing_repository.CancelAccount(account_id, CancelationType.NOW);
-</pre>
-</div>
-</div>
+_billing_repository.CancelAccount(account_id, <span class="4-d5">CancelType.NOW</span>);</pre>
+    </div>
+  </div>
 
-<div class="grid-content">
-  <div class="content">
- <p>
-This is an improvement. I've gotten rid of the ambiguity issues we had with the boolean parameter. It also leaves me better positioned to introduce additional cancelation types in the future.
-</p><p>
-But, this just doesn't feel like one of those features we'd continually augment in the near future. 
-</p><p>
-Weighing this factor in, an even more readable approach is to directly convey the type of cancelation in the method name. I ultimately decide to create two distinct cancelation methods.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-  <div class="code-block">
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        This is an improvement. I've gotten rid of the ambiguity issues we had with the boolean parameter. It also leaves me better positioned to introduce additional cancelation types in the future.
+      </p>
+      <p>
+        But, this just doesn't feel like one of those features we'd continually augment in the near future. 
+      </p>
+      <p>
+        An even more readable approach is to directly convey the type of cancelation in the method name. I ultimately decide to create two distinct cancelation methods.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
     <pre>
 public void CancelAccountNow(int account_id);
-public void CancelAccountAtPeriodEnd(int account_id);
-</pre>
-</div>
-</div>
+public void CancelAccountAtPeriodEnd(int account_id);</pre>
+    </div>
+  </div>
 
-<div class="grid-content">
-  <div class="content">
-    <p>
-With this update, now both the standard and unique cancelation implementations read as informatively. There's no ambiguity in either what the method does or what parameters I'm passing in.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-  <div class="code-block">
-    <pre>
-_billing_repository.CancelAccountNow(account_id);
-...
-_billing_repository.CancelAccountAtPeriodEnd(account_id);
-</pre>
-</div>
-</div>
-<div class="grid-content">
-  <div class="content">
-    <p>
-I also get an additional benefit from this approach. Breaking the method out into two methods allows me to separate the implementations of each. In the original approach, I'd have to do something like this.
-</p>
-</div>
-</div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        With this update, the standard and unique cancelation implementations both read clearly. There's zero ambiguity in either what the method does or what the parameters mean.
+      </p>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        I also get an additional benefit. Breaking the method out into two methods allows me to separate the implementations of each. In the original approach, I'd have to do something like this.
+      </p>
+    </div>
+  </div>
 
-<div class="grid-left-code">
-  <div class="content">
-<p> 
-The method body would not only be much longer, but it would have more than one responsibility. Breaking the methods apart not only clarify their use, but will make finding and updating their implementations easier down the road.
-</p>
-</div>
-<div class="code-block">
+  <div class="grid-left-code">
+    <div class="content">
+      <p> 
+        The method body would not only be much longer, but it would have more than one responsibility. Breaking the methods apart not only clarify their use, but will make finding and updating their implementations easier down the road.
+      </p>
+    </div>
+    <div class="code-block">
 <pre>
 void CancelAccount(int account_id, bool cancel_at_period_end)
 {
@@ -980,141 +959,130 @@ void CancelAccount(int account_id, bool cancel_at_period_end)
   }
 }
 </pre>
-</div>
-</div>
-<div class="grid-content">
-  <div class="content">
-    
-<hr />
-<p>
-Another place you'll come across a golden opportunity to create a new method is whenever <code>null</code>  values are passed to your method. Usually, it's a sign that a new method name ought to be created to handle the passing of the <code>null</code> to the original method.
-</p>
-<p>
-In DoneDone, I have a series of bulk editing methods that live in a services layer. They accept a list of <code>item_ids</code> and perform some action on each of them. One of these is a function to bulk update item due dates. Here's the signature.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-<div class="code-block">
-  <pre>
-public void UpdateDueDates(List&lt;long&gt; item_ids, DateTime? due_date, string comment, User requester);
-</pre>
-</div>
-</div>
-<div class="grid-right-code">
-<div class="content">
-<p>
-Crawling up to the application layer, here's a snippet of the controller method that calls the bulk edit methods depending on the user's input:
-</p>
-</div>
-<div class="code-block">
-  <pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <hr />
+      <p>
+        I find a similar opportunity arises when <code>null</code> values are passed to a method. Usually, it's a sign that a new method name ought to be created to handle the passing of <code>null</code> to the original method.
+      </p>
+      <p>
+        In DoneDone, I have a series of "bulk edit" methods that live in a services layer. Each accepts a list of <code>issue_ids</code> and performs some action on the issue they represent. One of these is a function to bulk update the issues' due dates. 
+      </p>
+      <p>
+        Here's the abbreviated signature. <em>(Due dates are optional&mdash;hence the nullable <code>DateTime?</code> object representing the due date in the parameter list).</em>
+      </p>
+    </div>
+  </div>
+  
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+public void UpdateDueDates(List&lt;long&gt; issue_ids, DateTime? due_date, ...);</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Crawling up to the application layer, here's where <a href="#" class="code-ref" data-code-ref="4-d6">I call the bulk edit due date method</a> based on the user's input:
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-code-only">
+    <div class="code-block">
+<pre>
 switch (input.ActionChangeType)
 {
-  ...
-      
   case BulkActions.UPDATE_DUE_DATE:
-    _items_service.UpdateDueDates(input.ItemIDs, 
-      DateTime.Parse(input.Value), input.comment, _LoggedInUser);
-          
-    success_alert = "The due date has been updated for these items.";
+    <span class="4-d6">_issues_service.UpdateDueDates(input.IssueIDs, DateTime.Parse(input.Value),...);</span>
     break;
-    
     ... 
-}
-</pre>
-</div>
-</div>
-<div class="grid-right-code">
-<div class="content">
-<p>
-Due dates are optional&mdash;hence the nullable <code>DateTime?</code> object representing the due date in the parameter list.
-</p>
-<p>In a recent feature update, we wanted to explicitly add an option to <em>remove</em> due dates from all items. Because the <code>UpdateDueDates()</code> method already gives the option to pass in a <code>null</code> value, the update was easy:
-</p>
-</div>
-<div class="code-block">
-  <pre>
+}</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        In a recent feature update, we wanted to explicitly add an option to <em>remove</em> due dates from all issues. Because the <code>UpdateDueDates()</code> method already gives the option to pass in a <code>null</code> value, <a href="#" class="code-ref" data-code-ref="4-d7">the update was straightforward</a>:
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-code-only">
+    <div class="code-block">
+<pre>
 switch (input.ActionChangeType)
 {
-    ...
+  case BulkActions.UPDATE_DUE_DATE:
+    _items_service.UpdateDueDates(input.ItemIDs, DateTime.Parse(input.Value), ...);
+    break;
         
-    case BulkActions.UPDATE_DUE_DATE:
-        _items_service.UpdateDueDates(input.ItemIDs, DateTime.Parse(input.Value), input.comment, _LoggedInUser);
-        success_alert = "The due date has been updated for these items.";
-        break;
-        
-    <em>case BulkActions.REMOVE_DUE_DATE:
-        _items_service.UpdateDueDates(input.ItemIDs, null, input.comment, _LoggedInUser);
-        success_alert = "The due date has been removed for these items.";
-        break;</em>
-        
+  <span class="4-d7">case BulkActions.REMOVE_DUE_DATE:
+    _items_service.UpdateDueDates(input.ItemIDs, null, ...);
+    break;</span>
     ... 
-}
-</pre>
-</div>
-</div>
-<div class="grid-content">
-  <div class="content">
-    <p>
-But, explicitly passing <code>null</code> makes the method invocation less readable. When I inevitably revisit this line of code down the road, I have to trickle into the method to be certain of what it means. Also, in this case, there would never be a reason to pass anything other than a hard-coded <code>null</code>&mdash;so why not eliminate the need altogether?
-</p>
-<p>
-Back on the service layer, I create a new method. It's nothing more than a wrapper to the original <code>UpdateDueDates()</code> method:
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-<div class="code-block">
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        But, explicitly passing <code>null</code> makes the code less readable. When I  revisit this line of code down the road, I have to trickle into the method to be certain of what <code>null</code> refers to. So why not eliminate the need altogether?
+      </p>
+      <p>
+        Back on the service layer, I create a new method specifically for removing due dates that wraps the original <code>UpdateDueDates()</code> method. And once again, I can give it a <a href="#" class="code-ref" data-code-ref="4-d8">more meaningful name</a>.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
   <pre>
-public void RemoveDueDates(List&lt;long&gt; item_ids, string comment, User requester)
+public void <span class="4-d9">RemoveDueDates</span>(List&lt;long&gt; issue_ids, ...)
 {
-  UpdateDueDates(item_ids, null, comment, requester);
-}
-</pre>
-</div>
-</div>
-
-<div class="grid-content">
-  <div class="content">
-    <p>
-But with this small addition, I now get to tidy up where I invoke the method on the application layer. Not only do I dissolve the <code>null</code> parameter, I also benefit from the name of the new method. In context, the two actions around due dates are much more distinct and clearer to parse.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-<div class="code-block">
-  <pre>
-case BulkActions.UPDATE_DUE_DATE:
-  _items_service.UpdateDueDates(input.ItemIDs, DateTime.Parse(input.Value), input.comment, _LoggedInUser);
-  success_alert = "The due date has been updated for these items.";
-  break;
+  UpdateDueDates(issue_ids, null, ...);
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        With this small addition, I can tidy up the application layer code. In context, <a href="#" class="code-ref" data-code-ref="4-d10">the two actions around due dates are now much easier to parse</a>.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+<pre>
+switch (input.ActionChangeType)
+{
+  case BulkActions.UPDATE_DUE_DATE:
+    <span class="4-d10">_items_service.UpdateDueDates(input.IssueIDs, DateTime.Parse(input.Value), ...);</span>
+    break;
         
-case BulkActions.REMOVE_DUE_DATE:
-  _items_service.RemoveDueDates(input.ItemIDs, input.comment, _LoggedInUser);
-  success_alert = "The due date has been removed for these items.";
-  break;
-</pre>
+  case BulkActions.REMOVE_DUE_DATE:
+    <span class="4-d10">_items_service.RemoveDueDates(input.IssueIDs, ...);</span>
+    break;
+    ... 
+}</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <hr />
+      <p>
+        In both examples, adding a <em>new</em> method rather than relying on the parameters of an existing method were fairly easy decisions. In both cases, there was only one variant to the parameters, requiring one additional method.
+      </p>
+      <p>
+        If the amount of variations are small (say, 3 or less), and these variations are unlikely to change over time, surfacing parameters into method names makes a whole lot of sense to improve your code readability.
+      </p>
+    </div>
+  </div>
 </div>
-</div>
-
-<div class="grid-content">
-  <div class="content">
-    <hr />
-    <p>
-In both examples, adding a <em>new</em> method rather than relying on the parameters of an existing method were fairly easy decisions. In both cases, there was only one variant to the parameters&mdash;requiring one additional method. If the amount of variations are small (say, 3 or less), and these variations are unlikely to change over time, surfacing parameters into method names makes sense.
-</p>
-<p>
-However, you may find yourself in situations where there are dozens or more variations to a method, and new variations are added to relatively frequently. In those cases, it might be best to lay off creating new methods to avoid such a large increase in methods and adding the burden of making updates to them too often.
-</p>
-</div>
-</div>
-
-</div>
-
-
-
-
 
 <div class="chapter" id="ch-shape-of-code">
   <div class="grid-content">
