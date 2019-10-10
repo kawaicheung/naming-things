@@ -199,6 +199,7 @@ pre span.emphasis {
 	font-family: 'Lora', sans-serif;
 	color: #fd5634;
 	font-weight: 400;
+	text-align: right;
 }
 
 .cover > h4 {
@@ -207,6 +208,7 @@ pre span.emphasis {
 	font-style: italic;
 	font-family: 'Lora', sans-serif;
 	font-weight: 400;
+	text-align: right;
 }
 
 .cover > h4 > a {
@@ -229,6 +231,7 @@ pre span.emphasis {
   	font-size: 0.7rem;
 	font-family: 'Lora', sans-serif;
 	font-weight: 400;
+	text-align: center;
 }
 
 
