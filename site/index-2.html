@@ -22,8 +22,7 @@
     <li><a href="#ch-naming-to-teach">Naming to Teach</a></li>
     <li><a href="#">Naming Completely?</a></li>
     <li><a href="#">Making Names Memorable?</a></li>
-    <li class="extended"><a href="#ch-about-the-author">About the Author</a></li>
-    <li class="extended"><a href="#ch-acknowledgements">Acknowledgements</a></li>
+    <li class="extended"><a href="#ch-about-this-book">About this book</a></li>
   </ul>
 </div>
 
@@ -109,7 +108,7 @@
         My obsession with naming started from a quote I read some time ago. If you've written code long enough, there's a good chance you've heard it as well.
       </p>
       <blockquote>
-        &ldquo;There are only two hard things in Computer Science: cache invalidation and naming things.&rdquo;
+        There are only two hard things in Computer Science: cache invalidation and naming things.
       </blockquote>
       <div class="quoter">
         Phil Karlton
@@ -750,14 +749,14 @@ void Update(int id, string name, string address, int status...</pre>
   <div class="grid-content">
     <div class="content">
       <p>
-        Of course, we can get around this mess by rounding up all of these parameters into a single object and passing it to the method. 
+        Of course, we can get around this mess by rounding up all of these parameters <a href="#" class="code-ref" data-code-ref="4-d0">into a single object</a> and passing it to the method. 
       </p>
     </div>
   </div>
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-void Update(<em>UpdateParams params</em>) { ... }</pre>
+void Update(<span class="4-d0">UpdateParams params</span>) { ... }</pre>
     </div>
   </div>
   <div class="grid-content">
@@ -1158,7 +1157,153 @@ for (int <span class="5-d4">curIndexOfTokenArray</span>=0; <span class="5-d4">cu
         The original version values the shape of the entire statement more the level of description each variable brings. There are certain times where this is a better trade-off. This example is one of them.
       </p>
       <hr />
-      <p>In DoneDone,....[TO DO - System time zones]</p>
+      <p>
+        Here’s another example. In DoneDone, <code>systemTimeZones</code> represent a collection of objects each describing a time zone. The method loops through this collection, then extracts time zone information to build a list of <code>DropDownComponents</code> while marking the passed-in time zone as <code>Selected</code>:
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+<pre>
+public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedTimeZone)
+{
+  var result  = new List&lt;DropDownComponent&gt;();
+  var systemTimeZones = TimeZoneInfo.GetSystemTimeZones();
+
+  foreach (var systemTimeZone in systemTimeZones)
+  {
+    var comp = new DropDownComponent(systemTimeZone.Id, systemTimeZone.DisplayName);
+
+    if (systemTimeZone.Id == selectedTimeZone)
+    {
+      comp.Selected = true;
+    }
+
+    result.Add(comp);
+  }
+
+  return result;
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        The issue with the shape of this code is how repetitive some of the variable names look. There are several names in this method that all look similar at a glance:
+      </p>
+      <ul>
+        <li>The `systemTimeZones` collection</li>
+        <li>The `systemTimeZone` object scoped in the `foreach` loop</li>
+        <li>The `selectedTimeZone` parameter</li>
+        <li>The `GetSystemTimeZones()` method call.</li>
+      </ul>
+      <p>
+        Scenarios like these are tricky because each name, in isolation, is appropriately descriptive. No single name is egregiously lengthy, misleading, or overly detailed. 
+      </p>
+      <p>
+        The problem, however, is when we step back and read the method as a whole. It reminds me a lot of the lines of a Dr. Suess story. One of my son’s favorites is <em>Hop On Pop</em>, which begins:
+      </p>
+      <blockquote>
+        UP PUP - Pup is up.<br />
+        CUP PUP - Pup in cup.<br />
+        PUP CUP - Cup on pup.<br />
+      </blockquote>
+      <div class="quoter">Dr. Seuss, <em>Hop on Pop</em></div>
+      <p>
+        The lines of Dr. Seuss, of course, are intentionally dizzying. My son loves to get lost in the pattern of the words and giggles at the absurdity of its rhythm. But, reading dizzying code at 5pm isn't that fun. For this, we need to make some name improvements.
+      </p>
+      <p>
+        The most immediate, impactful name change I can make is with the name of the <code>systemTimeZone</code> object. It appears four times within the method. No other similarly named construct appears more than twice. Also, because its reach is small (only scoped to the <code>foreach</code> loop), we can get away with a less descriptive name without doing much harm to the reader’s understanding. 
+      </p>
+      <p>
+        Let’s try reducing <code>systemTimeZone</code> to something shorter, like <code>tz</code>:
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+<pre>
+public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedTimeZone)
+{
+  var result  = new List&lt;DropDownComponent&gt;();
+  var systemTimeZones = TimeZoneInfo.GetSystemTimeZones();
+
+  foreach (var tz in systemTimeZones)
+  {
+    var component = new DropDownComponent(tz.Id, tz.DisplayName);
+
+    if (tz.Id == selectedTimeZone)
+    {
+      component.Selected = true;
+    }
+
+    result.Add(component);
+  }
+
+  return result;
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        I like this change already. Now, the details of the <code>foreach</code> loop are much easier to scan. In addition, all of the other similarly-named constructs benefit. They're given more room so that the similarity in their names aren’t as distracting on the eyes as they were before.
+      </p>
+      <p>
+        Just like our prior example, the variable <code>tz</code> feels sized appropriately. Conceptually, a small name like <code>tz</code> feels like just one element in a longer-named collection like <code>systemTimeZones</code>. These are the kinds of subtle visual cues that all lend themselves to good code shape.
+      </p>
+      <p>
+        Next, I decide to pare down the variable <code>systemTimeZones</code> to just <code>timeZones</code>. I originally named this list <code>systemTimeZones</code> to follow how the .NET framework named the get method I'm using (<code>GetSystemTimeZones()</code>). But, the word <em>system</em> doesn't add any helpful meaning here. This change also helps better differentiate from the <code>selectedTimeZone</code>
+        variable used inside the <code>foreach</code> loop.
+      </p>
+    </div>
+  </div>
+ <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedTimeZone)
+{
+  var result  = new List&lt;DropDownComponent&gt;();
+  var timeZones = TimeZoneInfo.GetSystemTimeZones();
+
+  foreach (var tz in timeZones)
+  {
+    var component = new DropDownComponent(tz.Id, tz.DisplayName);
+
+    if (tz.Id == selectedTimeZone)
+    {
+      component.Selected = true;
+    }
+
+    result.Add(component);
+  }
+
+  return result;
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        I could go further and rename the other variables more uniquely, but I don't feel it's necessary. When I read the updated method, I don't feel that dizzying effect of all those similarly named variables that I did earlier.
+      </p>
+      <hr />
+      <p>
+        When we edit names, we shouldn't look at them in isolation. That habit can drive naming decisions that don’t actually benefit the overall readability of the surrounding code. 
+      </p>
+      <p>
+        Instead, look at the context in which these names live. Find out what’s making a section of code difficult to read and solve the larger problem. It might be a more descriptive variable name, but it might also be a terse one. Let the full context drive those decisions.
+      </p>
+      <p>
+        In the previous examples, I didn't value the precision of certain variable names as much as I did the shape of the lines around them, particularly because the scope of those variables was small.
+      </p>
+      <p>
+        When editing prose, we read whole sentences and paragraphs to get a sense of readability and style. It’s the same when we write code.
+      </p>
+      <p>
+        [TODO: Shorten this last one and add another one from Lucene...see Github book on naming things chap on code shape]
     </div>
   </div>
 </div>
@@ -1482,7 +1627,7 @@ public void UpdateAccountInfo(string accountName);</pre>
   <div class="grid-content">
     <div class="content">
       <p>
-        In the flurry of updating code, it's easy to leave the <code>UpdateAccountInfo</code> method named as is. But, stripped of most of its original responsibilities, this method is much better named <code>UpdateAccountName</code>. That's all it's doing anymore. It also doesn't hurt to shorten the parameter <code>accountName</code> to just <code>name</code>, since it's obvious at this point what the parameter refers to.
+        In the flurry of updating code, it's easy to leave the <code>UpdateAccountInfo()</code> method named as is. But, stripped of most of its original responsibilities, this method is much better named <code>UpdateAccountName</code>. That's all it's doing anymore. It also doesn't hurt to shorten the parameter <code>accountName</code> to just <code>name</code>, since it's obvious at this point what the parameter refers to.
       </p>
     </div>
   </div>
@@ -1602,64 +1747,51 @@ Once that construct is being used in multiple different ways, then I can justifi
 </div>
 
 <div class="chapter" id="ch-speaking-the-native-tongue">
-<div class="grid-content">
-  <div class="content">
-    <h2>Speaking the Native Tongue</h2>
-
-
-**Pattern Hypnosis**
-
-Unearthing patterns is one of the most fundamental mental exercises in coding. When we can trivialize a procedure that once required a lot of thought into something seemingly automatic, we can move onto solving other problems. 
-
-On the other hand, automation can bias our thinking. We end up forcing a pre-conceived solution every time we encounter what feels like a similar problem without the careful examination we once gave it before we discovered a pattern. The reasoning becomes dogmatic -- it fits this pattern so this must be the way forward!
-
-Let's call this phenomenon "pattern hypnosis." Even the task of naming can fall prey to this pattern hypnosis. I notice I fall into the trap quite frequently when naming tables in a relational database model.
-
-If you're familiar with relational data modeling, you'll know one of the more common modeling concepts is the associative table. 
-
-An associative table's core characteristic is that it contains two or more foreign keys to tables that have a "many-to-many" relationship, like a table that links a `tbl_Students` table to a `tbl_Classes` table. A student enrolls in many classes and a class has many students. The associative table would hold the relationship between those two tables alongside any other data relevant to that relationship (like a student's current grade in that class).
-
-A common pattern is to name such an associative table by gluing the adjacent table names together. This approach usually creates a unique table name that's palatable. `tbl_StudentsClasses` feels like a reasonable name for this table. It reads decently.
-
-Let's take another example. I have a table that links a `tbl_Users` table with a `tbl_Accounts` table.  A single user can belong to many accounts and an account can have many users. If I'm blindly naming an associative table that links these two tables together, I'd call it `tbl_UsersAccounts`. 
-
-Down the road, I add other attributes to the model, like a date for when a user was added to the account. That column would fit naturally in the `tbl_UsersAccounts` table. But, saying "Nora's user account began on June 3rd, 2016" sounds obnoxiously technical. It sounds much more natural to say "Nora's membership began on June 3rd, 2016." 
-
-So, I decide to update the table name to `tbl_Memberships`. 
- 
-Later on, I want to add a third association to the table -- a relationship to a set of available roles. This way, I can model a particular user with an account and a level within the account (Nora has Gold status). If I'm blindly following convention, I'd name my table to something like `tbl_UsersAccountRoles`.
-
-Meanwhile, the name `tbl_Memberships` still holds up. "Nora has a gold-access membership to the Acme account." 
-
-This kind of pattern hypnosis isn't relegated to just table naming. Object-relational mappers usually map directly to tables, so it's common to see the same name patterns appear in data transfer or business domain objects as well.  A `UserPublication` class might be better served as a `Subscription` class. `CustomerProduct` could be a `PurchaseOrder`. `PassengerFlight`? A `Booking`.
-
-This isn't to say that the default pattern never works. Lots of times, it is the most sensible way to describe an association. But, in the end, to name things well, I sometimes have to fight the hypnosis of the easy route.
-
-**Profession-speak**
-
-People that write code today are often the same ones making business decisions or collaborating directly with clients. This makes it even more critical that programmers understand the business reasons behind their work. One of the best ways we can encourage this is to infuse the language of the business directly into our code.
-
-If I were building internal software to track the organizational aspects of a law firm, I'd want the names of the constructs in my software system to be as closely aligned to the words law professionals use to describe their own concepts. `PracticeAreas` instead of `Topics`. `PracticeGroups` instead of `Teams`. `Attorneys` and `Paralegals` instead of `Users`. This way, I don't have to make the mental mapping between what the client calls Concept X with what I call Concept Y.
-
-Business concepts can also dictate the kind of structures we introduce to a codebase. Consider this example.
-
-If I were building a patient management system for a medical clinic, I might define a doctor's patient list with a structure like `List&lt;Patient&gt;`. It seems reasonable enough. Plus, I get all the normal functions associated with a `List` out-of-the-box, like `Add()`, `Remove()`, `Count()` and so forth.
-
-But, doctors don't call these things patient lists, they call them _panels_. Doctors talk about how full their panels are or when new openings in their panel will open up. Knowing this, I'd opt to create a `Panel` class instead which houses the `List&lt;Patient&gt;` collection as its own property.
-
-```
+  <div class="grid-content">
+    <div class="content">
+      <h2>Speaking the Native Tongue</h2>
+      <p class="emphasis">People that write code today are often the same ones making business decisions or collaborating directly with clients.
+      </p>
+      <p>
+        This makes it even more critical that programmers understand the business reasons behind their work. One of the best ways we can encourage this is to infuse the language of the business directly into our code.
+      </p>
+      <p>
+        If I were building internal software to track the organizational aspects of a law firm, I'd want the names of the constructs in my software system to be as closely aligned to the words law professionals use to describe their own concepts. <code>PracticeAreas</code> instead of <code>Topics</code>. <code>PracticeGroups</code> instead of <code>Teams</code>. <code>Attorneys</code> and <code>Paralegals</code> instead of <code>Users</code>. This way, I don't have to make the mental mapping between what the client calls Concept X with what I call Concept Y.
+      </p>
+      <p>
+        Business concepts can also dictate the kind of structures we introduce to a codebase. Consider this example.
+      </p>
+      <p>
+        If I were building a patient management system for a medical clinic, I might define a doctor's patient list with a structure like <code>List&lt;Patient&gt;</code>. It seems reasonable enough. Plus, I get all the normal functions associated with a <code>List</code> out-of-the-box, like <code>Add()</code>, <code>Remove()</code>, <code>Count()</code> and so forth.
+      </p>
+      <p>
+        But, doctors don't call these things patient lists, they call them patient <em>panels</em>. Doctors speak to how their "panels are full" or when new spots in their panel will open up. Knowing this, I'd opt to create a <code>Panel</code> class instead which houses the <code>List&lt;Patient&gt;</code> collection as its own property.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 public class Panel
 {
-  private List&lt;Patient&gt; _patients;  
+  public List&lt;Patient&gt; Patients;  
   ...
-}
-```
-
-Because medical professionals have defined a specific concept called panels, it's almost certain that there are specific attributes tied to a panel -- it's not just a convenient alias to a collection of patients. 
-
-As it turns out, panels aren't just assigned to doctors, but to medical assistants and health educators. Panels also have a certain optimal number of patients (so that all clinicians generally see the same number of patients). Panels can have openings or be closed. It turns out there's a lot of other attributes tied to the concept of a panel. 
-
-```
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>  
+        Because medical professionals have defined a specific concept called panels, it's almost certain that there are specific attributes tied to a panel&mdash;it's not just a convenient alias to a collection of patients. 
+      </p>
+      <p>
+        As it turns out, panels aren't just assigned to doctors, but to medical assistants and health educators. Panels also have a certain optimal number of patients (so that all clinicians generally see the same number of patients). Panels can have openings or be closed. It turns out there's a lot of other attributes tied to the concept of a panel. 
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+<pre>
 public class Panel
 {
   private List&lt;Patient&gt; _patients;  
@@ -1671,54 +1803,113 @@ public class Panel
   private bool hasOpening;
   ...
 }
-```
-
-To add a patient to a panel, my first attempt at a method signature might be something like:
-
-```
+</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>  
+        To add a patient to a panel, my first attempt at a method signature might be something like:
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+    <pre>
 public class Panel
 {
-  ...
-
   public void Add(Patient p)
   {
     patients.Add(p);
   }
-}
-```
-
-Certainly, `Add` is clear, and it follows directly from the `Add()` method associated to the `List`. But, doctors usually talk about patients _subscribing_ to a panel. So, `Subscribe` is a far more fluent approach.
-
-```
+  ...
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Certainly, <code>Add</code> is clear, and it follows directly from the <code>Add()</code> method associated to the <code>List</code>. But, doctors usually talk about patients <em>subscribing</em> to a panel. So, <a href="#" class="code-ref" data-code-ref="10-d1"><code>Subscribe</code> is a far more fluent approach</a>.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 public class Panel
 {
-  ...
-
-  public void Subscribe(Patient p)
+  public void <span class="10-d1">Subscribe</span>(Patient p)
   {
     patients.Add(p);
   }
-}
-```
-
-These name and construct choices seem small at first. But, as the codebase grows and the functionality gets more complex, the benefits become more significant.
-
-By naming concepts in code the way in which software users would talk about them, we remove a layer of unnecessary interpretation. Our code becomes less foreign to people that aren't directly working with it. Software writers can have more productive discussions with other teams within the organization. And, most importantly, we have a better grasp of the business concepts we have to maintain.
-
----
-
-A> The law firm example has a particular place in my brain because many moons ago, I worked at a company that specialized in building software for law firms (websites, intranets, and "extranets").
-
-A> At some point, we did some pro-bono work for the CEO's old grade school by building their website and content management system. But, instead of building a custom database for them, we "leveraged" the existing database schema we'd been using for many of our corporate law client clients. I guess there were enough similarities in the organizational structures of a school that we could get by with our pre-built software for law firms.
-
-A> This, naturally, led to some pretty entertaining naming translations. The `tbl_Employees` table held teachers and students. A column normally reserved for law firm employee types was now re-purposed for the school. Teachers became attorneys; Principals became partners. The `tbl_PracticeAreas` table was repurposed for the course curriculum.
-
-A> It was funny to have to write code against a bunch of third-grade paralegals.
-
-A> Talk about Fowler's/Eric evans Ubiquitous Language concept? At least touch upon it. 
-
----
-
+  ...
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        These name and construct choices seem small at first. But, as the codebase grows and the functionality gets more complex, the benefits become more significant.
+      </p>
+      <p>
+        By naming concepts in code the way in which software users would talk about them, we remove a layer of unnecessary interpretation. Our code becomes less foreign to people that aren't directly working with it. Software writers can have more productive discussions with other teams within the organization. And, most importantly, we have a better grasp of the business concepts we have to maintain.
+      </p>
+      <p>
+        A> The law firm example has a particular place in my brain because many moons ago, I worked at a company that specialized in building software for law firms (websites, intranets, and "extranets").
+      </p>
+      <p>
+        A> At some point, we did some pro-bono work for the CEO's old grade school by building their website and content management system. But, instead of building a custom database for them, we "leveraged" the existing database schema we'd been using for many of our corporate law client clients. I guess there were enough similarities in the organizational structures of a school that we could get by with our pre-built software for law firms.
+      </p>
+      <p>
+        A> This, naturally, led to some pretty entertaining naming translations. The `tbl_Employees` table held teachers and students. A column normally reserved for law firm employee types was now re-purposed for the school. Teachers became attorneys; Principals became partners. The `tbl_PracticeAreas` table was repurposed for the course curriculum.
+      </p>
+      <p>
+        A> It was funny to have to write code against a bunch of third-grade paralegals.
+      </p>
+      <p>
+        A> Talk about Fowler's/Eric evans Ubiquitous Language concept? At least touch upon it. 
+      </p>
+      <p>
+        Unearthing patterns is one of the most fundamental mental exercises in coding. When we can trivialize a procedure that once required a lot of thought into something seemingly automatic, we can move onto solving other problems. 
+      </p>
+      <p>
+        On the other hand, automation can bias our thinking. We end up forcing a pre-conceived solution every time we encounter what feels like a similar problem without the careful examination we once gave it before we discovered a pattern. The reasoning becomes dogmatic&mdash;it fits this pattern so this must be the way forward!
+      </p>
+      <p>
+        Let's call this phenomenon "pattern hypnosis." Even the task of naming can fall prey to this pattern hypnosis. I notice I fall into the trap quite frequently when naming tables in a relational database model.
+      </p>
+      <p>
+        If you're familiar with relational data modeling, you'll know one of the more common modeling concepts is the associative table.
+      </p>
+      <p>
+        An associative table's core characteristic is that it contains two or more foreign keys to tables that have a "many-to-many" relationship, like a table that links a <code>tbl_Students</code> table to a <code>tbl_Classes</code> table. A student enrolls in many classes and a class has many students. The associative table would hold the relationship between those two tables alongside any other data relevant to that relationship (like a student's current grade in that class).
+      </p>
+      <p>
+        A common pattern is to name such an associative table by gluing the adjacent table names together. This approach usually creates a unique table name that's palatable. <code>tbl_StudentsClasses</code> feels like a reasonable name for this table. It reads decently.
+      </p>
+      <p>
+        Let's take another example. I have a table that links a <code>tbl_Users</code> table with a <code>tbl_Accounts</code> table.  A single user can belong to many accounts and an account can have many users. If I'm blindly naming an associative table that links these two tables together, I'd call it <code>tbl_UsersAccounts</code>. 
+      </p>
+      <p>
+        Down the road, I add other attributes to the model, like a date for when a user was added to the account. That column would fit naturally in the <code>tbl_UsersAccounts</code> table. But, saying "Nora's user account began on June 3rd, 2016" sounds obnoxiously technical. It sounds much more natural to say "Nora's membership began on June 3rd, 2016." 
+      </p>
+      <p>
+        So, I decide to update the table name to <code>tbl_Memberships</code>. 
+      </p>
+      <p>
+        Later on, I want to add a third association to the table&mdash;a relationship to a set of available roles. This way, I can model a particular user with an account and a level within the account (Nora has Gold status). If I'm blindly following convention, I'd name my table to something like <code>tbl_UsersAccountRoles</code>.
+      </p>
+      <p>
+        Meanwhile, the name <code>tbl_Memberships</code> still holds up. "Nora has a gold-access membership to the Acme account." 
+      </p>
+      <p>
+        This kind of pattern hypnosis isn't relegated to just table naming. Object-relational mappers usually map directly to tables, so it's common to see the same name patterns appear in data transfer or business domain objects as well.  A <code>UserPublication</code> class might be better served as a <code>Subscription</code> class. <code>CustomerProduct</code> could be a <code>PurchaseOrder</code>. <code>PassengerFlight</code>? A <code>Booking</code>.
+      </p>
+      <p>
+        This isn't to say that the default pattern never works. Lots of times, it is the most sensible way to describe an association. But, in the end, to name things well, I sometimes have to fight the hypnosis of the easy route.
+      </p>
+    </div>
+  </div>
 
 </div>
 </div>
@@ -1731,82 +1922,88 @@ A> Talk about Fowler's/Eric evans Ubiquitous Language concept? At least touch up
     <div class="content">
       <h2>Naming to Teach</h2>
       <p>
-I have a very simple thing to say about how code is taught. The more advanced you are, the more likely you teach the craft poorly. As you become more advanced in a field, more basic concepts in that field become so familiar that it becomes harder to recall what it was like before you understood those concepts. 
-</p><p>
-Assuming you actually know how to ride a bike&mdash;and have known how to do so for years&mdash;imagine the feeling you had of getting on a bike for the very first time. You tried to pedal and keep the handlebars straight, but you <em>still</em> fell down. I can remember this struggle when I was five years old. 
-</p><p>
-If I got on a bike today, I would have to fight my instincts to try to pedal and fall down. It would actually be <em>hard</em> for me to fall off my bike now. The old saying "it's like riding a bike" isn't just about something being intuitive; it's about how hard it is to recall the feeling of that thing not being intuitive.
-</p><p>
-Having worked with object-oriented programming languages for over twenty years, to me, the concept of a class constructor is obvious&mdash;it's a method which instantiate an instance of the object a class defines. Like riding a bike.
-</p><p>
-But, when I was first taught about class construction, I was at a complete and utter loss. The concept was one of those fancy italian racing bikes with those clip-on pedals. I was a mermaid. 
-</p><p>
-Looking back, it was unclear to me because I couldn't differentiate a class definition from an instance of the class&mdash;that these were two entirely different things. I couldn't visualize "instantiation". Is this a term ever used outside of programming?
-</p><p>
-A large part of the problem was how the concept was introduced. I recall seeing one of these example lines of code in my introductory class. While it's easy for me to understand now, I remember vividly the feeling of confusion staring at this kidn of code. I remember having to parse through it a dozen times to finally <em>get it</em>. The next day, it became completely foreign again.
-</p>
-</div>
-</div>
-
-<div class="grid-code-only">
-  <div class="code-block">
+        I have a very simple thing to say about how code is taught. The more advanced you are, the more likely you teach the craft poorly. As you become more advanced in a field, more basic concepts in that field become so familiar that it becomes harder to recall what it was like before you understood those concepts. 
+      </p>
+      <p>
+        Assuming you actually know how to ride a bike&mdash;and have known how to do so for years&mdash;imagine the feeling you had of getting on a bike for the very first time. You tried to pedal and keep the handlebars straight, but you <em>still</em> fell down. I can remember this struggle when I was five years old. 
+      </p>
+      <p>
+        If I got on a bike today, I would have to fight my instincts to try to pedal and fall down. It would actually be <em>hard</em> for me to fall off my bike now. The old saying "it's like riding a bike" isn't just about something being intuitive; it's about how hard it is to recall the feeling of that thing not being intuitive.
+      </p>
+      <p>
+        Having worked with object-oriented programming languages for over twenty years, to me, the concept of a class constructor is obvious&mdash;it's a method which instantiate an instance of the object a class defines. Like riding a bike.
+      </p>
+      <p>
+        But, when I was first taught about class construction, I was at a complete and utter loss. The concept was one of those fancy italian racing bikes with those clip-on pedals. I was a mermaid. 
+      </p>
+      <p>
+        Looking back, it was unclear to me because I couldn't differentiate a class definition from an instance of the class&mdash;that these were two entirely different things. I couldn't visualize "instantiation". Is this a term ever used outside of programming?
+      </p>
+      <p>
+        A large part of the problem was how the concept was introduced. I recall seeing one of these example lines of code in my introductory class. While it's easy for me to understand now, I remember vividly the feeling of confusion staring at this kidn of code. I remember having to parse through it a dozen times to finally <em>get it</em>. The next day, it became completely foreign again.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
 <pre>
 Object myObject = new Object();
-myObject.DoSomething();
-</pre>
-</div>
-</div>
+myObject.DoSomething();</pre>
+    </div>
+  </div>
   <div class="grid-content">
     <div class="content">
       <p>
-A line of code like this has no relatable concept outside of the programming world to latch onto. The word <code>Object</code> appears three times in one line. It creates that dizzying effect I mentioned in <a href="#ch-shape-of-code">The Shape of Code</a>. A knowledgeable programmer knows that they each stand for something different.
-</p>
-<ul>
-  <li>The first <code>Object</code> refers to the type of the instance we're instantiating.</li>
-<li>The second <code>Object</code> is part of the name of this instance <code>MyObject</code>.</li>
-<li>The third <code>Object</code> is invoking the constructor.</li>
-<li>The fourth <code>Object</code> is part of the now-instantiated instance <code>myObject</code>, which is now performing the very detailed action of <code>DoSomething()</code>.</li>
-</ul>
-<p>
-But, for a programming newbie, this made as much sense as this equally sensible line.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-  <div class="code-block">
-<pre>
+        A line of code like this has no relatable concept outside of the programming world to latch onto. The word <code>Object</code> appears three times in one line. It creates that dizzying effect I mentioned in <a href="#ch-shape-of-code">The Shape of Code</a>. A knowledgeable programmer knows that they each stand for something different.
+      </p>
+      <ul>
+        <li>The first <code>Object</code> refers to the type of the instance we're instantiating.</li>
+        <li>The second <code>Object</code> is part of the name of this instance <code>MyObject</code>.</li>
+        <li>The third <code>Object</code> is invoking the constructor.</li>
+        <li>The fourth <code>Object</code> is part of the now-instantiated instance <code>myObject</code>, which is now performing the very detailed action of <code>DoSomething()</code>.</li>
+      </ul>
+      <p>
+      But, for a programming newbie, this made as much sense as this equally sensible line.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 Xy8lksp0 myXy8lksp0 = new Xy8lksp0();
-myXy8lksp0.DoSomething();
-</pre>
-</div>
-</div>
+myXy8lksp0.DoSomething();</pre>
+    </div>
+  </div>
   <div class="grid-content">
     <div class="content">
       <p>
-Some code writers will "improve" upon this example by introducing meaningless variable names&mdash;<code>foo</code>, <code>bar</code>, <code>baz</code>, and so forth.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-  <div class="code-block">
-<pre>
+        Some code writers will "improve" upon this example by introducing meaningless variable names&mdash;<code>foo</code>, <code>bar</code>, <code>baz</code>, and so forth.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 Object foo = new Object();
-foo.DoSomething();
-</pre>
-</div>
-</div>
+foo.DoSomething();</pre>
+    </div>
+  </div>
   <div class="grid-content">
     <div class="content">
       <p>
-This helps rid some of the dizzying effects. At least the instance name is more readily discernable. But, the newbie is still left wondering what this all means. What is a <code>foo</code>? I'd come to find that it's intentionally meant to mean nothing specific--a way of ensuring the novice understands that the concept can be pplicable to nearly every kind of a "thing". 
-</p><p>
-But, at such an early step in the process, concreteness is exactly what the novice needs. The mental bridge to the abstract is far easier to cross this way, than to immediately start with the abstract. 
-</p><p>
-Then there are the "concrete" examples that are easy to visualize, but unrelatable to the vast majority of real programming tasks. This makes the bridge from the example to something a novice might actually need to do, still, a difficult one to cross. I see this in many writeups when demonstrating how an interface is used, with the classic example always revolving around domesticated household pets.
-</p>
-</div>
-</div>
-```C#
+        This helps rid some of the dizzying effects. At least the instance name is more readily discernable. But, the newbie is still left wondering what this all means. What is a <code>foo</code>? I'd come to find that it's intentionally meant to mean nothing specific--a way of ensuring the novice understands that the concept can be pplicable to nearly every kind of a "thing". 
+      </p>
+      <p>
+        But, at such an early step in the process, concreteness is exactly what the novice needs. The mental bridge to the abstract is far easier to cross this way, than to immediately start with the abstract. 
+      </p>
+      <p>
+        Then there are the "concrete" examples that are easy to visualize, but unrelatable to the vast majority of real programming tasks. This makes the bridge from the example to something a novice might actually need to do, still, a difficult one to cross. I see this in many writeups when demonstrating how an interface is used, with the classic example always revolving around domesticated household pets.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 interface IAnimal
 {
     string Speak();
@@ -1826,68 +2023,83 @@ class Cat : IAnimal
     {
         return "Meow!";
     }
-}
-```
-The example is certainly _concrete_, but when's the last time you worked on a video game with anima superheroes or for a pet store supply chain? . Imagine a newbie attempting to parlay the knowledge gained from this example of interfaces into a generic integration engine or a file export tool. 
-
-It may be second nature for a seasoned programmer, but for someone who's just learning these new concept of inheritance and intefaces, it takes a large leap to correlate a method like `Speak()` with animals to `ExportFile()` with various file types. At the same time, it's not as if a newbie doesn't understand the concept that a document can be exported as a PDF, plain-text file, Word doc, and so forth.
-
-So, why not skip the animal stuff and just start with a more relatable example -- you know, the ones you find when you're trying to do things with _software_. Then, it's imperative to name the constructs in our examples as _concretely_ as possible. Let the novice anchor their understanding around something real. This will make the bridge to other similar examples easy to cross. With confidence and momentum behind their newfound knowledge, it will make the further reaching bridges quicker to cross as well.
-
-[Deitel and Deitel example of gradebook...concrete, and more real world -- we might be building some system...but still using myGradebook1 and myGradebook2]
-
-A better example of constructors and class instantiation may be something like this:
-
-```C#
+}</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        The example is certainly _concrete_, but when's the last time you worked on a video game with anima superheroes or for a pet store supply chain? . Imagine a newbie attempting to parlay the knowledge gained from this example of interfaces into a generic integration engine or a file export tool. 
+      </p>
+      <p>
+        It may be second nature for a seasoned programmer, but for someone who's just learning these new concept of inheritance and intefaces, it takes a large leap to correlate a method like `Speak()` with animals to `ExportFile()` with various file types. At the same time, it's not as if a newbie doesn't understand the concept that a document can be exported as a PDF, plain-text file, Word doc, and so forth.
+      </p>
+      <p>
+        So, why not skip the animal stuff and just start with a more relatable example -- you know, the ones you find when you're trying to do things with _software_. Then, it's imperative to name the constructs in our examples as _concretely_ as possible. Let the novice anchor their understanding around something real. This will make the bridge to other similar examples easy to cross. With confidence and momentum behind their newfound knowledge, it will make the further reaching bridges quicker to cross as well.
+      </p>
+      <p>
+        [Deitel and Deitel example of gradebook...concrete, and more real world -- we might be building some system...but still using myGradebook1 and myGradebook2]
+      </p>
+      <p>
+        A better example of constructors and class instantiation may be something like this:
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 User requester = new User(username, password);
-requester.AttemptLogin();
-```
-
-Most all software these days require logins and users. This would be an instantly relatable example to the vast majority of novices. 
-
-Nearly every programming book I know will start with an example of a default constructor method that always has no parameters. Now, I know technical authors do this to prove the point that a constructor's unique quality -- the thing that differentiates it from any other method of a class -- is that it instantiates the object. We want to show the newbie that the mere act of calling this thing -- the one with the same name as the class but with two parentheses at the end -- creates an instance. Adding parameters to that method would just get in the way of that point.
-
-But, I remember thinking that for some reason, constructors _couldn't_ have parameters attached to them -- that somehow this made a constructor no longer a constructor. 
-
-Instead, if we showed early examples of constructors with parameters, the whole idea of a constructor makes much more sense. 
-
-```C#
+requester.AttemptLogin();</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Most all software these days require logins and users. This would be an instantly relatable example to the vast majority of novices. 
+      </p>
+      <p>
+        Nearly every programming book I know will start with an example of a default constructor method that always has no parameters. Now, I know technical authors do this to prove the point that a constructor's unique quality -- the thing that differentiates it from any other method of a class -- is that it instantiates the object. We want to show the newbie that the mere act of calling this thing -- the one with the same name as the class but with two parentheses at the end -- creates an instance. Adding parameters to that method would just get in the way of that point.
+      </p>
+      <p>
+        But, I remember thinking that for some reason, constructors _couldn't_ have parameters attached to them -- that somehow this made a constructor no longer a constructor. 
+      </p>
+      <p>
+        Instead, if we showed early examples of constructors with parameters, the whole idea of a constructor makes much more sense. 
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 var date_of_birth = new DateTime(1980,1,3);
-Person mary = new Person("Mary", date_of_birth);
-
-```
-
-Ah, I see... we're creating a person named Mary born on January 3rd, 1980.
-
-Of course, we know that constructors can have parameters. In fact, most well-written objects will have parameterized constructors that, in particular, accept data that can only be given during the instance's construction. This leads to all sorts of other concepts that bring out the empassioned object-oriented audience like immutability and hiding implementation details.
-
---
-
-Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
-
-(string myText) doesnt have to pass something called myText. Show SCOPE. Silly things we take for granted but a newbie wouldnt.
-
-[Finish]
-
-
-
-
-</div>
-
-<div class="chapter" id="ch-about-the-author">
-<div class="grid-content">
-  <div class="content">
-    <h2>About the Author</h2>
-    <p>Hey there.
-    </p>
+Person mary = new Person("Mary", date_of_birth);</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Ah, I see... we're creating a person named Mary born on January 3rd, 1980.
+      </p>
+      <p>
+        Of course, we know that constructors can have parameters. In fact, most well-written objects will have parameterized constructors that, in particular, accept data that can only be given during the instance's construction. This leads to all sorts of other concepts that bring out the empassioned object-oriented audience like immutability and hiding implementation details.
+      </p>
+      <p>
+        Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
+      </p>
+      <p>
+        (string myText) doesnt have to pass something called myText. Show SCOPE. Silly things we take for granted but a newbie wouldnt.
+      [Finish]
+      </p>
+    </div>
   </div>
 </div>
-</div>
 
-<div class="chapter" id="ch-acknowledgements">
+<div class="chapter" id="ch-about-this-book">
 <div class="grid-content">
   <div class="content">
-    <h2>Acknowledgements</h2>
+    <h2>About this book</h2>
+    <p>Hey there.
+    </p>
     <p>I'd like to thank a few (well-known) folks in the programming industry that provided some valuable insights into how they write code. Their thoughts gave me direction in my own thinking while writing this book.
     </p>
     <ul>
@@ -1902,12 +2114,26 @@ Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
 </div>
 </div>
 
+
+
 <div id="grid-prev-next">
   <div class="prev"></div>
   <div class="next"></div>
 </div>
 
 </body>
+
+<!--
+
+Other notes:
+
+ONT: Email methods -- sendExternalUserEmail DRY up vs. split out to a postmark_ses_thing() because relationship to loggability is different than 'from' address thing. - COMPLETE
+
+ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. because of the methods it has -- sending to queue, pulling from queue)
+
+
+-->
+
 
 <script>
   
