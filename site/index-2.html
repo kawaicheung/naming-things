@@ -7,8 +7,14 @@
 </head>
 <body>
 <div class="menu">
- <a href="">On Naming Things.</a>
- <ul>
+  <a href="">
+    <svg height="32px" id="Layer_1" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+  </a>
+</div>
+<div class="toc">
+  <ul>
     <li><a href="#ch-introduction">Introduction</a></li>
     <li><a href="#ch-imagining-objects">Imagining Objects</a></li>
     <li><a href="#ch-hunting-for-names">Hunting for Names</a></li>
@@ -142,31 +148,33 @@
     </div>
   </div>
 </div>
-
 <div class="chapter" id="ch-imagining-objects">
   <div class="grid-content">
     <div class="content">
       <h2>Imagining Objects</h2>
       <p class="emphasis">
-        The term <em>object-oriented programming</em> is misleading.
+        I think the term <em>object-oriented programming</em> is misleading.
       </p>
       <p>
-        Most "objects" in code don't have a direct representation in the physical world. Our textbooks always seem to use examples involving dogs and cats as a way of describing how to code classes and interfaces. But, unless you're a programmer at PetSmart, these aren't realistic examples.
+        Textbooks like to use examples of dogs, cats, and other such animals to demonstrate how to code classes and interfaces. But, not every programmer works for PetSmart. These aren't realistic examples for most coders. Most of the things we call "objects" in code don't have a direct representation in the physical world. 
       </p>
       <p>
-        We should call it <em>noun-oriented</em> programming because a noun can be a person, place, thing, or idea. And most classes really are ideas...with functionality. 
+        We should really call it noun-oriented programming. A noun can be a person, place, thing, or <em>idea</em>. Most classes really are <em>ideas with functionality</em>. 
       </p>
       <p>
-        Classes sometimes manifest because we find ourselves with a set of functions and properties that have a common purpose and we want to wrap them up in a neat little bundle. But, these classes don't always have an obvious physical translation. This is where wishy-washy names like <code>UserManager</code>, <code>MessagingHelper</code>, and <code>AppHandler</code> are born. 
+        Classes sometimes manifest because we find ourselves with a set of functions and properties that have a common purpose that we want to wrap up in a neat little bundle. But, these classes don't always have a physical translation. This is where wishy-washy names like <code>UserManager</code>, <code>MessagingHelper</code>, and <code>AppHandler</code> are born. 
       </p>
       <p>
-        Working through a codebase littered with class names is like working in a bloated organization where everyone is some form of middle-management. What exactly do you do, <em>Regional Account Manager Vice Principal</em>? When we're reading code, we have to dig more to figure out what these things actually mean. When we know there's some property or method out there we want to leverage, we have a harder time remembering where it lives. <em>Was it in the helper doohickey or in the other manager thingy?</em>
+        Working through a codebase littered with these kinds of class names reminds me of working in a bloated organization where everybody is some form of middle-management. When, exactly, should I direct a question to the <em>Regional Vice Account Manager</em>?
       </p>
       <p>
-        There are ways around this. Generic names might be a sign that the guts of the class belong elsewhere. For instance, maybe the methods inside that <em>UserManager</em> can be moved into the <em>User</em> class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. Perhaps there are natural groupings inside that <code>AppHandler</code> class--one that handles initialization, one that handles routing, one that deals with exception handling, and so forth. More specific names can be derived from there.
+        When I read code like this, I have to dig into these classes to figureout what purpose they serve. When I know there's some functionality out there I want to leverage, I have a harder time remembering where it lives. <em>Was it in that helper doohickey or in the other manager thingy?</em>
       </p>
       <p>
-        If it's neither of those cases, sometimes we just have to face the reality: A class can be hard to name because it does something that doesn't easily translate in the real world. That's when a little imagination helps. Even when a class is responsible for something that only makes sense in your own code, there's usually some metaphorical noun we can apply to it to make it memorable, and make it easier to recall when you need to revisit the "object" again.
+        There are ways around this. Generic names might be a sign that the guts of the class belong elsewhere. For instance, maybe the methods inside that <code>UserManager</code> can be moved into the <code>User</code> class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. Perhaps there are natural groupings inside that <code>AppHandler</code> class&mdash;one that handles initialization, one that handles routing, one that deals with exception handling, and so forth. More specific names can be derived from there.
+      </p>
+      <p>
+        If it's neither of those cases, sometimes I just have to face reality: A class can be hard to name because it does something that doesn't easily translate in the real world. That's when a little imagination helps. Even when a class is responsible for something that only makes sense in my code, there's usually some metaphorical noun out there I can apply to it to make it memorable. This makes it easier to recall when I need to revisit that "object" again.
       </p>
       <p>
         Here's an example.
@@ -2197,7 +2205,6 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
 
 <script>
   
-
   $(function() {
 
     var assetOriginal = "";
@@ -2245,8 +2252,6 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
         scrollToChapter(e);
     });
 
-   
-
     $("body").on("click", "a:not('#btn-cover-click')", function(e) {
       if ($(this).attr("href").startsWith("#"))
       {
@@ -2254,19 +2259,16 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
       }
     });
 
-    $("div.menu > a").hover(function(e) {
-      $("div.menu > ul").show();
-      $(this).addClass("exposed");
+    $("div.menu > a").click(function(e) {
+      e.preventDefault();
+      $("div.toc").show();
     });
 
-    $("div.menu").mouseleave(function(e) {
-      $("div.menu > ul").hide();
-      $("div.menu > a").removeClass("exposed");
+    $("div.toc a").click(function(e) {
+      $("div.toc").hide();
     });
 
-    $("div.menu > ul > li > a").click(function(e) {
-      $("div.menu > ul").hide();
-    });
+
 
     function showChapter(chapterId)
     {
@@ -2284,8 +2286,8 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
 
       $("div.chapter").hide();
 
-      $("div.menu > ul > li > a").removeClass("selected");
-      $("div.menu > ul > li").find("a[href='" + chapterId + "']").addClass("selected");
+      $("div.toc > ul > li > a").removeClass("selected");
+      $("div.toc > ul > li").find("a[href='" + chapterId + "']").addClass("selected");
 
       $(chapterId).fadeIn(200);
 
