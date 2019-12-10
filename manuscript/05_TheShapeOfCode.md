@@ -6,7 +6,7 @@ Sometimes names can disturb that shape dramatically. Consider this simple `for` 
 
 ```C#
 for (int i=0; i < tokens.length; i++)
-{
+{ 
   if (tokens[i].Used)
   {
     usedTokens.Add(tokens[i]);
