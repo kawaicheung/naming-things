@@ -6,7 +6,7 @@ When you think about it, method calls are a syntactically odd-looking thing. The
 
 Of course, we can get around this mess by rounding up all of these parameters into a single object, building up the object, and then passing that to the method.
 
-`void Update(UpdateParams params) { ... }`
+`void Update(UpdateParams params) { ... }` 
 
 While this acts as a nice tidying mechanism, it doesn't help you understand what the method actually does. This is when I like to look for ways I can push more meaning into the method name. 
 
