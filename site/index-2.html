@@ -152,60 +152,63 @@
         I think the term <em>object-oriented programming</em> is misleading.
       </p>
       <p>
-        Textbooks like to use examples of dogs, cats, and other such animals to demonstrate how to code classes and interfaces. But, not every programmer works for PetSmart. These aren't realistic examples for most coders. Most of the things we call "objects" in code don't have a direct representation in the physical world. 
+        Textbooks tend to demonstrate classes and interfaces by using dogs, cats, and other domesticated animals. But, these aren't realistic examples for most coders. Most of the things we call "objects" in code don't have a direct physical representation in the real world. 
       </p>
       <p>
-        We should really call it noun-oriented programming. A noun can be a person, place, thing, or <em>idea</em>. Most classes really are <em>ideas with functionality</em>. 
+        We should really call it noun-oriented programming. A noun can be a person, place, thing, or idea. Most classes really are <em>ideas with functionality</em>. 
       </p>
       <p>
         Classes sometimes manifest because we find ourselves with a set of functions and properties that have a common purpose that we want to wrap up in a neat little bundle. But, these classes don't always have a physical translation. This is where wishy-washy names like <code>UserManager</code>, <code>MessagingHelper</code>, and <code>AppHandler</code> are born. 
       </p>
       <p>
-        Working through a codebase littered with these kinds of class names reminds me of working in a bloated organization where everybody is some form of middle-management. When, exactly, should I direct a question to the <em>Regional Vice Account Manager</em>?
+        Working through a codebase littered with these kinds of class names reminds me of working in a bloated organization where everybody is some form of middle-management. When, exactly, should I direct a question to the <em>Regional Vice Account Manager</em> as opposed to the <em>District Assistant Account Principal</em>?
       </p>
       <p>
-        When I read code like this, I have to dig into these classes to figureout what purpose they serve. When I know there's some functionality out there I want to leverage, I have a harder time remembering where it lives. <em>Was it in that helper doohickey or in the other manager thingy?</em>
+        When I read code like this, I have to dig into these classes to figure out what purpose they serve. When I know there's some functionality out there I want to leverage, I have a harder time remembering where it lives. <em>Was it in that helper doohickey or in the other manager thingamajig?</em> 🤔
       </p>
       <p>
-        There are ways around this. Generic names might be a sign that the guts of the class belong elsewhere. For instance, maybe the methods inside that <code>UserManager</code> can be moved into the <code>User</code> class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. Perhaps there are natural groupings inside that <code>AppHandler</code> class&mdash;one that handles initialization, one that handles routing, one that deals with exception handling, and so forth. More specific names can be derived from there.
+        There are ways around this. Generic names might be a sign that the guts of the class belong elsewhere. For instance, maybe the methods inside that <code>UserManager</code> class can be moved into the <code>User</code> class itself. It might also be a sign that the class does too many things and needs to be split up into smaller pieces. Perhaps there are natural groupings inside that <code>AppHandler</code> class&mdash;one that handles initialization, one that handles routing, one that deals with exception handling, and so forth. More specific names can be derived from there.
       </p>
       <p>
-        If it's neither of those cases, sometimes I just have to face reality: A class can be hard to name because it does something that doesn't easily translate in the real world. That's when a little imagination helps. Even when a class is responsible for something that only makes sense in my code, there's usually some metaphorical noun out there I can apply to it to make it memorable. This makes it easier to recall when I need to revisit that "object" again.
-      </p>
-      <p>
-        Here's an example.
+        If it's neither of those cases, sometimes I just have to face reality: A class can be hard to name because it does something that doesn't easily translate in the real world. That's when a little imagination helps. Even when a class is responsible for something that only makes sense in my code, there's usually some metaphorical noun out there I can apply to it to make it memorable. This makes it easier to recall when I need to revisit that &ldquo;object&rdquo; again.
       </p>
       <hr />
       <p>
-        The other day, I was looking at some code I wrote awhile back that allows DoneDone users to reset their password. As is usually the case with code I wrote sometime ago, there were signs a little rethinking could make the code cleaner.
+        The other day, I was looking at code I wrote awhile back that allows DoneDone users to reset their password. The reset password function works like most other apps:
       </p>
+      <ul>
+        <li>A user enters their email address in a &ldquo;Forgot Password&rdquo; form from the app.</li>
+        <li>They receive an email with a link containing an encrypted token embedded in the querystring.</li>
+        <li>When clicked, the request passes the token to the server and is decrypted.</li>
+        <li>The information from the decryption determines whether the reset link is still valid and which user originally requested the reset.</li>
+      </ul>
       <p>
-        The reset password function works like most other apps: A user enters their email address in a "forgot password" form from the app. Then, they receive a link with an encrypted token embedded in the querystring. The information inside the token determines whether the reset link is expired and which user originally requested the reset.
-      </p>
-      <p>
-        On this re-read, I didn't like how the token was created and read. It was encrypted on one layer of the stack and decrypted on a completely different layer. There were a couple of places where I was checking whether the token hadn't expired yet.
+        On this re-read, I don't like how the token concept is implemented. Bits of logic are sprinkled in too many places. The token is encrypted on one layer of the stack and decrypted on a completely different layer. There are also a couple of places where I write repeated code to check whether the token is still valid. 
       </p> 
       <p>
-        It became clear that a better approach was to wrap up the token concept into a single object. Let the object handle both the encryption, decryption, and validation of the token.
+        But, what makes me most hungry to clean this code up is that the concept is <em>nearly identical</em> to the process for a user takes to complete their initial registration.
+      </p>
+      <p>
+        It's clear that a better approach is to wrap up this token into a single object. Let the object handle all of it&mdash;the encryption, decryption, and validation of the token. Then, I can re-use it for both the password reset and user registration processes.
+      </p>
+      <p>
+        I get to a place I'm quite happy with. The guts of the object look something like this. 
       </p>
     </div>
   </div>
   <div class="grid-right-code">
     <div class="content">
       <p>
-        I got to a place I was very happy with&mdash;the guts of the object looked something like this. 
-      </p>
-      <p>
         Taking a quick walkthrough of this object, you'll notice that there are two constructors. 
       </p>
       <p>
-        <a href="#" class="code-ref" data-code-ref="1-d1">One hydrates the properties of the object with a <code>user_id</code> and <code>email</code> of the user when a password reset (or registration completion request) is initiated</a>. The timestamp of the token is set to the moment the object instance is created. 
+        <a href="#" class="code-ref" data-code-ref="1-d1">One hydrates the properties of the object with a <code>user_id</code> and <code>email</code> of the user when a password reset (or registration completion request) is initiated</a>. The timestamp of the token is set to the moment the object instance is created. It also wraps all of this data together into an encrypted token. 
       </p>
       <p>
-        <a href="#" class="code-ref" data-code-ref="1-d2">The other hydrates the same object after a user clicks on the emailed link. The token is decrypted and the same properties are deduced from the decryption process</a>.
+        <a href="#" class="code-ref" data-code-ref="1-d2">The other hydrates the same object with the encrypted token. The token is decrypted and the other properties are deduced from the decryption</a>. This is called during the request when a user clicks the link they received from the email.
       </p>
       <p>
-        <a href="#" class="code-ref" data-code-ref="1-d3">The <code>IssueWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request</a>. For instance, we might set a password reset link to be valid for only ten minutes, whereas a user registration link could be valid for a few hours.
+        <a href="#" class="code-ref" data-code-ref="1-d3">The <code>IssueWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request</a>. For instance, a password reset link might be valid for only ten minutes whereas a user registration link could be valid for a few hours.
       </p>
     </div>
     <div class="code-block">
@@ -230,13 +233,14 @@ public sealed class <span class="blanked">AuthToken</span>
   {
     try
     {
+       EncryptedToken = encrypted_token;
        UserID = // Deduced from the token...
        EmailAddress = // Deduced from the token...
        _utc_date_issued = // Deduced from the token...
     }
     catch
     {
-      throw new InvalidInput(...);
+      throw new InvalidInput("Cannot decrypt token!");
     }
   }</span>
 
@@ -250,13 +254,13 @@ public sealed class <span class="blanked">AuthToken</span>
   <div class="grid-content">
     <div class="content">
       <p>
-        I'm giddy with the promises of such an object. I'm able to cleanup some duplicate logic used by both the password reset and registration completion functionality. And, whereas the encryption and decryption process once lived in random helper methods on different layers of the stack, they now have a comfortable home.
+        I'm giddy with the promises of such an object. I'm able to clean up some duplicate logic used by both the password reset and user registration processes. Whereas the encryption and decryption process once lived in random helper methods on different layers of the stack, they now have a comfortable home.
       </p>
       <p>
         The last hurdle, however, is a big one&mdash;what do I name this thing? This "object" is not a dog or cat. I don't really know what this thing is. 
       </p>
       <p>
-        My first attempt, <code>AuthToken</code> is a half-hearted one. I just wanted to get something down just so I can finish the implementation. Reading this name again brings up all sorts of questions and lackluster answers.
+        My first attempt, <code>AuthToken</code> was a half-hearted one. I just wanted to get something down so I can finish the implementation. Reading this name again brings up all sorts of questions and lackluster answers.
       </p>
       <ul>
         <li>
@@ -273,25 +277,20 @@ public sealed class <span class="blanked">AuthToken</span>
         This isn't the right name. What comparable thing possibly exists in the real world like this? 
       </p>
       <p>
-        I think about something that an authority creates for someone, and that person can later exchange for access to do whatever the authority agreed they can do. There's a quality of <em>redeeming</em> this thing. 
+        I begin to think about something that an <em>authority</em> creates for someone, and that person can later exchange for access to do whatever the authority agreed they can do. There's a quality of <em>redeeming</em> this thing. 
       </p>
       <p>
-        A <em>ticket</em> comes to mind. But, that conjurs up thoughts of going to a sporting event or movie, as if there's a specific time and place to redeem it. Not quite right.
+        A <em>ticket</em> comes to mind. But, that conjures up thoughts of going to a sporting event or movie premiere, as if there's a specific time and place to redeem it. It also makes me think of a parking ticket. Password resets and user registrations are neither particularly exciting nor dreadful. Neither metaphor feels close to right. 
       </p>
       <p>
-        A <em>permit</em>? Now that feels promising. A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a permit is something given to you usually by a governing body, not your local movie theater or sporting venue. 
+        A <em>permit</em>? A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a permit is something given to you usually by a governing body, not your local movie theater or sporting venue. That feels like the right move.👌
       </p>
       <p>
-        It doesn't evoke the excitement of having a "ticket". And, let's be honest, password resets and user registrations feel more like the DMV than a rock concert. If you're going to name something unconventional, it's better to have the name provoke similar feelings.
+        <a href="#" class="code-ref" data-code-ref="1-d4">I end up changing the class name to <code>PermitForUserUpdate</code></a>. The implementation instantly feels more readable. For instance, <a href="#" class="code-ref" data-code-ref="1-d5">the method <code>IssuedWithinMinutes()</code> reads more naturally</a> when used in context. Permits in the real world are normally <em>issued</em>. Here's how I can validate a password reset permit hasn't expired yet.
       </p>
     </div>
   </div>
-  <div class="grid-right-code">
-    <div class="content">
-      <p>
-        <a href="#" class="code-ref" data-code-ref="1-d4">I end up changing the class name to <code>PermitForUserUpdate</code></a>. Implementing the class with this name feels right. <a href="#" class="code-ref" data-code-ref="1-d5">Even the method <code>IssuedWithinMinutes()</code> reads naturally</a>. Permits in the real world are normally <em>issued</em>. Here's how I can validate a password reset permit hasn't expired yet.
-      </p>
-    </div>
+  <div class="grid-code-only">
     <div class="code-block">
       <pre>
 var permit = new <span class="1-d4">PermitForUserUpdate</span>(encrypted_token);
@@ -320,10 +319,10 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
         I'm sure you've daydreamed at work about devoting an entire week to just cleaning up code for a project.
       </p>
       <p>
-        That wouldn't sit well with 99% of managers and 100% of clients out there. The fact is, we have to clean up&mdash;surreptitiously&mdash;as we go. 
+        But, that wouldn't sit well with 99% of managers and 100% of clients out there. The fact is, we have to clean up&mdash;surreptitiously&mdash;as we go. 
       </p>
       <blockquote class="smaller">
-        Of course, many [managers] say they are driven by quality but are more driven by schedule...In these cases I give my more controversial advice: Don't tell! Subversive? I don't think so. 
+        &ldquo;Of course, many [managers] say they are driven by quality but are more driven by schedule...In these cases I give my more controversial advice: Don't tell! Subversive? I don't think so.&rdquo;
       </blockquote>
       <div class="quoter">
         Martin Fowler, <a href="https://martinfowler.com/books/refactoring.html">Refactoring: Improving the Desing of Existing Code</a>
