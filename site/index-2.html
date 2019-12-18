@@ -52,22 +52,22 @@
         Here's a little insight into what I think about when I write code.
       </p>
       <p>
-        So, I'm working on&mdash;what I'll call for now&mdash;a <em>data migration</em> feature. It's for the brand new version of <a href="https://www.donedone.com">DoneDone</a>, the issue tracking and customer support tool I've been working on since its inception a decade ago. Developing a product for this long, I get to be intimately familiar with the code&mdash;like a scupltor chiseling away endlessly at a large piece of stone. It becomes personal.
+        So, I'm working on&mdash;what I'll call for now&mdash;a <em>data migration</em> feature. It's for the brand new version of <a href="https://www.donedone.com">DoneDone</a>, the issue tracking and customer support app I created and have continued to work on for over a decade. Developing a product for this long, I'm intimately familiar with the code&mdash;like a scupltor chiseling away endlessly at a large piece of stone.
       </p>
       <p>
         The goal of this migration feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call <em>Classic</em>) over to this new version. I wish I could tell you this is a simple mapping of database tables and columns from Classic over to the new version, but it's not. The new DoneDone is markedly different from its predecessor: Some data maps simply, other data requires some massaging, and some stuff simply can't be mapped at all.
       </p>
       <p>
-        For the next week, I chisel away at this feature, top to bottom. I develop a screen to sign in to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On the backend, I work on a number of database updates to store these requests. I then write a separate service that picks up these requests to perform the dirty work of moving this data over cleanly. There are other tangential pieces I build along the way, like emailing the requester when the migration is complete and broadcasting error notifications.
+        For the next week, I chisel away at this feature&mdash;top to bottom. I develop a screen to sign in to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On the backend, I work on a number of database updates to store these requests. I then write a separate service that picks up these requests to perform the arduous work of moving this data over &ldquo;cleanly&rdquo;. There are other tangential pieces I build along the way, like emailing the requester when the migration is complete and broadcasting error notifications.
       </p>
       <p>
-        It's intense work but I get it all done and tested. Things go suprisingly smoothly for such a large addition.
+        It's intense work but after a week, I feel confident about the new feature.
       </p>
       <p>
-        Before I'm ready to release this feature, I give my code another onceover&mdash;like re-reading a manuscript from the beginning again with a fresh set of eyes. I tend to pick out things I don't like about your code best this way.
+        Before I'm ready to release it, I give my code another onceover&mdash;like re-reading a manuscript from the beginning again with a fresh set of eyes. I tend to pick out things I don't like about my code best this way.
       </p>
       <p>
-        I always try to use the same terms when I write code as when I <em>talk</em> about the feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with the word <em>migration</em> now.
+        The first thing I look at is naming. I try to use the same terms when I write code as when I <em>talk</em> about the feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with derivates of the word <em>migration</em>.
       </p>
       <ul>
         <li>There's a <code>ClassicMigrator</code> project in my codebase.</li>
@@ -86,7 +86,7 @@
         Migrate has this connotation that something is leaving one place to go to another, like a flock of birds migrating south for the winter. In our case, data isn't leaving the Classic version. That data is still there&mdash;untouched&mdash;after the migration. I wrote it this way so existing customers can try the new system using their existing data, but if they don't like it, they can stick with Classic.
       </p>
       <p>
-        Migrate is misleading. Using that word in the application copy might make customers apprehensive about their existing data. Using that word in code might confuse future developers.
+        Migrate is misleading. Using that word in the application copy might make customers apprehensive about their existing data. Using that word in code might confuse future developers about what the feature actually does.
       </p>
       <p>
         I contemplate replacing <em>migration</em> with <em>copy</em>. It's clear that copying doesn't mean removing the original. But, this isn't quite right either. As I mentioned earlier, this data transfer isn't a literal copy. There are some things that don't translate perfectly, or at all. Copying also seems like a fast, mindless operation&mdash;a simple <span class="key">CTRL</span>+<span class="key">C</span> <span class="key">CTRL</span>+<span class="key">V</span> exercise. That's not what this is.
@@ -95,55 +95,51 @@
         I tell Mike about my conundrum. 
       </p>
       <p>
-        Immediately, he suggests we use the word <em>import</em> instead. Ah ha!
+        After some thought, he suggests we use the word <em>import</em> instead. Ah ha!
       </p>
       <p>
-        There's a heftiness to the word <em>import</em>, isn't there? Whenever I think about importing data, I envision metallic gear icons  and the spiking of CPU graphs. Even when you import things in the real world, it has that same feeling of heft&mdash;huge cargo ships meandering across the ocean lugging thousands of tons of goods.
+        There's a heftiness to the word <em>import</em> that feels right. Whenever I think about importing data, I envision metallic gear icons  and the momentary spiking of CPU graphs. Even when you import things in the real world, it has that same feeling of heft&mdash;huge cargo ships meandering across the ocean lugging thousands of tons of goods.
       </p>
       <p>
-        The word import also doesn't feel like data is leaving one place and going to another. In the technical sense, I think of importing data from a file I've uploaded. I know that data isn't actually being removed from the file. I also don't necessarily expect this one-to-one mapping between my data and the imported data. Import seems like the perfect word to me.
+        The word <em>import</em>, as it's normally used in technical terms, also doesn't feel like data is leaving one place and going to another. I think of importing data from a file I've uploaded. I know the data on the file doesn't disappear. I also don't necessarily expect this one-to-one mapping between my data and the imported data. Import seems like the perfect word to me.
       </p>
       <p>
-        So, I end up substituting <em>migrate</em>, and all its various derivatives, with <em>import</em>.
+        So, I end up substituting <em>migrate</em>, and all its various derivatives, with <em>import</em>. I'm much happier with this change.
       </p>
       <hr />
       <p>
-        I'm the kind of programmer that obsesses over these seemingly inconsequential verbal details. Finding that just-right name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
+        I obsess over names. Finding that perfect name gives me the same kind of adrenaline boost I get after I've solved a difficult problem or figured out a much cleaner approach to an ugly solution. 
       </p>
       <p>
         My obsession with naming started from a quote I read some time ago. If you've written code long enough, there's a good chance you've heard it as well.
       </p>
       <blockquote>
-        There are only two hard things in Computer Science: cache invalidation and naming things.
+        &ldquo;There are only two hard things in Computer Science: cache invalidation and naming things.&rdquo;
       </blockquote>
       <div class="quoter">
         Phil Karlton
       </div>
       <p>
-        Karlton was a developer at Netscape back in its heyday. I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
+        Karlton was a software architect at Netscape. There is suprisingly little other information I could find about him though I'm sure he did great work. But, it's this quote that he will be forever remembered by in the programming industry.
       </p>
       <p>
-        Exactly when I first heard it, I do not recall&mdash;I just remember chuckling to myself. First, because I can think of many things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming as a difficult exercise.
+        The first time I read this quote, I remember chuckling to myself. First, because I can think of many things that are difficult for me in programming. Second, because naming wasn't initially among those things; I had never thought about naming as a difficult exercise. Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. 
       </p>
       <p>
-        Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. So, how do you name things well? Unlike so many other things in programming, an incoherent name won't be caught by the compiler. There are no metrics for naming. A bad name won't break your code. A good name won't speed up your build.
+        So, how do you name things well? Unlike so many other things in programming, an incoherent name won't be caught by the compiler. There are no metrics for naming. A bad name won't break your code. A good name won't speed up your build.
       </p>
       <p>
-        Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics. It is, in my humble opinion, the most human of technical subjects. Naming is an art. Good naming has a whole lot of subjectivity.
+        Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics. It is, in my humble opinion, the most human of technical subjects. Naming is subjective.
       </p>
       <p>
-        Though there are no metrics for good names, it deserves as much attention as all the other skills we preach in programming&mdash;like good architecture, writing "clean code", or rigid testing. While all the other best practices are critical, they share the common drawback that you cannot see these things right away. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
+        Though there are no metrics for good names, it deserves as much attention as all the other skills we preach in programming&mdash;like good architecture, writing "clean code", or rigid testing. While these other practices are critical, they share the common drawback that you cannot see these things instantly. It's only after digesting the codebase and working with it for awhile that you reap its benefits. 
       </p>
       <p>
-        On the other hand, there's an immediate payoff to a codebase with good names. They are the first things a programmer sees when digging into new code. They make your code more approachable. You can change the name of something and instantly improve your codebase.
+        On the other hand, there's an immediate payoff to a codebase with good names. They are the first things a programmer sees when reading  new code. They make code more approachable. With modern tooling, you can also change the names of things safely and quickly.
       </p>
       <hr />
       <p>
-        This book is about how names can influence how well our code reads and drive us toward better implementations&mdash;regardless of the languages, tools, or development environment you use. <a href="#ch-imagining-objects">Let's begin</a>!
-      </p>
-      <p class="smaller">
-        <em>
-          <strong>Developer's note:</strong> Many of the examples in this book come directly from, or were inspired by, real code I've written for DoneDone over the past decade. Some examples have been altered to highlight specific approaches to naming more clearly or to remove technical detail unimportant to the topic at-hand.</em>
+        This book is about how focusing on names can drive us toward better code&mdash;regardless of the languages, tools, or development environment you use. Many of the examples in this book come directly from, or were inspired by, real code I've written for DoneDone over the past decade. <a href="#ch-imagining-objects">Let's begin</a>.
       </p>
     </div>
   </div>
