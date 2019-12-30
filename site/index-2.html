@@ -36,7 +36,7 @@
 </div>
 <div class="grid-cover">
   <div class="cover">
-    <h1>On Naming Things.</h1>
+    <h1>Naming Things.</h1>
     <h2>A short book dedicated to one of coding's most elusive tasks.</h2>
     <h3>By Ka Wai Cheung, creator and co-founder of <a href="https://www.donedone.com" target="_blank">DoneDone</a>.</h3>
     <h4><a href="#" id="btn-cover-click">Start reading...</a></h4>
@@ -316,10 +316,10 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
     <div class="content">
       <h2>Hunting For Names</h2>
       <p class="emphasis">
-        I'm sure you've daydreamed at work about devoting an entire week to just cleaning up code for a project.
+        There never seems to be time to clean up code. 
       </p>
       <p>
-        But, that wouldn't sit well with 99% of managers and 100% of clients out there. The fact is, we have to clean up&mdash;surreptitiously&mdash;as we go. 
+        No client wants to pay for it. No product manager wants to see time spent with no feature improvements. We sometimes have to clean up&mdash;surreptitiously&mdash;as we go.
       </p>
       <blockquote class="smaller">
         &ldquo;Of course, many [managers] say they are driven by quality but are more driven by schedule...In these cases I give my more controversial advice: Don't tell! Subversive? I don't think so.&rdquo;
@@ -328,7 +328,10 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
         Martin Fowler, <a href="https://martinfowler.com/books/refactoring.html">Refactoring: Improving the Desing of Existing Code</a>
       </div>
       <p>
-        The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is one of the simplest: <em>Find</em> things to name. Look for bits of exposed logic you can define with a name, then replace the logic with the name. 
+        The good news is, you don't need a long stretch of dedicated time to make positive impacts on your code. You can get a lot done in small spurts. One of my favorite exercises is one of the simplest: <em>Find things to name</em>. I look for bits of logic over-exposed logic, then replace the logic with a method or property I can define with a meaningful name. Done repeatedly, it can quickly make souring code sweet. 
+      </p>
+      <p>
+         So what's overexposed logic? Here's an example.
       </p>
       <hr />
       <p>
@@ -350,13 +353,13 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
         If you're unfamiliar with Vue's syntax, no big deal. The <a href="#" class="code-ref" data-code-ref="2-d1"><code>v-if</code> attribute</a> is Vue syntax that works just like a normal <code>if</code> statement, with a Typescript expression inside of it. On an HTML element, it determines if that element should be rendered. In this case, I have a <code>&lt;div&gt;</code> element that I only want to show if the Typescript statement <code>!['xs', 'sm', 'md'].includes($mq)</code> is true.
       </p>
       <p>
-        But, what does this code <em>actually</em> mean? Well, it evaluates to <code>true</code> if the "extra small", "small", or "medium" media query breakpoints are not hit based on the size of the browser. Put more simply, <em>it tells you if the current browser width is sized to at least the width of a normal desktop screen</em>.
+        But, what does this code <em>actually</em> mean? Well, it evaluates to <code>true</code> if the "extra small", "small", or "medium" media query breakpoints are <em>not</em> hit based on the size of the browser. Put more meaningfully, <em>it tells us if the current browser width is sized to at least the width of a normal desktop screen</em>.
       </p>
       <p>
-        When you scan this statement, it just looks complicated. 
+        When I scan this statement, it looks cryptic. Out-of-place. Too specific in the context of the code around it. 
       </p>
       <p>
-        I can quickly fix this line by defining the mess with a meaningful name, like <a href="#" class="code-ref" data-code-ref="2-d2"><code>isDesktopWidth</code></a>.
+        I can quickly fix this line by swapping the logic with a well-named property, like <a href="#" class="code-ref" data-code-ref="2-d2"><code>isDesktopWidth</code></a>.
       </p>
     </div>
   </div>
@@ -371,7 +374,7 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
   <div class="grid-content">
     <div class="content">
       <p>
-        And now I get the satisfaction of cleaning up my original code up with something so much more approachable.
+        Now, I get the satisfaction of cleaning up my original code up with something much more approachable.
       </p>
     </div>
   </div>
@@ -386,31 +389,34 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
   <div class="grid-content">
     <div class="content">
       <p>
-        Not only does this read better, but I have a property I can potentially reuse again in other parts of my code.
+        Not only does this read better, but I have a property I can reuse again in other parts of my code.
       </p>
       <hr />
       <p>
-        You can spot code like this from a mile away&mdash;a messy, overly technical bit of code lying around without a proper home. I often write code like this on the first pass, when I'm just trying to get a feature to work right. But, if I never make that second pass, then things quickly gets ugly.
+        You can spot code like this from a mile away&mdash;an overly technical bit of code lying around without a proper home. I usually write code like this on the first pass, when I'm just trying to get a feature to work right and I don't care about where all the pieces fit. If I never make that second pass, however, then things quickly turn ugly.
       </p>
       <p>
-        It's that second pass where I focus on naming. Where I look to say <em>what</em> rather than <em>how</em>. Where the readability of code improves dramatically. This is among the most basic and important ways you can improve code.
+        In my earlier days, it would be easy to forget to do that second pass because I got lost in the euphoria of simply getting code to work right&mdash;or I was already past the deadline I've set for myself to do so.
       </p>
       <p>
-        Take a moment to look at your own code&mdash;especially in the "higher" areas of your stack where the semantics really <em>should</em> be more human-readable. You might be surprised how many bits of messy logic are sprinkled about that could be wrapped up into a meaningful name.
+        But, I don't skip that second pass anymore. It's this pass where I focus heavily on naming. Where I look to say <em>what</em> rather than <em>how</em>. Where the readability of my code improves dramatically. 
+      </p>
+      <p>
+        Take a moment to look at your own code&mdash;especially in the "higher" areas of your stack where the semantics really <em>should</em> be more human-readable. You might be surprised how many bits of messy logic are sprinkled about that you could wrap up into a meaningful name.
       </p>
       <h3>Empowering your objects</h3>
       <p>
-        Now, logic bits don't always have to look overly technical to benefit from a name. 
+        Logic bits don't always have to look overly <em>technical</em> to benefit from replacing it with a named method or property. 
       </p>
       <p>
-        You may see business logic already using the well-named properties of an object. But, even in these cases, there's usually a way to name that piece of logic and push it <em>back</em> into the class definition. 
+         Even in the cases where I might see business logic already using the well-named properties of an object, there's usually a way I can name that piece of logic and push it <em>back</em> into the class definition. Here's an example. 
       </p>
     </div>
   </div>
   <div class="grid-content">
     <div class="content">
       <p>
-        Here's an example. I have a <code>Person</code> class that houses some basic information used throughout my codebase.
+        I have a <code>Person</code> class that houses some basic information used throughout my codebase.
       </p>
     </div>
   </div>
@@ -437,7 +443,7 @@ public class Person
   <div class="grid-left-code">
     <div class="content">
       <p>
-        For example, on a person's profile screen, <a href="#" class="code-ref" data-code-ref="2-d3">I have an instance of <code>Person</code> named <code>authedPerson</code></a> used to display an authenticated user's name and a few links to other sections of the application they have access to, only if they are an admin or owner in the account.
+        For example, on a person's profile screen, <a href="#" class="code-ref" data-code-ref="2-d3">I have an instance of <code>Person</code> named <code>authedPerson</code></a> used to display an authenticated user's full name and a few links to other sections of the application they have access to, only if they are an admin or owner in the account.
       </p>
     </div>
     <div class="code-block">
@@ -483,7 +489,7 @@ if ((<span class="2-d5">person.LastAccessTimestamp - DateTime.UtcNow).TotalMinut
   <div class="grid-content">
     <div class="content">
       <p>
-        There are a handful of other occurences like the examples above, where little bits of business logic against a <code>Person</code>'s properties are sprinkled about. Most of these bits feel so inconsequentually minor&mdash;simple, one-line constructions and statements&mdash;you might not even consider them to be real business logic at all.
+        There are a handful of other occurences like the examples above, where little bits of business logic against a <code>Person</code>'s properties are sprinkled about. Most of these bits feel so inconsequentually minor&mdash;simple, one-line constructions and statements&mdash;you might not even consider them to be &ldquo;business logic&rdquo; at all.
       </p>
     </div>
   </div>
@@ -507,7 +513,7 @@ public string <span class="2-d6">FullName</span>
   <div class="grid-left-code">
     <div class="content">
       <p>
-        Likewise, the same can be done for the person's name in the subject line of the notification message. I call this an <a href="#" class="code-ref" data-code-ref="2-d7">abbreviated name</a>.
+        Likewise, the same can be done for the special format of the person's name in the subject line of the notification message. I could call this an <a href="#" class="code-ref" data-code-ref="2-d7">abbreviated name</a>.
       </p>
     </div>
     <div class="code-block">
@@ -524,7 +530,7 @@ public string <span class="2-d7">AbbreviatedName</span>
   <div class="grid-right-code">
     <div class="content">
       <p>
-        Back on the profile screen, I can move the check for whether a person is an admin or owner as a property of the <code>Person</code> class and, again, give it a meaningful name. In this case, the check is answering the question, "Does this person have administrative access?". <a href="#" class="code-ref" data-code-ref="2-d8"><code>HasAdminAccess</code> is a sound name</a>.
+        Back on the profile screen, I can move the check for whether a person is an admin or owner as a property of the <code>Person</code> instead. In this case, the check is answering the question, "Does this person have administrative access?". <a href="#" class="code-ref" data-code-ref="2-d8"><code>HasAdminAccess</code> is a sound name</a> for this new property.
       </p>
     </div>
     <div class="code-block">
@@ -541,7 +547,7 @@ public bool <span class="2-d8">HasAdminAccess</span>
   <div class="grid-content">
     <div class="content">
       <p>
-        The application access logic against the <code>Person</code> object within the security class can be pushed back to the class in a couple of ways. Let's take a closer look at that conditional statement one more time.
+        The application access logic against the <code>Person</code> object within the security class can be pushed back to the class in a couple of ways. Here's that conditional statement again.
       </p>
     </div>
   </div>
@@ -555,7 +561,7 @@ if ((person.LastAccessTimestamp - DateTime.Now).TotalMinutes > 60)...
   <div class="grid-content">
     <div class="content">
       <p>
-        There are a few ways I could go about moving this logic. I could take this entire statement and turn it into <a href="#" class="code-ref" data-code-ref="2-d9">a boolean property off <code>Person</code> like so</a>:
+        There are a few ways I could go about moving this logic. The entire statement is asking if the person has been idle for more than 60 minutes, so I could take this entire statement and turn it into <a href="#" class="code-ref" data-code-ref="2-d9">a boolean property off <code>Person</code> like so</a>:
       </p>
     </div>
   </div>
@@ -574,14 +580,17 @@ public bool <span class="2-d9">HasPersonBeenIdleForMoreThan60Minutes</span>
   <div class="grid-content">
     <div class="content">
       <p>
-        This cleans up <em>all</em> of the logic from the security method. But, the name feels way too specific. If someone were just inspecting the <code>Person</code> class, they might ask why such a specific property exists. In addition, if I change the requirements around the idle time, I might easily forget to change the name of the property. I don't like this trade off.
+        This cleans up <em>all</em> of the logic from the security method. But, the name feels way too specific. If someone were just inspecting the <code>Person</code> class, they might ask why such a specific property exists. In addition, if I change the requirements around the idle time, I might easily forget to change the name of the property. 
+      </p>
+      <p>
+        I don't like these tradeoffs. In this case, I'd rather pull back on the specificity of the property so it has a better chance of being reused and maintained well over time.
       </p>
     </div>
   </div>
   <div class="grid-content">
     <div class="content">
       <p>
-        Some alternatives? I could push just the calculation of the idle minutes into the object...
+        For instance, I could push <em>just</em> the calculation of the idle minutes into the object and call this property <code>MinutesIdle</code>.
       </p>
     </div>
   </div>
@@ -600,14 +609,14 @@ public int MinutesIdle
   <div class="grid-content">
     <div class="content">
       <p>
-        ...or, I could convert the logic to a method and allow the caller to pass in the time.
+        Or, I could convert the logic to a method and let the caller <a href="#" class="code-ref" data-code-ref="2-d9-1">pass in the idle minutes</a> to compare.
       </p>
     </div>
   </div>
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-public bool IdleLongerThanMinutes(int minutes)
+public bool IdleLongerThanMinutes(<span class="2-d9-1">int minutes</span>)
 {
   return (person.LastAccessTimestamp - DateTime.Now).TotalMinutes > minutes;
 }</pre>
@@ -619,7 +628,7 @@ public bool IdleLongerThanMinutes(int minutes)
         These two examples are both decent options. But, I like the first option&mdash;it feels more straightforward and reads more coherently.
       </p>
       <p>
-        With these updates, our <code>Person</code> class now evolves into something a lot more powerful. Here's what the full class now looks like with these additional, well-named properties.
+        With these updates, the <code>Person</code> class now evolves into something a lot more powerful. Here's what the full class now looks like with these additional, well-named properties.
       </p>
     </div>
   </div>
@@ -679,7 +688,7 @@ public class Person
   <div class="grid-right-code">
     <div class="content">
       <p>
-        Besides reuse, the biggest gain comes from the improved readability of my code. Here's how the improved implementations look like. In my HTML markup, the business logic below competes far less with the HTML around it.
+        Besides reuse, the biggest gain comes from the improved readability of my code. Here's how the improved implementations look like. In my HTML markup, the business logic visually competes far less with the HTML around it.
       </p>
     </div>
     <div class="code-block">
@@ -721,7 +730,7 @@ if (person.MinutesIdle > 60)
   <div class="grid-content">
     <div class="content">
       <p>
-        The best part of this work is that, once you get accustomed to the game, it's not a heavy effort. You can make these simple refactorings quickly and you can stop whenever the time you've devoted is up (or your manager's come back from lunch).
+        The best part of this work is that, once you get accustomed to the game, it's not a heavy effort. It becomes a bit addictive. You can make these simple refactorings quickly and you can stop whenever the time you've devoted is up (or your manager's come back from lunch).
       </p>
       <p>
         Keep hunting for places where you can corral bits of logic into meaningful names, whether as standalone properties or back into the objects they derived from. It will do wonders to the clarity of your code.
