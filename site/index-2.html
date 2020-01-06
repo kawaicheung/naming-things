@@ -745,23 +745,23 @@ if (person.MinutesIdle > 60)
     <div class="content">
       <h2>Surfacing Method Parameters</h2>
       <p class="emphasis">
-        When you think about it, method calls are a syntactically odd-looking thing. 
+        When you think about it, methods are an odd-looking thing. 
       </p>
       <p>
-        The more parameters the method requires, the harder it is to understand what that method does without digging into its definition. 
+        The more parameters a method requires, the harder it is to understand what that method does without digging into its definition. 
       </p>
     </div>
   </div>
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-void Update(int id, string name, string address, int status...</pre>
+void Update(int id, string name, string address, int status...)</pre>
     </div>
   </div>
   <div class="grid-content">
     <div class="content">
       <p>
-        Of course, we can get around this mess by rounding up all of these parameters <a href="#" class="code-ref" data-code-ref="4-d0">into a single object</a> and passing it to the method. 
+        You can get around this mess by rounding up all of these parameters <a href="#" class="code-ref" data-code-ref="4-d0">into a single object</a> and passing it to the method. 
       </p>
     </div>
   </div>
@@ -774,11 +774,11 @@ void Update(<span class="4-d0">UpdateParams params</span>) { ... }</pre>
   <div class="grid-content">
     <div class="content">
       <p>
-        While this approach tidys your code up, it doesn't help you understand what the method actually <em>does</em>. This is when I like to look for ways I can push more meaning into the method name. 
+        Sure, this approach tidys your code up, but it doesn't help you understand what the method actually <em>does</em>. This is when I like to look for ways I can push more meaning into the method name. Here's an example I stumbled upon recently.
       </p>
       <hr />
       <p>
-        For years, we've only allowed our customers the option to cancel a DoneDone account immediately&mdash;it was instantaneous and irreversible. 
+        For years, DoneDone has only allowed customers the option to cancel an account immediately&mdash;it was instantaneous and irreversible. 
       </p>
     </div>
   </div>
@@ -802,13 +802,13 @@ public class BillingRepository
   <div class="grid-content">
     <div class="content">
       <p>
-        However, some customers want to cancel their account at the end of their term, which could be several months out. Rather than remembering to cancel their account in a few months, they want the account to automatically cancel on the last day of their term.
+        Over the years, we've had customers who've wanted to cancel their account at the end of their term which could be several months out. Rather than remembering to cancel their account in a few months, they wanted the account to automatically cancel on the last day of their term. 
       </p>
       <p>
         I start implementing this by tacking on a parameter to <code>CancelAccount()</code>. Since there are now two cancellation options, cancelling immediately <em>or</em> at the end of their current billing period, I choose the simplest parameter type that fills the need, the trusty boolean. 
       </p>
       <p>
-        I decide to name it <code>cancel_at_period_end</code>. Now, I can pass in <code>true</code> to handle this new special case, and <code>false</code> to handle the original case.
+        <a href="#" class="code-ref" data-code-ref="4-d11">I decide to name it <code>cancel_at_period_end</code></a>. Now, I can pass in <code>true</code> to handle this new special case, and <code>false</code> to handle the original case.
       </p>
     </div>
   </div>
@@ -816,7 +816,7 @@ public class BillingRepository
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-public void CancelAccount(int account_id, <em>bool cancel_at_period_end</em>);
+public void CancelAccount(int account_id, <span class="4-d11">bool cancel_at_period_end</span>);
 </pre>
     </div>
   </div>
@@ -824,7 +824,7 @@ public void CancelAccount(int account_id, <em>bool cancel_at_period_end</em>);
   <div class="grid-content">
     <div class="content">
       <p>
-       After I've implemented the new code to handle the update, I now update all existing references to this method that handle the immediate cancellations.
+       After I've implemented the new code to handle the update, I then update <a href="#" class="code-ref" data-code-ref="4-d12">all existing references</a> to this method that handle the immediate cancellations.
       </p>
     </div>
   </div>
@@ -832,7 +832,7 @@ public void CancelAccount(int account_id, <em>bool cancel_at_period_end</em>);
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-_billing_repository.CancelAccount(account_id, <em>false</em>);
+_billing_repository.CancelAccount(account_id, <span class="4-d12">false</span>);
 </pre>
     </div>
   </div> 
@@ -843,7 +843,7 @@ _billing_repository.CancelAccount(account_id, <em>false</em>);
         But something doesn't feel right about this method signature.
       </p>
       <p>
-        At a glance, it's hard to tell what the <code>false</code> parameter means. Having just written the updates, it makes sense to me now, but it won't to someone else (or to myself in a few days). They'll have to look at the method signature and perhaps even drill into the method to be sure. 
+        At a glance, it's hard to tell what the <code>false</code> parameter means. Having just written the updates, it makes sense to me now. But it won't to someone else (or to myself in a few days). They'll have to look at the method signature and perhaps even drill into the method to be sure. 
       </p>
       <p>
         <a href="#" class="code-ref" data-code-ref="4-d2">I add a comment above each call to <code>CancelAccount()</code></a> for clarity.  It also helps differentiate between the new code I'll be adding later to handle the additional option of canceling at the end of the period.
@@ -860,7 +860,7 @@ _billing_repository.CancelAccount(account_id, false);</pre>
   <div class="grid-content">
     <div class="content">
       <p>
-        <em>Better</em>. But, comments never age well. The method call still feels strange. The standard cancellation case (canceling immediately) accepts the <code>false</code> parameter. Passing in <code>false</code> as the default just feels odd&mdash;It's as if I have to suppress something to perform the <em>default</em> action.
+        <em>Better</em>. But comments never age well. The method call still feels strange. The standard cancellation case (canceling immediately) accepts the <code>false</code> parameter. Passing in <code>false</code> as the default just feels odd&mdash;It's as if I have to suppress something to perform the <em>default</em> action.
       </p>
       <p>
         I can get around this pretty quickly though. Since I'm working with a boolean parameter, I can change its meaning so that the standard case passes in <code>true</code> and update my code accordingly.
@@ -898,7 +898,7 @@ _billing_repository.CancelAccount(account_id, <span class="4-d4">true</span>);</
         I often find this is the case with booleans when the concept it describes has two cases but the options aren't really <em>opposites</em>. That's the case here&mdash;the natural opposite of <code>cancel_now</code> isn't <code>cancel_at_period_end</code> in the way the natural opposite of <code>open</code> is <code>closed</code>.
       </p>
       <p>
-        To improve, <a href="#" class="code-ref" data-code-ref="4-d5">I could try introducing an enumerated value instead</a>.
+        <a href="#" class="code-ref" data-code-ref="4-d5">I could try introducing an enumerated value instead</a>.
       </p>
     </div>
   </div>
@@ -924,13 +924,13 @@ _billing_repository.CancelAccount(account_id, <span class="4-d5">CancelType.NOW<
   <div class="grid-content">
     <div class="content">
       <p>
-        This is an improvement. I've gotten rid of the ambiguity issues we had with the boolean parameter. It also leaves me better positioned to introduce additional cancelation types in the future.
+        This is an improvement. On the plus side, I've gotten rid of the ambiguity issues I had with the boolean parameter. It also leaves me better positioned to introduce additional cancelation types in the future.
       </p>
       <p>
-        But, this just doesn't feel like one of those features we'd continually augment in the near future. 
+        However, this just doesn't feel like one of those features we'd continually augment in the near future. There just aren't that many variations of canceling DoneDone that would make sense. And, now I've introduced a new type as well as a new parameter.
       </p>
       <p>
-        An even more readable approach is to directly convey the type of cancelation in the method name. I ultimately decide to create two distinct cancelation methods.
+        I ultimately decide to simplify things. I create two distinct cancelation methods and convey the type of cancelation in the <em>method names</em>. 
       </p>
     </div>
   </div>
@@ -1025,7 +1025,7 @@ switch (input.ActionChangeType)
   <div class="grid-content">
     <div class="content">
       <p>
-        In a recent feature update, we wanted to explicitly add an option to <em>remove</em> due dates from all issues. Because the <code>UpdateDueDates()</code> method already gives the option to pass in a <code>null</code> value, <a href="#" class="code-ref" data-code-ref="4-d7">the update was straightforward</a>:
+        In a recent feature update, we wanted to explicitly add an option to <em>remove</em> due dates from all issues. Because the <code>UpdateDueDates()</code> method already gives the option to pass in a <code>null</code> value, <a href="#" class="code-ref" data-code-ref="4-d7">the update is straightforward</a>:
       </p>
     </div>
   </div>
@@ -1096,7 +1096,7 @@ switch (input.ActionChangeType)
         In both examples, adding a <em>new</em> method rather than relying on the parameters of an existing method were fairly easy decisions. In both cases, there was only one variant to the parameters, requiring one additional method.
       </p>
       <p>
-        If the amount of variations are small (say, 3 or less), and these variations are unlikely to change over time, surfacing parameters into method names makes a whole lot of sense to improve your code readability.
+        If the amount of variations are small (say, three or less), and these variations are unlikely to change over time, surfacing parameters into method names makes a whole lot of sense to improve your code readability.
       </p>
     </div>
   </div>
@@ -1107,10 +1107,10 @@ switch (input.ActionChangeType)
     <div class="content">
       <h2>The Shape of Code</h2>
       <p class="emphasis">
-        Code has a certain <em>shape</em> to it. It's spacing and indentation. Where line breaks are made. How the lines flow down a page. All of this stuff matters.
+        Code has a certain <em>shape</em> to it. It's spacing. The indentations. Where line breaks are made. All of this stuff matters.
       </p>
       <p>
-        Good shape makes code easier&mdash;and more enjoyable&mdash;to read. So, part of my consideration for how to name something is unapologetically superficial: It has nothing to do with the actual meaning, but how it impacts the code's shape.
+        Good shape makes code easier&mdash;and more enjoyable&mdash;to read. So, at times, my reason for naming something is unapologetically superficial: It might have more to do with the code's shape than the meaning of the name.
       </p>
       <p>
         Consider this simple <code>for</code> loop.
@@ -1139,18 +1139,18 @@ for (int i=0; i < <span class="5-d1">tokens</span>.length; i++)
   <div class="grid-content">
     <div class="content">
       <p>
-        Here's that same code block again with a few name changes. In each case, I've substituted a name with an even more precise name.
+        Here's that same code block again with one name change. Instead of using the generic variable name <code>i</code>, I substitute it with a much more precise name, <a href="#" class="code-ref" data-code-ref="5-d4"><code>curIndexOfTokenArray</code></a>.
       </p>
     </div>
   </div>
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-for (int <span class="5-d4">curIndexOfTokenArray</span>=0; <span class="5-d4">curIndexOfTokenArray</span> < <span class="5-d5">tokensArray</span>.length; <span class="5-d4">curIndexOfTokenArray</span>++)
+for (int <span class="5-d4">curIndexOfTokenArray</span>=0; <span class="5-d4">curIndexOfTokenArray</span> < <span class="5-d5">tokens</span>.length; <span class="5-d4">curIndexOfTokenArray</span>++)
 {
- if (<span class="5-d5">tokensArray</span>[<span class="5-d4">curIndexOfTokenArray</span>].Used)
+ if (<span class="5-d5">tokens</span>[<span class="5-d4">curIndexOfTokenArray</span>].Used)
  {
-   <span class="5-d5">usedTokensList</span>.Add(<span class="5-d5">tokensArray</span>[<span class="5-d4">curIndexOfTokenArray</span>]);
+   <span class="5-d5">usedTokens</span>.Add(<span class="5-d5">tokens</span>[<span class="5-d4">curIndexOfTokenArray</span>]);
  }
 }</pre>
     </div>
@@ -1158,21 +1158,21 @@ for (int <span class="5-d4">curIndexOfTokenArray</span>=0; <span class="5-d4">cu
   <div class="grid-content">
     <div class="content">
       <p>
-        If we think only in terms of clarity, then the code should be an improvement. Certainly,  
-        <a href="#" class="code-ref" data-code-ref="5-d4"><code>curIndexOfTokenArray</code></a> is clearer than <code>i</code>. The names <a href="#" class="code-ref" data-code-ref="5-d5"><code>tokensArray</code> and <code>usedTokensList</code></a> now tell me the object's type without having to dig into them. The names are far more clear. 
+        If I think only in terms of clarity, then the code should be an improvement. Certainly,  
+        <a href="#" class="code-ref" data-code-ref="5-d4"><code>curIndexOfTokenArray</code></a> is clearer than <code>i</code>. But, is it <em>better</em>? 
       </p>
       <p>
-        While the current index is a critical anchor of a <code>for</code> loop, representing it in a verbally meaningful way isn’t. For one thing, an index is common to <em>every</em> kind of <code>for</code> loop. In addition, it's scope is small&mdash;it only exists for the duration of a few lines inside the loop. If someone were really confused about the variable name, they only need to look around a small visual radius to get refamiliarized.
+        While the current index is a critical anchor of a <code>for</code> loop, representing it in a verbally meaningful way isn’t. For one thing, an index is common to <em>every</em> kind of <code>for</code> loop. In addition, it's scope is small&mdash;it only exists within a few lines inside the loop. If someone were really confused about the variable name, they only need to look around a small visual radius to get familiarized.
       </p>
       <p>
-        The stars of the show here ought to be the <code>tokens</code> array and <code>usedTokens</code> list. Adding more description to <code>i</code> brings a peripheral stage crew member into the spotlight. Couple this with the additional suffix <code>Array</code> to <code>tokens</code> and the line <code>if (tokensArray[curIndexOfTokenArray].Used)</code> takes much longer to parse through it.
+        The stars of the show here ought to be the <code>tokens</code> array and <code>usedTokens</code> list. Adding more description to <code>i</code> brings a peripheral stage crew member into the spotlight. The lines are altogether more difficult to digest&mdash;a whole lot of verbosity to explain something quite simple.
       </p>
       <p>
-        The original version values the shape of the entire statement more than the level of description each variable brings. There are certain times where this is a better trade-off. This is one of them.
+        The original version values the shape of the entire statement over the specificity of the variable name. There are certain times where this is a better trade-off. This is one of them.
       </p>
       <hr />
       <p>
-        Here’s another example. In DoneDone, <code>systemTimeZones</code> represent a collection of objects each describing a time zone. The method loops through this collection, then extracts time zone information to build a list of <code>DropDownComponents</code> while marking the passed-in time zone as <code>Selected</code>:
+        Here’s another example. In DoneDone, <code>systemTimeZones</code> represent a collection of objects each describing a time zone. The method below loops through this collection, then extracts time zone information to build a list of <code>DropDownComponents</code> while marking the passed-in time zone as <code>Selected</code>:
       </p>
     </div>
   </div>
@@ -1207,7 +1207,7 @@ public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedT
       </p>
       <ul>
         <li>The <code>systemTimeZones</code> collection</li>
-        <li>The <code>systemTimeZone</code> object scoped in the `foreach` loop</li>
+        <li>The <code>systemTimeZone</code> object scoped in the <code>foreach</code> loop</li>
         <li>The <code>selectedTimeZone</code> parameter</li>
         <li>The <code>GetSystemTimeZones()</code> method call.</li>
       </ul>
@@ -1215,7 +1215,7 @@ public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedT
         Scenarios like these are tricky because each name, in isolation, is appropriately descriptive. No single name is egregiously lengthy, misleading, or overly detailed. 
       </p>
       <p>
-        The problem, however, is when we step back and read the method as a whole. It reminds me a lot of the lines of a Dr. Suess story. One of my son’s favorites is <em>Hop On Pop</em>, which begins:
+        The problem, however, is when we step back and read the method as a whole. It reminds me a lot of the lines of a Dr. Suess story. One of my kids&rsquo; favorites is <em>Hop On Pop</em>, which begins:
       </p>
       <blockquote>
         UP PUP - Pup is up.<br />
@@ -1224,13 +1224,13 @@ public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedT
       </blockquote>
       <div class="quoter">Dr. Seuss, <em>Hop on Pop</em></div>
       <p>
-        The lines of Dr. Seuss, of course, are intentionally dizzying. My son loves to get lost in the pattern of the words and giggles at the absurdity of its rhythm. But, reading dizzying code at 5pm isn't that fun. For this, we need to make some name improvements.
+        The lines of Dr. Seuss, of course, are intentionally dizzying. My son loves to get lost in the pattern of the words and giggles at the absurdity of its rhythm. But, reading dizzying code at 5pm isn&rsquo;t that fun. For this, I need to make some name improvements.
       </p>
       <p>
-        The most immediate, impactful name change I can make is with the name of the <code>systemTimeZone</code> object. It appears four times within the method. No other similarly named construct appears more than twice. Also, because its reach is small (only scoped to the <code>foreach</code> loop), we can get away with a less descriptive name without doing much harm to the reader’s understanding. 
+        The most immediate and impactful name change I can make is with the name of the <code>systemTimeZone</code> object. It appears four times within the method whereas no other similarly named construct appears more than twice. Also, because its reach is small (only scoped to the <code>foreach</code> loop), I can get away with a less descriptive name without doing much harm to the reader’s understanding. 
       </p>
       <p>
-        Let’s try <a href="#" class="code-ref" data-code-ref="5-d6">reducing <code>systemTimeZone</code> to something shorter, like <code>tz</code></a>:
+        I try <a href="#" class="code-ref" data-code-ref="5-d6">reducing <code>systemTimeZone</code> to something shorter, like <code>tz</code></a>:
       </p>
     </div>
   </div>
@@ -1264,11 +1264,11 @@ public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedT
         I like this change already. Now, the details of the <code>foreach</code> loop are much easier to scan. In addition, all of the other similarly-named constructs benefit. They're given more room so that the similarity in their names aren’t as distracting on the eyes as they were before.
       </p>
       <p>
-        Just like our prior example, the variable <code>tz</code> feels sized appropriately. Conceptually, a small name like <code>tz</code> feels like just one element in a longer-named collection like <code>systemTimeZones</code>. These are the kinds of subtle visual cues that all lend themselves to good code shape.
+        Just like in the prior example, the variable <code>tz</code> feels sized appropriately. Conceptually, a small name like <code>tz</code> feels like just one element in a longer-named collection like <code>systemTimeZones</code>. These are the kinds of subtle visual cues that all lend themselves to good code shape.
       </p>
       <p>
-        Next, I decide to pare down the variable <code>systemTimeZones</code> to just <code>timeZones</code>. I originally named this list <code>systemTimeZones</code> to follow how the .NET framework named the get method I'm using (<code>GetSystemTimeZones()</code>). But, the word <em>system</em> doesn't add any helpful meaning here. This change also helps better differentiate from the <code>selectedTimeZone</code>
-        variable used inside the <code>foreach</code> loop.
+        Next, I decide to <a href="#" class="code-ref" data-code-ref="5-d71">pare down the variable <code>systemTimeZones</code> to just <code>timeZones</code></a>. I originally named this list <code>systemTimeZones</code> to follow how the .NET framework named the get method I'm using (<code>GetSystemTimeZones()</code>). But, the word <em>system</em> doesn't add any helpful meaning here. This change also helps better <a href="#" class="code-ref" data-code-ref="5-d72">differentiate it from the <code>selectedTimeZone</code>
+        variable</a> used inside the <code>foreach</code> loop.
       </p>
     </div>
   </div>
@@ -1278,13 +1278,13 @@ public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedT
 public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedTimeZone)
 {
   var result  = new List&lt;DropDownComponent&gt;();
-  var timeZones = TimeZoneInfo.GetSystemTimeZones();
+  var <span class="5-d71">timeZones</span> = TimeZoneInfo.GetSystemTimeZones();
 
-  foreach (var tz in timeZones)
+  foreach (var tz in <span class="5-d71">timeZones</span>)
   {
     var component = new DropDownComponent(tz.Id, tz.DisplayName);
 
-    if (tz.Id == selectedTimeZone)
+    if (tz.Id == <span class="5-d72">selectedTimeZone</span>)
     {
       component.Selected = true;
     }
@@ -1301,11 +1301,11 @@ public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedT
   <div class="grid-content">
     <div class="content">
       <p>
-        I could go further and rename the other variables more uniquely, but I don't feel it's necessary. When I read the updated method, I don't feel that dizzying effect of all those similarly named variables that I did earlier.
+        I could go further and rename the other variables more uniquely, but I don't feel it's necessary. When I read the updated method, I don't feel that dizzying effect of all those similarly named variables that I did earlier. Mission accomplished.
       </p>
       <hr />
       <p>
-        In DoneDone, there are places where I write code to build up larger segments of text. For instance, a <code>StreamWriter</code> to generate documentation for our API, or a <code>StringBuilder</code> to write lines of dynamic text into an email object.
+        In DoneDone, there are places where I write code to build up larger segments of text. For instance, I use a <code>StreamWriter</code> to generate documentation for our API and a <code>StringBuilder</code> to write lines of dynamic text into an email object.
       </p>
       <p>
         Here's a case where I've used a <code>Document</code> object to build up our search catalog. The search catalog library I'm using is a port of the well-known Java search library <em>Lucene</em>, so naturally, a name like <code>lucene_document</code> feels appropriate here. Here's a bit of the code snippet that builds
@@ -1365,16 +1365,16 @@ doc.Add(new Field(_FIELD_item_event_desc, item_event.PlainTextDescription...);
     <div class="content">
       <hr />
       <p>
-        When we edit names, we shouldn't look at them in isolation. That habit can drive naming decisions that don’t actually benefit the overall readability of the surrounding code. 
+        When you edit names, you shouldn't look at them in isolation. That habit can drive naming decisions that don’t actually benefit the overall readability of the surrounding code. 
       </p>
       <p>
         Instead, look at the context in which these names live. Find out what’s making a section of code difficult to read and solve the larger problem. It might be a more descriptive variable name, but it might also be a terse one. Let the full context drive those decisions.
       </p>
       <p>
-        In the previous examples, I didn't value the precision of certain variable names as much as I did the shape of the lines around them, particularly because the scope of those variables was small.
+        In the previous examples, I didn't value the precision of certain variable names as much as I did the shape of the lines around them, particularly because the scope of those variables was small or the extra precision didn't add much context.
       </p>
       <p>
-        When editing prose, we read whole sentences and paragraphs to get a sense of readability and style. It’s the same when we write code.
+        When editing prose, you read whole sentences and paragraphs to get a sense of readability and style. I find code writing to be similar.
       </p>
     </div>
   </div>
@@ -1388,29 +1388,29 @@ doc.Add(new Field(_FIELD_item_event_desc, item_event.PlainTextDescription...);
         Usually, the English language has enough breadth that most words have a clear opposite.
       </p>
       <p>
-        For a piece of functionality that allows us to move a file out of the trash, we don't have to say <em>undelete</em>; <em>Restore</em> makes perfect sense. It's clear that a file that can be restored has already been deleted or removed.
+        For a piece of functionality that allows you to move a file out of the trash, you don't have to say <em>undelete</em>; <em>Restore</em> makes perfect sense. It's clear that a file that can be restored has already been deleted or removed.
       </p>
       <p>
         But, sometimes finding the opposite isn't always straightforward.
       </p>
       <hr />
       <p>
-        There's this concept in the new DoneDone called <em><a href="https://www.youtube.com/watch?v=Z7rkxgq6-Ac">Workflows</a></em>. A workflow defines a series of statuses available for an issue. A typical workflow might have statuses like "Open", "In Progress", "Not Reproducible", "Closed" and so forth. We let users create workflows to tailor them to their particular business processes. 
+        There's this concept in the new DoneDone called <em><a href="https://www.youtube.com/watch?v=Z7rkxgq6-Ac">Workflows</a></em>. A workflow defines a series of statuses available for a task. A typical workflow might have statuses like "Open", "In Progress", "Not Reproducible", "Closed" and so forth. We let users create workflows to tailor them to their particular business processes. 
       </p>
       <p>
-        A workflow has its own status too. It starts as <em>unpublished</em>. When you're ready to use the workflow on a project, you must <em>publish</em> it. That's simple enough.
+        A workflow has its own status too. It starts as <em>unpublished</em>. When you're ready to use the workflow on a project, you must <em>publish</em> it. Simple enough.
       </p>
       <p>
         But, once a workflow is published, you can still <em>unpublish</em> the workflow. There are a few caveats to this, so I decide to wrap this logic inside of a convenient little method inside the <code>Workflow</code> class. My first attempt at a method name is <code>IsWorkflowUnpublishable()</code>.
       </p>
       <p>
-        Quickly, I realize there's something unsavory about this name. Someone could easily mistake this as a check that a workflow <em>cannot be published</em> rather than a check that a workflow <em>can be unpublished</em>. Those are, indeed, two very different things.
+        Quickly, I realize there's something unsavory about this name. Someone could easily mistake this name to mean that a workflow <em>cannot be published</em> rather than that a workflow <em>can be unpublished</em>. Those are, indeed, two very different things.
       </p>
       <p>
-        The problem is that there just isn't a good adjective that means the opposite of published. <em>Draft</em> might be the best way to describe this concept. It's something I've seen before in blogging tools for instance. But a method name like <code>IsWorkflowDraftable()</code> or <code>IsWorkflowAbleToBeInDraftMode()</code> feels like we're headed in the wrong direction fast.
+        The problem is that there just isn't a good adjective that means the opposite of published. <em>Draft</em> might be the best way to describe this concept. It's something I've seen before in blogging tools for instance. But a method name like <code>IsWorkflowDraftable()</code> or <code>IsWorkflowAbleToBeInDraftMode()</code> feels like I'm headed in the wrong direction fast.
       </p>
       <p>
-        In cases like these, I try to look for a completely different angle to the name. After staring at my options for a few minutes, I realize the obstacle lies with the initial word <em>is</em>. It corners us into having to come up with an adjective to describe the state of the workflow we want to achieve&mdash;and there aren't any good ones that make the method name read clearly.
+        In cases like these, I try to look for a completely different angle to the name. After staring at my options for a few minutes, I realize the obstacle lies with the initial word <em>is</em>. It forces me into having to come up with an adjective to describe the state of the workflow I want to achieve&mdash;and there aren't any good ones that make the method name read clearly.
       </p>
       <p>
         Instead of starting the name with the adjective-requiring "is", I start with the verb-requiring "can." <code>CanUnpublishWorkflow()</code>
