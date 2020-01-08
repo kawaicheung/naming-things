@@ -1431,24 +1431,15 @@ doc.Add(new Field(_FIELD_item_event_desc, item_event.PlainTextDescription...);
     <div class="content">
       <h2>The Tautologous Name Trap</h2>
       <p class="emphasis">
-        It's a good habit to look for business logic that you can extract into a method or variable. It infuses better meaning into your code. It makes it easier to understand your original intentions later on. 
-      </p>
-      <p>
-        But, a name that seems meaningful at the outset might not be.
+        The French philosopher René Descartes once said &ldquo;I am, therefore I am.&rdquo; What makes for a great philosophical statement to ponder also makes for an unhelpful line of code to read.
       </p>
       <hr />
       <p>
-        I'm working on a piece of code that processes incoming emails for <a href="https://www.donedone.com">DoneDone</a>. One of its responsibilities is to send an auto-response email back to the original sender if certain conditions are met.
+        I'm working on a piece of code that processes incoming emails for DoneDone. One of its responsibilities is to send an auto-response email back to the original sender if certain conditions are met.
       </p>
       <p>
         In the first iteration of this feature, I send the auto-response only if the  email was received outside of a company's office hours. 
-      </p>
-    </div>
-  </div>
-  <div class="grid-content">
-    <div class="content">
-      <p>
-        I've written a method named <code>isCurrentlyOutsideOfficeHours()</code> which queries the company's work hours and compares these date ranges to the current time to answer the question. 
+        I've written a method named <code>isCurrentlyOutsideOfficeHours()</code> which queries the company's work hours and figures out if the current time falls outside of them. 
       </p>
     </div>
   </div>
@@ -1480,7 +1471,7 @@ if (isCurrentlyOutsideOfficeHours())
   <div class="grid-content">
     <div class="content">
       <p>
-        Suppose later on, we decide to allow users to configure company holidays as well as office hours. This way, the auto-response will always be triggered during a company holiday regardless of the time of day.
+        Suppose&mdash;later on&mdash;we decide to allow users to configure company holidays as well as office hours. This way, the auto-response will always be triggered during a company holiday regardless of the time of day.
       </p>
     </div>
   </div>
@@ -1488,7 +1479,7 @@ if (isCurrentlyOutsideOfficeHours())
   <div class="grid-left-code">
     <div class="content">
       <p>
-       Back under the hood, I add the new functionality. Now, the check for whether to send the auto-response has <a href="#" class="code-ref" data-code-ref="7-d1">another condition</a>.
+       Back under the hood, I add the new functionality. Now, the check for whether to send the auto-response has <a href="#" class="code-ref" data-code-ref="7-d1">this new condition</a>.
       </p>
     </div>
     <div class="code-block">
@@ -1503,7 +1494,7 @@ if (isCurrentlyOutsideOfficeHours() <span class="7-d1">|| isCompanyHoliday()</sp
   <div class="grid-content">
     <div class="content">
       <p>
-        Because I've added more complexity to the auto-response logic, I consider pushing the conditional expression into its own method, then calling the new method in place of the expression. At first, a name like <code>shouldSendAutoResponse()</code> sounds sensible. Here's what that would look like:
+        Because I've added more complexity to the auto-response logic, I might consider pushing the conditional expression into its own method, then calling the new method in place of the expression. At first, a name like <code>shouldSendAutoResponse()</code> sounds completely sensible. Here's what that would look like:
       </p>
     </div>
   </div>
@@ -1521,7 +1512,7 @@ private bool shouldSendAutoResponse()
   <div class="grid-content">
     <div class="content">
       <p>
-        With a new property extracted, I can replace the original conditional so things are tidy again. 
+        With a new property extracted, I can replace the original conditional so my code is tidy again. 
       </p>
     </div>
   </div>
@@ -1538,10 +1529,10 @@ if (shouldSendAutoResponse())
   <div class="grid-content">
     <div class="content">
       <p>
-        But, do you spot the new issue? The statement, while tidy, has lost all of its meaning. Of course we send the auto-response if we should send the auto-response!
+        But, do you spot the new problem? Descartes might. The statement, while tidy, has lost all of its meaning. Of course we send the auto-response if we should send the auto-response!
       </p>
       <p>
-        When you read the conditional in isolation, you don't know <em>why</em> the auto-response is being sent. You need to trickle into the <code>shouldSendAutoResponse()</code> method to find out. The extraction doesn't give us better comprehension; It merely tucks away some logic that you likely have to drill into later anyways.
+        When you read the conditional in isolation, you don't know <em>why</em> the auto-response is being sent. You need to trickle into the <code>shouldSendAutoResponse()</code> method to find out. The extraction doesn't give us better comprehension&mdash;it just tucks away some logic.
       </p>
       <p>
         I find this happens a lot with these quick extraction exercises. My immediate inclination is to name the newly extracted property after the <em>outcome</em> of the conditions being met rather than the <em>meaning</em> of the conditions. I name the property after the <em>effect</em> rather than the <em>cause</em>.
@@ -1575,11 +1566,12 @@ if (isOfficeClosed())
       <p>
       The conditional now reads much more meaningfully. In addition, <code>isOfficeClosed()</code> is a method that has far more obvious applications than <code>shouldSendAutoReponse()</code> does. 
       </p>
+      <hr />
       <p>
       Tautologous conditionals aren't necessarily bad, though. There are times where describing the <em>effect</em> is the cleanest option. Let's continue with this example. 
       </p>
       <p>
-      Suppose that I introduce a few more conditions to determine whether to send an auto-response. Namely, I let a user toggle auto-responses altogether and I also want to exclude auto-responses to emails that are flagged as spam. My first step is to <a href="#" class="code-ref" data-code-ref="7-d2">augment the conditional</a> one more time.
+      Suppose that we introduce a few more conditions to determine whether to send an auto-response. Namely, we let an account toggle auto-responses altogether and we also want to exclude auto-responses to emails that are flagged as spam. My first step is to <a href="#" class="code-ref" data-code-ref="7-d2">augment the conditional</a> one more time.
       </p>
     </div>
   </div>
@@ -1595,7 +1587,7 @@ if (isOfficeClosed() <span class="7-d2">&& autoResponseEnabled && !_email.IsSpam
   <div class="grid-content">
     <div class="content">
       <p>
-        The conditional expression bloats up again&mdash;it seems ripe for packaging things up. But, I have trouble finding an elegant solution. Is there a meaningful name that could consolidate all or some of the expression <code>isOfficeClosed()</code>, <code>autoResponseEnabled</code>, and <code>!_email.IsSpam</code>? There doesn't appear to be a common relationship other than they all factor into sending an auto-response.
+        The conditional expression bloats up again&mdash;it seems ripe for packaging things up. But, I have trouble finding an elegant solution. Is there a meaningful name that could consolidate all (or some) of the expression <code>isOfficeClosed()</code>, <code>autoResponseEnabled</code>, and <code>!_email.IsSpam</code>? There doesn't appear to be a common relationship other than they all factor into sending an auto-response.
       </p>
     </div>
   </div>
@@ -1632,10 +1624,7 @@ bool isOfficeClosed()
     <div class="content">
       <hr />
       <p>
-        This brings up an important general idea we see throughout all programming concepts, particularly with naming. We make tradeoffs depending on how a section of code evolves. When I can find an apt name for the <em>cause</em>, I choose it. When I can't, I might decide that naming an extraction for its <em>effect</em> is still better than not extracting it at all.
-      </p>
-      <p>
-        In the end, the goal is to continually rename things to produce the most coherency in each situation.
+        I make tradeoffs with names depending on how a section of code evolves. When I can find an apt name for the <em>cause</em>, I choose it. When I can't, I might decide that naming an extraction for its <em>effect</em> is still better than not extracting it at all.
       </p>
     </div>
   </div>
