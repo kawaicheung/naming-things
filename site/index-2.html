@@ -52,7 +52,7 @@
         Here's a little insight into what I think about when I write code.
       </p>
       <p>
-        So, I'm working on&mdash;what I'll call for now&mdash;a <em>data migration</em> feature. It's for the brand new version of <a href="https://www.donedone.com">DoneDone</a>, the issue tracking and customer support app I created and have continued to work on for over a decade. Developing a product for this long, I'm intimately familiar with the code&mdash;like a scupltor chiseling away endlessly at a large piece of stone.
+        So, I'm working on&mdash;what I'll call for now&mdash;a <em>data migration</em> feature. It's for the brand new version of <a href="https://www.donedone.com">DoneDone</a>, the task tracking and customer support app I created and have continued to work on for over a decade. Developing a product for this long, I'm intimately familiar with the code&mdash;like a scupltor chiseling away endlessly at a large piece of stone.
       </p>
       <p>
         The goal of this migration feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call <em>Classic</em>) over to this new version. I wish I could tell you this is a simple mapping of database tables and columns from Classic over to the new version, but it's not. The new DoneDone is markedly different from its predecessor: Some data maps simply, other data requires some massaging, and some stuff simply can't be mapped at all.
@@ -208,7 +208,7 @@
         <a href="#" class="code-ref" data-code-ref="1-d2">The other hydrates the same object with the encrypted token. The token is decrypted and the other properties are deduced from the decryption</a>. This is called during the request when a user clicks the link they received from the email.
       </p>
       <p>
-        <a href="#" class="code-ref" data-code-ref="1-d3">The <code>IssueWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request</a>. For instance, a password reset link might be valid for only ten minutes whereas a user registration link could be valid for a few hours.
+        <a href="#" class="code-ref" data-code-ref="1-d3">The <code>IssuedWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request</a>. For instance, a password reset link might be valid for only ten minutes whereas a user registration link could be valid for a few hours.
       </p>
     </div>
     <div class="code-block">
@@ -461,15 +461,15 @@ public class Person
   <div class="grid-content">
     <div class="content">
       <p>
-        In another part of the application, <a href="#" class="code-ref" data-code-ref="2-d4">I use a person's first name and last initial</a> to prep notification messages when they update an issue.
+        In another part of the application, <a href="#" class="code-ref" data-code-ref="2-d4">I use a person's first name and last initial</a> to prep notification messages when they update a task.
       </p>
     </div>
   </div>
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-// e.g. "Mary D. updated the issue."
-var subject = <span class="2-d4">person.FirstName + " " +  person.LastName.Substring(0,1) + "."</span> + " updated the issue.";</pre>
+// e.g. "Mary D. updated the task."
+var subject = <span class="2-d4">person.FirstName + " " +  person.LastName.Substring(0,1) + "."</span> + " updated the task.";</pre>
     </div>
   </div>
   <div class="grid-right-code">
@@ -986,7 +986,7 @@ void CancelAccount(int account_id, bool cancel_at_period_end)
         I find a similar opportunity arises when <code>null</code> values are passed to a method. Usually, it's a sign that a new method name ought to be created to handle the passing of <code>null</code> to the original method.
       </p>
       <p>
-        In DoneDone, I have a series of "bulk edit" methods that live in a services layer. Each accepts a list of <code>issue_ids</code> and performs some action on the issue they represent. One of these is a function to bulk update the issues' due dates. 
+        In DoneDone, I have a series of "bulk edit" methods that live in a services layer. Each accepts a list of <code>task_ids</code> and performs some action on the task they represent. One of these is a function to bulk update the tasks' due dates. 
       </p>
       <p>
         Here's the abbreviated signature. <em>(Due dates are optional&mdash;hence the nullable <code>DateTime?</code> object representing the due date in the parameter list).</em>
@@ -997,7 +997,7 @@ void CancelAccount(int account_id, bool cancel_at_period_end)
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-public void UpdateDueDates(List&lt;long&gt; issue_ids, DateTime? due_date, ...);</pre>
+public void UpdateDueDates(List&lt;long&gt; task_ids, DateTime? due_date, ...);</pre>
     </div>
   </div>
 
@@ -1015,7 +1015,7 @@ public void UpdateDueDates(List&lt;long&gt; issue_ids, DateTime? due_date, ...);
 switch (input.ActionChangeType)
 {
   case BulkActions.UPDATE_DUE_DATE:
-    <span class="4-d6">_issues_service.UpdateDueDates(input.IssueIDs, DateTime.Parse(input.Value),...);</span>
+    <span class="4-d6">_tasks_service.UpdateDueDates(input.TaskIDs, DateTime.Parse(input.Value),...);</span>
     break;
     ... 
 }</pre>
@@ -1025,7 +1025,7 @@ switch (input.ActionChangeType)
   <div class="grid-content">
     <div class="content">
       <p>
-        In a recent feature update, we wanted to explicitly add an option to <em>remove</em> due dates from all issues. Because the <code>UpdateDueDates()</code> method already gives the option to pass in a <code>null</code> value, <a href="#" class="code-ref" data-code-ref="4-d7">the update is straightforward</a>:
+        In a recent feature update, we wanted to explicitly add an option to <em>remove</em> due dates from all tasks. Because the <code>UpdateDueDates()</code> method already gives the option to pass in a <code>null</code> value, <a href="#" class="code-ref" data-code-ref="4-d7">the update is straightforward</a>:
       </p>
     </div>
   </div>
@@ -1059,9 +1059,9 @@ switch (input.ActionChangeType)
   <div class="grid-code-only">
     <div class="code-block">
   <pre>
-public void <span class="4-d8">RemoveDueDates</span>(List&lt;long&gt; issue_ids, ...)
+public void <span class="4-d8">RemoveDueDates</span>(List&lt;long&gt; task_ids, ...)
 {
-  UpdateDueDates(issue_ids, null, ...);
+  UpdateDueDates(task_ids, null, ...);
 }</pre>
     </div>
   </div>
@@ -1078,11 +1078,11 @@ public void <span class="4-d8">RemoveDueDates</span>(List&lt;long&gt; issue_ids,
 switch (input.ActionChangeType)
 {
   case BulkActions.UPDATE_DUE_DATE:
-    <span class="4-d10">_items_service.UpdateDueDates(input.IssueIDs, DateTime.Parse(input.Value), ...);</span>
+    <span class="4-d10">_items_service.UpdateDueDates(input.TaskIDs, DateTime.Parse(input.Value), ...);</span>
     break;
         
   case BulkActions.REMOVE_DUE_DATE:
-    <span class="4-d10">_items_service.RemoveDueDates(input.IssueIDs, ...);</span>
+    <span class="4-d10">_items_service.RemoveDueDates(input.TaskIDs, ...);</span>
     break;
     ... 
 }</pre>
@@ -1203,7 +1203,7 @@ public List&lt;DropDownComponent&gt; BuildTimeZonesDropDownList(string selectedT
   <div class="grid-content">
     <div class="content">
       <p>
-        The issue with the shape of this code is how repetitive some of the variable names look. There are several names in this method that all look similar at a glance:
+        The task with the shape of this code is how repetitive some of the variable names look. There are several names in this method that all look similar at a glance:
       </p>
       <ul>
         <li>The <code>systemTimeZones</code> collection</li>
@@ -1743,9 +1743,9 @@ It's taxing work. And I think it leads programmers (including myself) to abstrac
 </p>
 <hr />
 <p>
-I'm going through a refactoring in DoneDone's codebase to consolidate a few data objects that hold very similar kinds of information in slightly different ways. They all revolve around the history of actions applied to an issue.
+I'm going through a refactoring in DoneDone's codebase to consolidate a few data objects that hold very similar kinds of information in slightly different ways. They all revolve around the history of actions applied to a task.
 </p><p>
-Ultimately, the properties of these objects manifest in a few different places. On an issue's detail page, the collection of history for a single issue is written out from an <code>IssueDetailHistory</code> collection. On the activity dashboard, a list of history on all issues in a given day is extracted from a list of <code>ActivityHistory</code> items. When activity occurs on an issue, yet another "history" object is packaged up in a class with a list of emails to send to specific users. A mailing service unpacks the data and formats the right bits of information into emails.
+Ultimately, the properties of these objects manifest in a few different places. On a task's detail page, the collection of history for a single task is written out from an <code>IssueDetailHistory</code> collection. On the activity dashboard, a list of history on all issues in a given day is extracted from a list of <code>ActivityHistory</code> items. When activity occurs on an issue, yet another "history" object is packaged up in a class with a list of emails to send to specific users. A mailing service unpacks the data and formats the right bits of information into emails.
 </p><p>
 Each of these objects look nearly identical. They all could derive from a single class, but they've all been written separately from each other over time. It's time to consolidate them.
 </p><p>
@@ -2204,17 +2204,26 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
     var hasAssetRolloverPad = "0";
     var curChapterId = "";
 
-    $("body").delay(1000).fadeIn(1000);
 
     $("div.chapter").each(function(i) {
       $(this).children("div.grid-content").first().children("div.content").first().prepend("<h4>Chapter " + (i + 1) + "</h4>");
     });
 
-    showInitialChapter();
+    showCurrentChapter();
+
+    if (getCurChapterId() == getIntroChapterId())
+    {
+      $("body").delay(1000).fadeIn(1000);
+    }
+    else
+    {
+      $("body").show();
+      scrollToChapter(null);
+    }
 
     $(window).scroll(function (event) {
 
-        if ($(curChapterId).offset().top - 1 <= $(window).scrollTop())
+        if ($(getCurChapterId()).offset().top - 1 <= $(window).scrollTop())
         {
           $("div.menu").fadeIn(200);
         }
@@ -2262,12 +2271,12 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
     });
 
 
-
+    /* 
+     * Functions
+     */
     function showChapter(chapterId)
     {
-      curChapterId = chapterId;
-
-      if (chapterId == "#ch-introduction")
+      if (chapterId == getIntroChapterId())
       {
         $("#btn-cover-click").html("Start reading...");
       }
@@ -2275,7 +2284,6 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
       {
         $("#btn-cover-click").html("Keep reading...");
       }
-
 
       $("div.chapter").hide();
 
@@ -2308,32 +2316,48 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
       }
     }
 
-    function showInitialChapter()
+    function showCurrentChapter()
     {
-      var url = window.location.href;
-
-      if (url.indexOf("#") <= 0 || url.indexOf("#") == url.length - 1)
-      {
-        showChapter("#" + $("div.chapter").first().attr("id"));
-        return;
-      }
-
-      curChapterId = url.substring(url.indexOf("#"));
-      showChapter(curChapterId);
+      showChapter(getCurChapterId());
     }
 
     function scrollToChapter(e)
     {
-      e.preventDefault();
+      if (e != null) {
+        e.preventDefault();
+      }
+
+      console.log(getCurChapterId());
 
       $("body,html").animate(
         {
-          scrollTop: $(curChapterId).offset().top
+          scrollTop: $(getCurChapterId()).offset().top
         },
         500 //speed
       );
     }
 
+    function isRootUrl()
+    {
+      var url = window.location.href;
+      return url.indexOf("#") <= 0 || url.indexOf("#") == url.length - 1;
+    }
+
+    function getCurChapterId()
+    {    
+      if (isRootUrl())
+      {
+        return getIntroChapterId();
+      }
+
+      var url = window.location.href;
+      return url.substring(url.indexOf("#"));
+    }
+
+    function getIntroChapterId()
+    {
+      return $("div.toc > ul > li > a").first().attr("href");
+    }
   });
 
 </script>
