@@ -23,8 +23,8 @@
     <li><a href="#ch-when-opposites-dont-attract">When Opposites Don't Attract</a></li>
     <li><a href="#ch-tautologous-name-trap">The Tautologous Name Trap</a></li>
     <li><a href="#ch-names-are-fickle">Names are Fickle</a></li>
-    <li><a href="#ch-abstracting-to-soon">Abstracting too Soon - NEXT</a></li>
-    <li><a href="#ch-speaking-the-native-tongue">Speaking the Native Tongue</a></li>
+    <li><a href="#ch-abstracting-to-soon">Abstracting too Soon</a></li>
+    <li><a href="#ch-speaking-the-native-tongue">Speaking the Native Tongue - NEXT</a></li>
     <li><a href="#ch-naming-to-teach">Naming to Teach</a></li>
     <li><a href="#">Naming Completely?</a></li>
     <li><a href="#">Making Names Memorable?</a></li>
@@ -1726,91 +1726,103 @@ public void UpdateAccountName(string name);</pre>
 <div class="chapter" id="ch-abstracting-to-soon">
   <div class="grid-content">
     <div class="content">
-      <h2>Abstracting Too Soon - NEXT</h2>
-      <p>
-        [Combine with "The Wrong Abstraction" in book-on-naming-things?....system/inappemail method naming]
-      <p>
-        As I write code, I usually start with names that describe their constructs concretely before gradually iterating toward something more abstract. Proper abstractions need to be made at the right pace. Abstract too slowly and it will be the feature creep that steers the ship. Abstract too soon and the boat will soon be sinking under its own weight.
+      <h2>Abstracting Too Soon</h2>
+      <p class="emphasis">
+        Changing software architecture is a bit like driving a stick shift.
       </p>
-<p>
-[Maybe Sandi Metz bit here about championing the idea of duplicate code better than the wrong abstraction?]
-</p>
-<p>
-Naming should also undergo the same kind of scrutiny. The gradual reshaping of our codebase also warrants constant re-evaluation of the names we give to the constructs in our code. 
-</p>
-<p>
-It's taxing work. And I think it leads programmers (including myself) to abstract the meaning of a name too early in the process - a desparate attempt to get a name right, once and forever. But I've never found prematurely abstracting a name helpful. In fact, it often inflicts more pain than comfort, just like premature code abstraction does.
-</p>
-<hr />
-<p>
-I'm going through a refactoring in DoneDone's codebase to consolidate a few data objects that hold very similar kinds of information in slightly different ways. They all revolve around the history of actions applied to a task.
-</p><p>
-Ultimately, the properties of these objects manifest in a few different places. On a task's detail page, the collection of history for a single task is written out from an <code>IssueDetailHistory</code> collection. On the activity dashboard, a list of history on all issues in a given day is extracted from a list of <code>ActivityHistory</code> items. When activity occurs on an issue, yet another "history" object is packaged up in a class with a list of emails to send to specific users. A mailing service unpacks the data and formats the right bits of information into emails.
-</p><p>
-Each of these objects look nearly identical. They all could derive from a single class, but they've all been written separately from each other over time. It's time to consolidate them.
-</p><p>
-After a fair amount of hair-pulling, I've reduced these classes into a single <code>IssueHistory</code> class that can support the needs of each of these three distinct use cases, and more going forward. This also gives me an opportunity to consolidate similar names in the old objects like <code>CreatedOn</code>, <code>CreatedDate</code>, or <code>CreateDate</code> into one consistent name (I like <code>CreatedOn</code>, for what it's worth).
-</p><p>
-In the process of the consolidation, I discover one particular string off of the old history object used by the mailing service. It's a terse description used as the beginning of the email subject, like "New fixer" or "Priority Update" or "Closed". (The rest of the subject is composed of the issue number and title). 
-</p><p>
-The dilemma I face here is what exactly to call this string. At present moment, it's <em>only</em> used by the mailing service and not by either the detail page or activity dashboard. But, since I've done all the pruning to get toward a single object, I feel compelled to come up with a name that can satisfy all future implementers.
-</p><p>
-My natural inclination is to call this something like <code>AbbreviatedAction</code>, especially because it juxtaposes nicely with the <code>Action</code> attribute that stores a more verbose description of the action ("John Doe was assigned to fix the issue" or "The priority was updated to Critical") I go with this name.
-</p><p>
-After a few days of refactoring the rest of the code, I find myself going back to this name a couple of times not entirely remembering what it's being used for. I even decide to comment the name to remind me it's only being used by the mailing service as part of the subject of the email. 
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-  <div class="code-block">
-    <pre>
-// Note: Only being used by the mailing service right now as part of the email subject, but I'm sure it will have other uses one day.
+      <p>
+        When the codebase is small and the features are light, you can write concretely. But, as features evolve, you begin to introduce abstractions as a way of absorbing the complexities of the system better.
+      </p>
+      <p>
+        Deciding when to create more abstraction is the difficult part. Like shifting gears on a car, if you abstract too slowly, the system starts to wear down. Abstract too soon and it takes forever to accelerate even to the smallest degree. Knowing when the right time is requires remembering what landmarks you've already passed and a little foreknowledge of what's coming down the road. It's a delicate art.
+      </p>
+      <p>
+        Naming should also undergo the same kind of scrutiny.
+      </p>
+      <p>
+        A crutch of mine is trying to abstract the meaning of a name too early in the process. Perhaps it's my desparate attempt to get a name right, once and forever. But abstracting too soon usually inflicts more pain than comfort, just like abstracting code too soon.
+      </p>
+      <hr />
+      <p>
+        I'm going through a refactoring in DoneDone's codebase to consolidate a few objects that hold very similar kinds of information, but in slightly different ways. They all revolve around the history of events that happen to a given task.
+      </p>
+      <p>
+        Ultimately, the properties of these objects manifest in a few different places. On a task's detail page, the collection of events for a single task is written out from a <code>TaskDetailEvents</code> list. On the activity calendar, a list of events on a given day is extracted from a list of <code>EventHistory</code>. When someone updates a task, yet another event object, <code>TaskMessagingEvent</code>, is packaged up. A mailing service unpacks the data and formats the right bits of information to send email updates.
+      </p>
+      <p>
+        On the surface, each of these objects look very similar. My guess is that they could all be consolidated into one class.
+      </p>
+      <p>
+        After a few hours of passing the code through the refactoring press, I've reduced these classes into a single <code>TaskEvent</code> class that can support the needs of each of these three distinct use cases and more going forward. This also gives me an opportunity to consolidate similar names in the old objects like <code>CreatedOn</code>, <code>CreatedDate</code>, or <code>CreateDate</code> into one consistent name. I'm feeling pretty good.
+      </p>
+      <p>
+        In the process of this consolidation, however, I discover one particular string off of <code>TaskMessagingEvent</code> that doesn't have an equivalent in the other objects. It's a terse description used as the beginning of the email subject, like "New fixer" or "Priority Update" or "Closed". 
+      </p>
+      <p>
+        The dilemma I face here is what exactly to call this string. At present moment, it's <em>only</em> used by the mailing service and not by either the detail page or activity dashboard. But, since I've done all the pruning to get toward a single object, I'm compelled to come up with a name that can satisfy all future implementers if they ever needed this property.
+      </p>
+      <p>
+        My natural inclination is to call this something like <code>AbbreviatedAction</code>, especially because it juxtaposes nicely with the <code>Action</code> attribute that stores a more verbose description of the action ("John Doe was assigned to fix the task" or "The priority was updated to Critical"). I go with this name.
+      </p>
+      <p>
+        But, after a few days, I find myself going back to this property name a couple of times again because I can't  remember exactly what <code>AbbreviatedAction</code> refers to, or what it's used for. I decide to comment the name to remind me it's only being used by the mailing service as part of the subject of the email. 
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+        <pre>
+/* Only being used by the mailing service right now as part of the email subject, but I'm sure it will have other uses one day. */
 public string AbbreviatedAction
 {
   get { … }
 }
-</pre>
-</div>
-</div>
-
- <div class="grid-content">
-  <div class="content">
-    <p>
-Whenever I have to remind myself what a name means (and eventually surrender to the commenting devils) there's a good chance I've prematurely abstracted the name.
-</p><p>
-Instead of finding a name that simultaneously fits anything but nothing in particular, it's best I reduce the scope of the name's meaning to fit how it's being used right now. A name like <code>EmailSubjectAction</code> ends up working a lot better.
-</p>
-</div>
-</div>
-<div class="grid-code-only">
-  <div class="code-block">
-    <pre>
+    </pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        Whenever I have to remind myself what a name means (and eventually surrender to the commenting Gods) there's a good chance I've prematurely abstracted the name.
+      </p>
+      <p>
+        Instead of finding a name that simultaneously fits anything but nothing in particular, I decide to name it more concretely. A name like <code>EmailSubjectAction</code> ends up working a lot better for me.
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
 public string EmailSubjectAction
 {
   get { … }
 }
-</pre>
-</div>
-</div>
- <div class="grid-content">
-  <div class="content">
-    <p>
-Some might worry that a name that's too specific like this might hide the full capabilities of that construct. That, one day, I'll need the very thing that <code>EmailSubjectAction</code> brings to the table (a terse description of an issue action) for something entirely unrelated to email subjects and I will never realize it existed. Instead, I'll create a near-identical version of that construct and name it something else.
-</p><p>
-In my experience, I rarely find this to be the case. If I'm familiar enough with the codebase, I recall some part of it that replicates (or nearly replicates) what I'm trying to implement by thinking about the particular feature ("What I need is just like that first part of that subject line of the emails that are sent when issues are updated!") rather than the particular name of the relevant construct (<code>EmailSubjectAction</code>). The more specific name just helps me find where that construct lives, faster.
-</p><p>
-Others might argue that I really should move this particular property to its own class and inherit the <code>IssueHistory</code> class. This way, I can use this class specifically for the emailing case. But, to me, the additional overhead of managing another class just for the sanctity of keeping the name exposed only to those who need it isn't worth the tradeoff. I'm OK with exposing this property to the other use cases especially if it's the only one of its kind. If this starts becoming a theme with other properties, then I might sway the other way. But, it's too early now.
-</p><p>
-Once that construct is being used in multiple different ways, then I can justifies the broader name change. In my case, <code>AbbreviatedAction</code> may eventually be the best name one day, but only when its set of use cases warrants it.
-</p>
-</div>
-</div>
+      </pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <hr />
+      <p>
+        You might argue that I should move this particular property to its own subclass that inherits the <code>TaskEvent</code> class. This way, I can use this subclass specifically for the emailing case. But, the overhead of managing another class just for this one unique property exposed isn't worth the tradeoff right now. 
+      </p>
+      <p>
+        You might also argue that such a name might might hide the full capabilities of the property. One day, I'll need the very thing that <code>EmailSubjectAction</code> brings to the table&mdash;a terse description of a task action&mdash;for something entirely unrelated to emails and I will introduce an identical version of that construct and name it something else.
+      </p>
+      <p>
+        In my experience, I find this to be the exception rather than the rule. New features are rarely developed completely isolated from anything else going on with the existing application. For instance, when we introduced in-app notifications a few months later, much of the content was inspired by what was already being displayed in our emails, including the <code>EmailSubjectAction</code>. It was far easier for me to find the property because its name hadn't been abstracted.
+      </p>
+      <p>
+        At that point, because the construct was being used in multiple ways, I justified the broader name change to <code>AbbreviatedAction</code>.
+      </p>
+    </div>
+  </div>
 </div>
 
 <div class="chapter" id="ch-speaking-the-native-tongue">
   <div class="grid-content">
     <div class="content">
-      <h2>Speaking the Native Tongue</h2>
+      <h2>Speaking the Native Tongue - NEXT</h2>
       <p class="emphasis">People that write code today are often the same ones making business decisions or collaborating directly with clients.
       </p>
       <p>
