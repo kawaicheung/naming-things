@@ -1917,63 +1917,30 @@ public class Panel
         <li>You might even be able to <em>show</em> your client working code to better explain complexities and hurdles in logic they may not have thought of.</li> 
         <li>You have a better grasp of the business concepts you have to maintain.</li>
       </ul>
+      <hr />
       <p>
-        A> The law firm example has a particular place in my brain because many moons ago, I worked at a company that specialized in building software for law firms (websites, intranets, and "extranets").
+        If you&rsquo;re familiar with relational data modeling, you know one of the key concepts is the associative entity (or associative table).
       </p>
       <p>
-        A> At some point, we did some pro-bono work for the CEO&rsquo;s old grade school by building their website and content management system. But, instead of building a custom database for them, we "leveraged" the existing database schema we&rsquo;d been using for many of our corporate law client clients. I guess there were enough similarities in the organizational structures of a school that we could get by with our pre-built software for law firms.
+        An associative table&rsquo;s core characteristic is that it contains two or more foreign keys to tables that have a &ldquo;many-to-many&rdquo; relationship. For instance, a student enrolls in multiple classes and a class can have multiple students. You might represent students in a <code>Students</code> table and another in a <code>Classes</code> table. The associative table would hold the relationship between those two tables alongside any other data relevant to that relationship (like a student&rsquo;s current grade in that class).
       </p>
       <p>
-        A> This, naturally, led to some pretty entertaining naming translations. The `tbl_Employees` table held teachers and students. A column normally reserved for law firm employee types was now re-purposed for the school. Teachers became attorneys; Principals became partners. The `tbl_PracticeAreas` table was repurposed for the course curriculum.
+        It's customary to name such an associative table by gluing the adjacent table names together. This approach usually creates a platable table name like <code>StudentsClasses</code>. It reads decently.
       </p>
       <p>
-        A> It was funny to have to write code against a bunch of third-grade paralegals.
+        Let&rsquo;s take another example. I have an associative table that links a <code>Users</code> table with an <code>Accounts</code> table.  A user can belong to many accounts and an account can have many users. If I blindly name the associative table that links these two tables together, I&rsquo;d call it a <code>UsersAccounts</code> table.
       </p>
       <p>
-        A> Talk about Fowler&rsquo;s/Eric evans Ubiquitous Language concept? At least touch upon it. 
+        Down the road, I might track other pieces of data, like the date someone was added to the account or the particular role a user has in a specific account. Both those columns would fit naturally in the <code>UsersAccounts</code> table.
       </p>
       <p>
-        Unearthing patterns is one of the most fundamental mental exercises in coding. When we can trivialize a procedure that once required a lot of thought into something seemingly automatic, we can move onto solving other problems. 
+        But, saying "Nora&rsquo;s user account began on June 3rd, 2016" sounds obnoxiously technical. It sounds much more natural to say "Nora&rsquo;s <em>membership</em> began on June 3rd, 2016" or "Nora&rsquo;s <em>membership</em> has admin privileges." The associative table is far more descriptive with a name like <code>Memberships</code>. 
       </p>
       <p>
-        On the other hand, automation can bias our thinking. We end up forcing a pre-conceived solution every time we encounter what feels like a similar problem without the careful examination we once gave it before we discovered a pattern. The reasoning becomes dogmatic&mdash;it fits this pattern so this must be the way forward!
-      </p>
-      <p>
-        Let&rsquo;s call this phenomenon "pattern hypnosis." Even the task of naming can fall prey to this pattern hypnosis. I notice I fall into the trap quite frequently when naming tables in a relational database model.
-      </p>
-      <p>
-        If you&rsquo;re familiar with relational data modeling, you&rsquo;ll know one of the more common modeling concepts is the associative table.
-      </p>
-      <p>
-        An associative table&rsquo;s core characteristic is that it contains two or more foreign keys to tables that have a "many-to-many" relationship, like a table that links a <code>tbl_Students</code> table to a <code>tbl_Classes</code> table. A student enrolls in many classes and a class has many students. The associative table would hold the relationship between those two tables alongside any other data relevant to that relationship (like a student&rsquo;s current grade in that class).
-      </p>
-      <p>
-        A common pattern is to name such an associative table by gluing the adjacent table names together. This approach usually creates a unique table name that&rsquo;s palatable. <code>tbl_StudentsClasses</code> feels like a reasonable name for this table. It reads decently.
-      </p>
-      <p>
-        Let&rsquo;s take another example. I have a table that links a <code>tbl_Users</code> table with a <code>tbl_Accounts</code> table.  A single user can belong to many accounts and an account can have many users. If I&rsquo;m blindly naming an associative table that links these two tables together, I&rsquo;d call it <code>tbl_UsersAccounts</code>. 
-      </p>
-      <p>
-        Down the road, I add other attributes to the model, like a date for when a user was added to the account. That column would fit naturally in the <code>tbl_UsersAccounts</code> table. But, saying "Nora&rsquo;s user account began on June 3rd, 2016" sounds obnoxiously technical. It sounds much more natural to say "Nora&rsquo;s membership began on June 3rd, 2016." 
-      </p>
-      <p>
-        So, I decide to update the table name to <code>tbl_Memberships</code>. 
-      </p>
-      <p>
-        Later on, I want to add a third association to the table&mdash;a relationship to a set of available roles. This way, I can model a particular user with an account and a level within the account (Nora has Gold status). If I&rsquo;m blindly following convention, I&rsquo;d name my table to something like <code>tbl_UsersAccountRoles</code>.
-      </p>
-      <p>
-        Meanwhile, the name <code>tbl_Memberships</code> still holds up. "Nora has a gold-access membership to the Acme account." 
-      </p>
-      <p>
-        This kind of pattern hypnosis isn&rsquo;t relegated to just table naming. Object-relational mappers usually map directly to tables, so it&rsquo;s common to see the same name patterns appear in data transfer or business domain objects as well.  A <code>UserPublication</code> class might be better served as a <code>Subscription</code> class. <code>CustomerProduct</code> could be a <code>PurchaseOrder</code>. <code>PassengerFlight</code>? A <code>Booking</code>.
-      </p>
-      <p>
-        This isn&rsquo;t to say that the default pattern never works. Lots of times, it is the most sensible way to describe an association. But, in the end, to name things well, I sometimes have to fight the hypnosis of the easy route.
+        The trick with good names is getting your head out of the technical details of your work and thinking about what you're real-world thing you're actually modeling. You just might find a more appropriate name that way. 
       </p>
     </div>
   </div>
-
 </div>
 </div>
 </div>
@@ -2265,7 +2232,7 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
 
     $("div.menu > a").click(function(e) {
       e.preventDefault();
-      $("div.toc").show();
+      $("div.toc").toggle();
     });
 
     $("div.toc a").click(function(e) {
@@ -2290,7 +2257,7 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
       $("div.chapter").hide();
 
       $("div.toc > ul > li > a").removeClass("selected");
-      $("div.toc > ul > li").find("a[href='" + chapterId + "]").addClass("selected");
+      $("div.toc > ul > li > a[href='" + chapterId + "']").addClass("selected");
 
       $(chapterId).fadeIn(200);
 
@@ -2328,8 +2295,6 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
       if (e != null) {
         e.preventDefault();
       }
-
-      console.log(getCurChapterId());
 
       $("body,html").animate(
         {
