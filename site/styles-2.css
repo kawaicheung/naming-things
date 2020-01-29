@@ -165,7 +165,7 @@ pre span.emphasis {
 }
 
 .toc > ul > li > a.selected {
-	font-weight: 700;
+	text-decoration: underline;
 }
 
 .toc > ul > li > a:hover {
