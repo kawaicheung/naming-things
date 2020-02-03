@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Lora:400,400i,700,700i|Raleway:400,600,800|Roboto+Mono&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Lora:400,400i,700,700i|Roboto+Mono&display=swap" rel="stylesheet">
 	<link href="styles-2.css" rel="stylesheet" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
@@ -34,7 +34,7 @@
 </div>
 <div class="grid-cover">
   <div class="cover">
-    <h1>Naming Things.</h1>
+    <h1>Naming Things</h1>
     <h2>A short book dedicated to one of coding&rsquo;s most elusive tasks.</h2>
     <h3>By Ka Wai Cheung, creator and co-founder of <a href="https://www.donedone.com" target="_blank">DoneDone</a>.</h3>
     <h4><a href="#" id="btn-cover-click">Start reading...</a></h4>
@@ -50,22 +50,22 @@
         Here&rsquo;s a little insight into what I think about when I write code.
       </p>
       <p>
-        So, I&rsquo;m working on&mdash;what I&rsquo;ll call for now&mdash;a <em>data migration</em> feature. It&rsquo;s for the brand new version of <a href="https://www.donedone.com">DoneDone</a>, the task tracking and customer support app I created and have continued to work on for over a decade. Developing a product for this long, I&rsquo;m intimately familiar with the code&mdash;like a scupltor chiseling away endlessly at a large piece of stone.
+        I&rsquo;m working on&mdash;what I&rsquo;ll call for now&mdash;a <em>data migration</em> feature. It&rsquo;s for the brand new version of <a href="https://www.donedone.com">DoneDone</a>, the task tracking and customer support app I&rsquo;ve worked on for the past decade. Developing a product for this long, I&rsquo;m intimately familiar with its code&mdash;like a scupltor chiseling away endlessly at a large piece of stone.
       </p>
       <p>
-        The goal of this migration feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call <em>Classic</em>) over to this new version. I wish I could tell you this is a simple mapping of database tables and columns from Classic over to the new version, but it&rsquo;s not. The new DoneDone is markedly different from its predecessor: Some data maps simply, other data requires some massaging, and some stuff simply can&rsquo;t be mapped at all.
+        The goal of this migration feature is to give our customers an easy way to bring their existing data over from the old version of DoneDone (which we call <em>Classic</em>) to this new version. I wish I could tell you this is a simple mapping of database tables from Classic over to the new version, but it&rsquo;s far from it. The new DoneDone is markedly different from its predecessor; Some data maps simply, other data requires some massaging, and some stuff simply can&rsquo;t be mapped at all.
       </p>
       <p>
-        For the next week, I chisel away at this feature&mdash;top to bottom. I develop a screen to sign in to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration request. On the backend, I work on a number of database updates to store these requests. I then write a separate service that picks up these requests to perform the arduous work of moving this data over &ldquo;cleanly&rdquo;. There are other tangential pieces I build along the way, like emailing the requester when the migration is complete and broadcasting error notifications.
+        For the next week, I chisel away at this feature from top to bottom. I develop a screen to sign in to the old system, one to let users choose the projects they want to move over, and one to see the progress of their migration requests. On the backend, I work on a number of database updates to store these requests. I then write a separate service that picks up these requests to perform the arduous work of moving this data over &ldquo;cleanly&rdquo;. There are other tangential pieces I build along the way, like emailing the requester when the migration is complete and broadcasting error notifications.
       </p>
       <p>
-        It&rsquo;s intense work but after a week, I feel confident about the new feature.
+        It&rsquo;s intense work. But after a week, I feel confident about this new feature.
       </p>
       <p>
         Before I&rsquo;m ready to release it, I give my code another onceover&mdash;like re-reading a manuscript from the beginning again with a fresh set of eyes. I tend to pick out things I don&rsquo;t like about my code best this way.
       </p>
       <p>
-        The first thing I look at is naming. I try to use the same terms when I write code as when I <em>talk</em> about the feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with derivates of the word <em>migration</em>.
+        The first thing I look at is naming. I try to use the same terms when I write code as when I <em>talk</em> about a feature. This avoids any unnecessary mental mapping when I transition between the screen and the rest of the world. So naturally, my codebase is littered with derivates of the word <em>migration</em>.
       </p>
       <ul>
         <li>There&rsquo;s a <code>ClassicMigrator</code> project in my codebase.</li>
@@ -75,7 +75,7 @@
       </li>
       </ul>
       <p>
-        On this re-read, the word is eating at me. Mike (my business partner) and I have been using the word "migration" in reference to this feature the whole time. It&rsquo;s an important word to get right. 
+        On this re-read, the word is eating at me. Mike (my business partner) and I have been using the word &ldquo;migration&rdquo; in reference to this feature the whole time. It&rsquo;s an important word to get right. 
       </p>
       <p>
         Sometimes you use a word so much that you no longer think about what it actually means; You just know what it&rsquo;s <em>supposed</em> to mean. Here&rsquo;s the problem: We aren&rsquo;t actually migrating data. 
@@ -96,10 +96,10 @@
         After some thought, he suggests we use the word <em>import</em> instead. Ah ha!
       </p>
       <p>
-        There&rsquo;s a heftiness to the word <em>import</em> that feels right. Whenever I think about importing data, I envision metallic gear icons  and the momentary spiking of CPU graphs. Even when you import things in the real world, it has that same feeling of heft&mdash;huge cargo ships meandering across the ocean lugging thousands of tons of goods.
+        There&rsquo;s a heftiness to the word <em>import</em> that feels right. Whenever I think about importing data, I envision metallic gear icons and the momentary spiking of CPU graphs. Even when you import things in the real world, it has that same feeling of heft&mdash;huge cargo ships meandering across the ocean lugging thousands of tons of goods.
       </p>
       <p>
-        The word <em>import</em>, as it&rsquo;s normally used in technical terms, also doesn&rsquo;t feel like data is leaving one place and going to another. I think of importing data from a file I&rsquo;ve uploaded. I know the data on the file doesn&rsquo;t disappear. I also don&rsquo;t necessarily expect this one-to-one mapping between my data and the imported data. Import seems like the perfect word to me.
+        The word <em>import</em>, as it&rsquo;s normally used in technical terms, also doesn&rsquo;t feel like data is leaving one place and going to another. I think of importing data from a file I&rsquo;ve uploaded. I know the data on the file doesn&rsquo;t disappear. I also don&rsquo;t necessarily expect a one-to-one mapping between my data and the imported data. Import seems like the perfect word to me.
       </p>
       <p>
         So, I end up substituting <em>migrate</em>, and all its various derivatives, with <em>import</em>. I&rsquo;m much happier with this change.
@@ -118,7 +118,7 @@
         Phil Karlton
       </div>
       <p>
-        Karlton was a software architect at Netscape. There is suprisingly little other information I could find about him though I&rsquo;m sure he did great work. But, it&rsquo;s this quote that he will be forever remembered by in the programming industry.
+        Karlton was a software architect at Netscape. There is suprisingly little other information I could find about him though I&rsquo;m sure he&rsquo;s done great work. But, it&rsquo;s this quote that he will be forever remembered by in the programming industry.
       </p>
       <p>
         The first time I read this quote, I remember chuckling to myself. First, because I can think of many things that are difficult for me in programming. Second, because naming wasn&rsquo;t initially among those things; I had never thought about naming as a difficult exercise. Yet, we all have written and read names that confuse, misdirect, conflate, or otherwise mistify us. 
@@ -127,13 +127,13 @@
         So, how do you name things well? Unlike so many other things in programming, an incoherent name won&rsquo;t be caught by the compiler. There are no metrics for naming. A bad name won&rsquo;t break your code. A good name won&rsquo;t speed up your build.
       </p>
       <p>
-        Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics. It is, in my humble opinion, the most human of technical subjects. Naming is subjective.
+        Naming is elusive. It has a lot to do with gut, feel, style and even aesthetics. It is, in my humble opinion, the most subjective of technical subjects.
       </p>
       <p>
-        Though there are no metrics for good names, it deserves as much attention as all the other skills we preach in programming&mdash;like good architecture, writing "clean code", or rigid testing. While these other practices are critical, they share the common drawback that you cannot see these things instantly. It&rsquo;s only after digesting the codebase and working with it for awhile that you reap its benefits. 
+        Though there are no metrics for good names, it deserves as much attention as all the other skills we preach in programming&mdash;like good architecture, writing &ldquo;clean code&rdquo;, or rigid testing. While these other practices are critical, they share the common drawback that you cannot see these things instantly. It&rsquo;s only after digesting the codebase and working with it for awhile that you reap its benefits. 
       </p>
       <p>
-        On the other hand, there&rsquo;s an immediate payoff to a codebase with good names. They are the first things a programmer sees when reading  new code. They make code more approachable. With modern tooling, you can also change the names of things safely and quickly.
+        On the other hand, a codebase with good names pays off <em>immediately</em>. They are the first things a programmer sees when reading new code. They make code more approachable. With modern tooling, you can also change the names of things safely and quickly.
       </p>
       <hr />
       <p>
@@ -150,7 +150,7 @@
         I think the term <em>object-oriented programming</em> is misleading.
       </p>
       <p>
-        Textbooks tend to demonstrate classes and interfaces by using dogs, cats, and other domesticated animals. But, these aren&rsquo;t realistic examples for most coders. Most of the things we call "objects" in code don&rsquo;t have a direct physical representation in the real world. 
+        Textbooks tend to explain concepts like classes and interfaces by using dogs, cats, and other domesticated cuddly animals. But, these aren&rsquo;t realistic examples for most coders. Most of the things we call &ldquo;objects&rdquo; in code don&rsquo;t have a direct physical representation in the real world. 
       </p>
       <p>
         We should really call it noun-oriented programming. A noun can be a person, place, thing, or idea. Most classes really are <em>ideas with functionality</em>. 
@@ -159,7 +159,7 @@
         Classes sometimes manifest because we find ourselves with a set of functions and properties that have a common purpose that we want to wrap up in a neat little bundle. But, these classes don&rsquo;t always have a physical translation. This is where wishy-washy names like <code>UserManager</code>, <code>MessagingHelper</code>, and <code>AppHandler</code> are born. 
       </p>
       <p>
-        Working through a codebase littered with these kinds of class names reminds me of working in a bloated organization where everybody is some form of middle-management. When, exactly, should I direct a question to the <em>Regional Vice Account Manager</em> as opposed to the <em>District Assistant Account Principal</em>?
+        Working through a codebase littered with these kinds of class names reminds me of working in a bloated organization where everybody is some form of middle-management. When should I direct a question to the <em>Regional Vice President</em> versus the <em>District Assistant Principal</em>?
       </p>
       <p>
         When I read code like this, I have to dig into these classes to figure out what purpose they serve. When I know there&rsquo;s some functionality out there I want to leverage, I have a harder time remembering where it lives. <em>Was it in that helper doohickey or in the other manager thingamajig?</em>
@@ -184,31 +184,17 @@
         On this re-read, I don&rsquo;t like how the token concept is implemented. Bits of logic are sprinkled in too many places. The token is encrypted on one layer of the stack and decrypted on a completely different layer. There are also a couple of places where I write repeated code to check whether the token is still valid. 
       </p> 
       <p>
-        But, what makes me most hungry to clean this code up is that the concept is <em>nearly identical</em> to the process for a user takes to complete their initial registration.
+        But, what makes me most hungry to clean this code up is that the concept is <em>nearly identical</em> to the process a user takes to complete their initial registration.
       </p>
       <p>
-        It&rsquo;s clear that a better approach is to wrap up this token into a single object. Let the object handle all of it&mdash;the encryption, decryption, and validation of the token. Then, I can re-use it for both the password reset and user registration processes.
+        It&rsquo;s clear that a better approach is to wrap up this token into a single object. Let the object handle all of it&mdash;the encryption, decryption, and validation of the token. Then, I can re-use it for both password resets and user registrations.
       </p>
       <p>
         I get to a place I&rsquo;m quite happy with. The guts of the object look something like this. 
       </p>
     </div>
   </div>
-  <div class="grid-right-code">
-    <div class="content">
-      <p>
-        Taking a quick walkthrough of this object, you&rsquo;ll notice that there are two constructors. 
-      </p>
-      <p>
-        <a href="#" class="code-ref" data-code-ref="1-d1">One hydrates the properties of the object with a <code>user_id</code> and <code>email</code> of the user when a password reset (or registration completion request) is initiated</a>. The timestamp of the token is set to the moment the object instance is created. It also wraps all of this data together into an encrypted token. 
-      </p>
-      <p>
-        <a href="#" class="code-ref" data-code-ref="1-d2">The other hydrates the same object with the encrypted token. The token is decrypted and the other properties are deduced from the decryption</a>. This is called during the request when a user clicks the link they received from the email.
-      </p>
-      <p>
-        <a href="#" class="code-ref" data-code-ref="1-d3">The <code>IssuedWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request</a>. For instance, a password reset link might be valid for only ten minutes whereas a user registration link could be valid for a few hours.
-      </p>
-    </div>
+  <div class="grid-left-code">
     <div class="code-block">
       <pre>
 public sealed class <span class="blanked">AuthToken</span>
@@ -248,6 +234,21 @@ public sealed class <span class="blanked">AuthToken</span>
   }</span>
 }</pre>
     </div>
+    <div class="content">
+      <p>
+        Taking a quick walkthrough of this object, you&rsquo;ll notice that there are two constructors. 
+      </p>
+      <p>
+        <a href="#" class="code-ref" data-code-ref="1-d1">One hydrates the properties of the object with a <code>user_id</code> and <code>email</code> of the user when a password reset (or registration completion request) is initiated</a>. The timestamp of the token is set to the moment the instance is created. It also wraps all of this data together into an encrypted token. 
+      </p>
+      <p>
+        <a href="#" class="code-ref" data-code-ref="1-d2">The other hydrates the same object with the encrypted token. The token is decrypted and the other properties are deduced from the decryption</a>. This is called during the request when a user clicks the link they received from the email.
+      </p>
+      <p>
+        <a href="#" class="code-ref" data-code-ref="1-d3">The <code>IssuedWithinMinutes</code> public method allows code elsewhere to decide whether to honor the request</a>. For instance, a password reset link might be valid for only ten minutes whereas a user registration link could be valid for a few hours.
+      </p>
+    </div>
+
   </div>
   <div class="grid-content">
     <div class="content">
@@ -255,33 +256,33 @@ public sealed class <span class="blanked">AuthToken</span>
         I&rsquo;m giddy with the promises of such an object. I&rsquo;m able to clean up some duplicate logic used by both the password reset and user registration processes. Whereas the encryption and decryption process once lived in random helper methods on different layers of the stack, they now have a comfortable home.
       </p>
       <p>
-        The last hurdle, however, is a big one&mdash;what do I name this thing? This "object" is not a dog or cat. I don&rsquo;t really know what this thing is. 
+        The last hurdle, however, is a big one. What do I name this thing? This &ldquo;object&rdquo; is not a dog or cat. I don&rsquo;t really know what this thing is. 
       </p>
       <p>
-        My first attempt, <code>AuthToken</code> was a half-hearted one. I just wanted to get something down so I can finish the implementation. Reading this name again brings up all sorts of questions and lackluster answers.
+        My first attempt, <code>AuthToken</code> was half-hearted. I just wanted to get something down so I could finish the implementation. Reading this name again brings up all sorts of questions and lackluster answers.
       </p>
       <ul>
         <li>
-          <strong>Does "Auth" mean "Authorization" or "Authentication"?</strong> In this case, it kind of means <em>both</em>. That doesn&rsquo;t really help.
+          <strong>Does &ldquo;Auth&rdquo; mean &ldquo;Authorization&rdquo; or &ldquo;Authentication&rdquo;?</strong> In this case, it kind of means <em>both</em>. That doesn&rsquo;t really help.
         </li>
         <li>
-          <strong>Does this object represent the encrypted token?</strong> Kind of. It really represents the encrypted token <em>in addition to</em> the data the token represents. Calling it <code>AuthToken</code> while also having a property with the name <code>EncryptedToken</code> is confusing. It&rsquo;s more than just the token. It&rsquo;s easy to get into the trap of naming an object on only part of its reason for being.
+          <strong>Does this object represent the encrypted token?</strong> Kind of. It really represents the encrypted token <em>in addition to</em> the data the token represents. Calling it <code>AuthToken</code> while also having a property with the name <code>EncryptedToken</code> is confusing. It&rsquo;s more than just the token. It&rsquo;s easy to get into the trap of naming an object for only part of its reason for being.
         </li>
         <li>
-          <strong>What is it supposed to be used for?</strong> In the lexicon of object naming, <code>AuthToken</code> is about as generic as <code>UserManager</code>.
+          <strong>What is this object supposed to be used for?</strong> In the lexicon of object naming, <code>AuthToken</code> is about as generic as <code>UserManager</code>.
         </li>
       </ul>
       <p>
-        This isn&rsquo;t the right name. What comparable thing possibly exists in the real world like this? 
+        This clearly isn&rsquo;t the right name. But, what comparable thing possibly exists in the real world like this? 
       </p>
       <p>
-        I begin to think about something that an <em>authority</em> creates for someone, and that person can later exchange for access to do whatever the authority agreed they can do. There&rsquo;s a quality of <em>redeeming</em> this thing. 
+        I begin to think about something that an <em>authority</em> creates for someone, who can later exchange this thing to do whatever the authority said they could do. 
       </p>
       <p>
-        A <em>ticket</em> comes to mind. But, that conjures up thoughts of going to a sporting event or movie premiere, as if there&rsquo;s a specific time and place to redeem it. It also makes me think of a parking ticket. Password resets and user registrations are neither particularly exciting nor dreadful. Neither metaphor feels close to right. 
+        A <em>ticket</em> comes to mind. But, that conjures up thoughts of going to a sporting event or movie premiere, as if there&rsquo;s a specific time and place to redeem it. It also makes me think of a parking ticket. Password resets and user registrations are neither particularly exciting nor dreadful. The metaphor doesn&rsquo;t feel quite right.
       </p>
       <p>
-        A <em>permit</em>? A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a permit is something given to you usually by a governing body, not your local movie theater or sporting venue. That feels like the right move.👌
+        A <em>permit</em>? A permit is valid for a set period of time and it lets someone do something agreed to by an authority until it expires. Plus, a permit is something given to you usually by a governing body, not your local movie theater or sporting venue. This feels spot on.
       </p>
       <p>
         <a href="#" class="code-ref" data-code-ref="1-d4">I end up changing the class name to <code>PermitForUserUpdate</code></a>. The implementation instantly feels more readable. For instance, <a href="#" class="code-ref" data-code-ref="1-d5">the method <code>IssuedWithinMinutes()</code> reads more naturally</a> when used in context. Permits in the real world are normally <em>issued</em>. Here&rsquo;s how I can validate a password reset permit hasn&rsquo;t expired yet.
