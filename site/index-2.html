@@ -17,8 +17,8 @@
   <ul>
     <li><a href="#ch-introduction">1. Introduction</a></li>
     <li><a href="#ch-imagining-objects">2. Imagining Objects</a></li>
-    <li><a href="#ch-hunting-for-names">3. Hunting for Names</a></li>
-    <li><a href="#ch-surfacing-parameters">4. Surfacing Parameters</a></li>
+    <li><a href="#ch-name-hunting">3. Name Hunting</a></li>
+    <li><a href="#ch-breaking-methods-apart">4. Breaking Methods Apart</a></li>
     <li><a href="#ch-shape-of-code">5. The Shape of Code</a></li>
     <li><a href="#ch-when-opposites-dont-attract">6. When Opposites Don&rsquo;t Attract</a></li>
     <li><a href="#ch-tautologous-name-trap">7. The Tautologous Name Trap</a></li>
@@ -310,10 +310,10 @@ if (!<span class="1-d5">permit.IssuedWithinMinutes(10)</span>)
   </div>
 </div>
 
-<div class="chapter" id="ch-hunting-for-names">
+<div class="chapter" id="ch-name-hunting">
   <div class="grid-content">
     <div class="content">
-      <h2>Hunting For Names</h2>
+      <h2>Name Hunting</h2>
       <p class="emphasis">
         There never seems to be time to clean up code. 
       </p>
@@ -464,7 +464,6 @@ public class Person
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-// e.g. "Mary D. updated the task."
 var subject = <span class="2-d4">person.FirstName + " " +  person.LastName.Substring(0,1) + ".</span> updated the task.";</pre>
     </div>
   </div>
@@ -706,7 +705,7 @@ public class Person
     </div>
     <div class="code-block">
 <pre>
-var subject = person.AbbreviatedName + " added a comment";</pre>
+var subject = person.AbbreviatedName + " updated the task.";</pre>
     </div>
   </div>
   <div class="grid-right-code">
@@ -736,42 +735,15 @@ if (person.MinutesIdle > 60)
 </div>
 
 
-<div class="chapter" id="ch-surfacing-parameters">
+<div class="chapter" id="ch-breaking-methods-apart">
   <div class="grid-content">
     <div class="content">
-      <h2>Surfacing Method Parameters</h2>
+      <h2>Breaking Methods Apart</h2>
       <p class="emphasis">
-        When you think about it, methods are an odd-looking thing. 
+        As you add more parameters to a method, two problems tend to occur.
       </p>
       <p>
-        The more parameters a method requires, the harder it is to understand what that method does without digging into its definition. 
-      </p>
-    </div>
-  </div>
-  <div class="grid-code-only">
-    <div class="code-block">
-      <pre>
-void Update(int id, string name, string address, int status...)</pre>
-    </div>
-  </div>
-  <div class="grid-content">
-    <div class="content">
-      <p>
-        You can get around this mess by rounding up all of these parameters <a href="#" class="code-ref" data-code-ref="4-d0">into a single object</a> and passing it to the method. 
-      </p>
-    </div>
-  </div>
-  <div class="grid-code-only">
-    <div class="code-block">
-      <pre>
-void Update(<span class="4-d0">UpdateParams params</span>) { ... }</pre>
-    </div>
-  </div>
-  <div class="grid-content">
-    <div class="content">
-      <p>
-        Sure, this approach tidys your code up, but it doesn&rsquo;t help you understand what the method actually <em>does</em>. This is when I like to look for ways I can push more meaning into the method name. Here&rsquo;s an example I stumbled upon recently.
-      </p>
+        First, the method starts doing too much. Second, the name of the method becomes either more vague or more misleading. Whenever I&rsquo;ve augmented a method to support a new feature, I revisit it to see if breaking it apart can help alleviate both problems&mdash;even if the updates seem miniscule.
       <hr />
       <p>
         For years, DoneDone has only allowed customers the option to cancel an account immediately&mdash;it was instantaneous and irreversible. 
@@ -828,7 +800,7 @@ public void CancelAccount(int account_id, <span class="4-d11">bool cancel_at_per
   <div class="grid-code-only">
     <div class="code-block">
       <pre>
-_billing_repository.CancelAccount(account_id, <span class="4-d12">false</span>);
+_billing.CancelAccount(account_id, <span class="4-d12">false</span>);
 </pre>
     </div>
   </div> 
@@ -839,10 +811,10 @@ _billing_repository.CancelAccount(account_id, <span class="4-d12">false</span>);
         But something doesn&rsquo;t feel right about this method signature.
       </p>
       <p>
-        At a glance, it&rsquo;s hard to tell what the <code>false</code> parameter means. Having just written the updates, it makes sense to me now. But it won&rsquo;t to someone else (or to myself in a few days). They&rsquo;ll have to look at the method signature and perhaps even drill into the method to be sure. 
+        At a glance, it&rsquo;s hard to tell what the <code>false</code> parameter means. Having just written the updates, it makes sense to me now. But it might not to someone else (or to myself in a few days). They&rsquo;ll have to look at the method signature and perhaps even drill into the method to be sure. 
       </p>
       <p>
-        <a href="#" class="code-ref" data-code-ref="4-d2">I add a comment above each call to <code>CancelAccount()</code></a> for clarity.  It also helps differentiate between the new code I&rsquo;ll be adding later to handle the additional option of canceling at the end of the period.
+        <a href="#" class="code-ref" data-code-ref="4-d2">I add a comment above each call to <code>CancelAccount()</code></a> for clarity.  It also helps differentiate between the new code I&rsquo;ll be adding later to handle the new option of canceling at the end of the period.
       </p>
     </div>
   </div>
@@ -850,13 +822,13 @@ _billing_repository.CancelAccount(account_id, <span class="4-d12">false</span>);
     <div class="code-block">
       <pre>
 <span class="4-d2">// Cancel the account immediately...</span>
-_billing_repository.CancelAccount(account_id, false);</pre>
+_billing.CancelAccount(account_id, false);</pre>
     </div>
   </div>
   <div class="grid-content">
     <div class="content">
       <p>
-        <em>Better</em>. But comments never age well. The method call still feels strange. The standard cancellation case (canceling immediately) accepts the <code>false</code> parameter. Passing in <code>false</code> as the default just feels odd&mdash;It&rsquo;s as if I have to suppress something to perform the <em>default</em> action.
+        <em>Better</em>. But comments never age well. The method call still feels strange. The standard cancellation case (canceling immediately) accepts the <code>false</code> parameter. Passing in <code>false</code> as the base case just feels odd&mdash;it&rsquo;s as if I have to suppress something to perform the <em>default</em> action.
       </p>
       <p>
         I can get around this pretty quickly though. Since I&rsquo;m working with a boolean parameter, I can change its meaning so that the standard case passes in <code>true</code> and update my code accordingly.
@@ -873,12 +845,12 @@ _billing_repository.CancelAccount(account_id, false);</pre>
     </div>
     <div class="code-block">
 <pre>
-public void CancelAccount(int account_id, <span class="4-d3">bool cancel_now</span>);
+public void CancelAccount(int account_id, <span class="4-d3">bool cancel_now</span>) { ... }
 
 ...
 
 // Cancel the account immediately...
-_billing_repository.CancelAccount(account_id, <span class="4-d4">true</span>);</pre>
+_billing.CancelAccount(account_id, <span class="4-d4">true</span>);</pre>
     </div>
   </div>
 
@@ -913,7 +885,7 @@ public void CancelAccount(int account_id, <span class="4-d5">CancelType cancel_t
 
 ...
 
-_billing_repository.CancelAccount(account_id, <span class="4-d5">CancelType.NOW</span>);</pre>
+_billing.CancelAccount(account_id, <span class="4-d5">CancelType.NOW</span>);</pre>
     </div>
   </div>
 
@@ -926,15 +898,15 @@ _billing_repository.CancelAccount(account_id, <span class="4-d5">CancelType.NOW<
         However, this just doesn&rsquo;t feel like one of those features we&rsquo;d continually augment in the near future. There just aren&rsquo;t that many variations of canceling DoneDone that would make sense. And, now I&rsquo;ve introduced a new type as well as a new parameter.
       </p>
       <p>
-        I ultimately decide to simplify things. I create two distinct cancelation methods and convey the type of cancelation in the <em>method names</em>. 
+        I ultimately decide to simplify things. I create two distinct cancelation methods and convey the type of cancelation in the <a href="#" class="code-ref" data-code-ref="4-d51">method names</a>. 
       </p>
     </div>
   </div>
   <div class="grid-code-only">
     <div class="code-block">
     <pre>
-public void CancelAccountNow(int account_id);
-public void CancelAccountAtPeriodEnd(int account_id);</pre>
+public void <span class="4-d51">CancelAccountNow</span>(int account_id);
+public void <span class="4-d51">CancelAccountAtPeriodEnd</span>(int account_id);</pre>
     </div>
   </div>
 
@@ -982,10 +954,10 @@ void CancelAccount(int account_id, bool cancel_at_period_end)
         I find a similar opportunity arises when <code>null</code> values are passed to a method. Usually, it&rsquo;s a sign that a new method name ought to be created to handle the passing of <code>null</code> to the original method.
       </p>
       <p>
-        In DoneDone, I have a series of "bulk edit" methods that live in a services layer. Each accepts a list of <code>task_ids</code> and performs some action on the task they represent. One of these is a function to bulk update the tasks&rsquo; due dates. 
+        In DoneDone, I have a series of &ldquo;bulk edit&rdquo; methods that live in a services layer. Each accepts a list of <code>task_ids</code> and performs some action on the task they represent. One of these is a function to bulk update the tasks&rsquo; due dates. 
       </p>
       <p>
-        Here&rsquo;s the abbreviated signature. <em>(Due dates are optional&mdash;hence the nullable <code>DateTime?</code> object representing the due date in the parameter list).</em>
+        Here&rsquo;s the abbreviated signature. (Due dates are optional&mdash;hence the nullable <code>DateTime?</code> object representing the due date in the parameter list.)
       </p>
     </div>
   </div>
@@ -1011,7 +983,7 @@ public void UpdateDueDates(List&lt;long&gt; task_ids, DateTime? due_date, ...);<
 switch (input.ActionChangeType)
 {
   case BulkActions.UPDATE_DUE_DATE:
-    <span class="4-d6">_tasks_service.UpdateDueDates(input.TaskIDs, DateTime.Parse(input.Value),...);</span>
+    <span class="4-d6">_service.UpdateDueDates(input.TaskIDs, DateTime.Parse(input.Value),...);</span>
     break;
     ... 
 }</pre>
@@ -1032,11 +1004,11 @@ switch (input.ActionChangeType)
 switch (input.ActionChangeType)
 {
   case BulkActions.UPDATE_DUE_DATE:
-    _items_service.UpdateDueDates(input.ItemIDs, DateTime.Parse(input.Value), ...);
+    _service.UpdateDueDates(input.ItemIDs, DateTime.Parse(input.Value), ...);
     break;
         
   <span class="4-d7">case BulkActions.REMOVE_DUE_DATE:
-    _items_service.UpdateDueDates(input.ItemIDs, null, ...);
+    _service.UpdateDueDates(input.ItemIDs, null, ...);
     break;</span>
     ... 
 }</pre>
@@ -1074,11 +1046,11 @@ public void <span class="4-d8">RemoveDueDates</span>(List&lt;long&gt; task_ids, 
 switch (input.ActionChangeType)
 {
   case BulkActions.UPDATE_DUE_DATE:
-    <span class="4-d10">_items_service.UpdateDueDates(input.TaskIDs, DateTime.Parse(input.Value), ...);</span>
+    <span class="4-d10">_service.UpdateDueDates(input.TaskIDs, DateTime.Parse(input.Value), ...);</span>
     break;
         
   case BulkActions.REMOVE_DUE_DATE:
-    <span class="4-d10">_items_service.RemoveDueDates(input.TaskIDs, ...);</span>
+    <span class="4-d10">_service.RemoveDueDates(input.TaskIDs, ...);</span>
     break;
     ... 
 }</pre>
@@ -1103,7 +1075,7 @@ switch (input.ActionChangeType)
     <div class="content">
       <h2>The Shape of Code</h2>
       <p class="emphasis">
-        Code has a certain <em>shape</em> to it. It&rsquo;s spacing. The indentations. Where line breaks are made. All of this stuff matters.
+        Code has a certain <em>shape</em> to it. Its spacing. The indentations. Where line breaks are made. All of this stuff matters.
       </p>
       <p>
         Good shape makes code easier&mdash;and more enjoyable&mdash;to read. So, at times, my reason for naming something is unapologetically superficial: It might have more to do with the code&rsquo;s shape than the meaning of the name.
@@ -2019,7 +1991,7 @@ foo.DoSomething();</pre>
   <div class="grid-content">
     <div class="content">
       <p>
-        This helps rid some of the dizzying effects. At least the instance name is more readily discernable. But, the newbie is still left wondering what this all means. What is a <code>foo</code>? I&rsquo;d come to find that it&rsquo;s intentionally meant to mean nothing specific--a way of ensuring the novice understands that the concept can be pplicable to nearly every kind of a "thing". 
+        This helps rid some of the dizzying effects. At least the instance name is more readily discernable. But, the newbie is still left wondering what this all means. What is a <code>foo</code>? I&rsquo;d come to find that it&rsquo;s intentionally meant to mean nothing specific&mdash;a way of ensuring the novice understands that the concept can be pplicable to nearly every kind of a "thing". 
       </p>
       <p>
         But, at such an early step in the process, concreteness is exactly what the novice needs. The mental bridge to the abstract is far easier to cross this way, than to immediately start with the abstract. 
