@@ -103,7 +103,6 @@ pre, pre span {
  	line-height: 1.1rem;
 }
 
-
 pre span.emphasis {
 	font: inherit;
 	color: #ffed95 !important;
@@ -116,7 +115,7 @@ pre span.emphasis {
 	margin: 1rem 0 0 1rem;
 	top: 0;
 	left: 0;
-	font-family: 'Fredericka the Great', sans-serif;
+	font-family: 'Fredericka the Great', serif;
 }
 
 .menu > a {
@@ -143,6 +142,16 @@ pre span.emphasis {
 	background-color: #fff;
 }
 
+.toc > span {
+	display:inline-block;
+	margin: 1rem 0 0 .6rem;
+	font-family: 'Lora', serif;
+	font-size: .6rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .1rem;
+}
+
 .toc > ul {
 	list-style-type: none;
 	padding: .5rem .6rem;
@@ -150,17 +159,17 @@ pre span.emphasis {
 
 .toc > ul > li {
 	margin-top: .6rem;
-	font-family: 'Lora', sans-serif;
+	font-family: 'Lora', serif;
 	font-size: 1rem;
 }
 
 .toc > ul > li.extended {
-	font-family: 'Lora', sans-serif;
+	font-family: 'Lora', serif;
 	font-size: .8rem;
 }
 
 .toc > ul > li > a {
-	color: #fd5634;
+	color: #444;
 	text-decoration: none;
 }
 
@@ -169,7 +178,7 @@ pre span.emphasis {
 }
 
 .toc > ul > li > a:hover {
-	color: #f5360f;
+	color: #000 !important;
 	text-decoration: underline;
 }
 
@@ -184,21 +193,21 @@ pre span.emphasis {
 
 .cover > h1 {
 	font-size: 4rem;
-	font-family: 'Fredericka the Great', sans-serif;
+	font-family: 'Fredericka the Great', serif;
 	font-weight: 400;
 }
 
 .cover > h2 {
 	font-size: 1.2rem;
 	font-style: italic;
-	font-family: 'Lora', sans-serif;
+	font-family: 'Lora', serif;
 	font-weight: 400;
 }
 
 .cover > h3 {
 	padding-top: 1.4rem;
 	font-size: 1.1rem;
-	font-family: 'Lora', sans-serif;
+	font-family: 'Lora', serif;
 	color: #fd5634;
 	font-weight: 400;
 	text-align: right;
@@ -208,7 +217,7 @@ pre span.emphasis {
 	padding-top: 1rem;
 	font-size: 1rem;
 	font-style: italic;
-	font-family: 'Lora', sans-serif;
+	font-family: 'Lora', serif;
 	font-weight: 400;
 	text-align: right;
 }
@@ -231,7 +240,7 @@ pre span.emphasis {
 .cover > h5 {
   	padding-top: 2rem;
   	font-size: 0.7rem;
-	font-family: 'Lora', sans-serif;
+	font-family: 'Lora', serif;
 	font-weight: 400;
 	text-align: center;
 }
@@ -256,7 +265,7 @@ pre span.emphasis {
 }
 
 .content > h2, h3 {
-	font-family: 'Fredericka the Great', sans-serif;
+	font-family: 'Fredericka the Great', serif;
 	font-weight: 400;
 }
 .content > h2 {
