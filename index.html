@@ -1,9 +1,9 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Lora:400,400i,700,700i|Roboto+Mono&display=swap" rel="stylesheet">
-	<link href="styles-2.css" rel="stylesheet" type="text/css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Lora:400,400i,700,700i|Roboto+Mono&display=swap" rel="stylesheet">
+  <link href="styles-2.css" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="menu">
@@ -13,22 +13,23 @@
     </svg>
   </a>
 </div>
-<div class="toc">
-  <span>Table of Contents</span>
-  <ul>
-    <li><a href="#ch-introduction">Introduction</a></li>
-    <li><a href="#ch-imagining-objects">Imagining Objects</a></li>
-    <li><a href="#ch-name-hunting">Name Hunting</a></li>
-    <li><a href="#ch-breaking-methods-apart">Breaking Methods Apart</a></li>
-    <li><a href="#ch-shape-of-code">The Shape of Code</a></li>
-    <li><a href="#ch-when-opposites-dont-attract">When Opposites Don&rsquo;t Attract</a></li>
-    <li><a href="#ch-tautologous-name-trap">The Tautologous Name Trap</a></li>
-    <li><a href="#ch-names-are-fickle">Names are Fickle</a></li>
-    <li><a href="#ch-abstracting-to-soon">Abstracting too Soon</a></li>
-    <li><a href="#ch-speaking-the-native-tongue">Speaking the Native Tongue</a></li>
-    <li><a href="#ch-naming-to-teach">Naming to Teach</a></li>
-    <li class="extended"><a href="#ch-about-this-book">About this book</a></li>
-  </ul>
+<div class="toc" id="toc">
+  <a href="" class="close-btn">&times;</a>
+  <div class="toc-content">
+    <a href="#ch-introduction">Introduction</a>
+    <a href="#ch-imagining-objects">Imagining Objects</a>
+    <a href="#ch-name-hunting">Name Hunting</a>
+    <a href="#ch-breaking-methods-apart">Breaking Methods Apart</a>
+    <a href="#ch-shape-of-code">The Shape of Code</a>
+    <a href="#ch-when-opposites-dont-attract">When Opposites Don&rsquo;t Attract</a>
+    <a href="#ch-tautologous-name-trap">The Tautologous Name Trap</a>
+    <a href="#ch-names-are-fickle">Names are Fickle</a>
+    <a href="#ch-abstracting-to-soon">Abstracting too Soon</a>
+    <a href="#ch-speaking-the-native-tongue">Speaking the Native Tongue</a>
+    <a href="#ch-naming-to-teach">Naming to Teach</a>
+    <a href="#ch-about">About</a>
+    </ul>
+  </div>
 </div>
 
 <div class="bookmark">
@@ -37,7 +38,7 @@
   <div class="cover">
     <h1>Naming Things</h1>
     <h2>A short book dedicated to one of coding&rsquo;s most elusive tasks.</h2>
-    <h3>By Ka Wai Cheung, creator and co-founder of <a href="https://www.donedone.com" target="_blank">DoneDone</a>.</h3>
+    <h3>By Ka Wai Cheung, creator of <a href="https://www.donedone.com" target="_blank">DoneDone</a>.</h3>
     <h4><a href="#" id="btn-cover-click">Start reading...</a></h4>
     <h5>Copyright &copy; 2019-2020, DoneDone LLC. All rights reserved.
   </div>  
@@ -1789,7 +1790,7 @@ public string EmailSubjectAction
       <p>One of the best ways to encourage this is to infuse the language of the business directly into your code.
       </p>
       <p>
-        If I were building internal software to track the organizational aspects of a law firm, I&rsquo;d want the names of the constructs in my software system to be as closely aligned to the words law professionals use to describe their own concepts. <code>PracticeAreas</code> instead of <code>Topics</code>. <code>PracticeGroups</code> instead of <code>Teams</code>. <code>Attorneys</code> and <code>Paralegals</code> instead of <code>Users</code>. This way, I don&rsquo;t have to make the mental mapping between what the client calls something versus what I do.
+        If I&rsquo;m building software to manage a law firm&rsquo;s organization, I want the names of my constructs to be as closely aligned to the words law professionals use to describe their own concepts. <em>Practice Areas</em> instead of <em>Topics</em>. <em>Practice Groups</em> instead of <em>Teams</em>. <em>Attorneys</em> and <em>Paralegals</em> instead of <em>Employees</em>. This way, I don&rsquo;t have to make the mental mapping between what the client calls something versus what I do.
       </p>
       <p>
         Business concepts should also drive the kind of structures you introduce into a codebase.
@@ -1799,13 +1800,13 @@ public string EmailSubjectAction
         If I were building a patient management system for a medical clinic, I might define a doctor&rsquo;s patient list with a structure like <code>List&lt;Patient&gt;</code>. It seems reasonable enough. I get all the normal functions associated with a <code>List</code> out-of-the-box, like <code>Add()</code>, <code>Remove()</code>, <code>Count()</code> and so forth.
       </p>
       <p>
-        But, doctors don&rsquo;t call these things patient lists, they call them <em>patient panels</em>. Doctors speak to how their panels are <em>full</em> or when new spots in their panel will open up. 
+        But, doctors typically do not call these things patient lists, they call them <em>patient panels</em>. Doctors speak to how their panels are <em>full</em> or when new spots in their panel will open up. 
       </p>
       <p>  
-        Because medical professionals have defined a specific concept called panels already, it&rsquo;s almost certain there are specific attributes tied to the panel itself&mdash;it&rsquo;s probably not just a convenient shorthand to a list of patients. 
+        Because medical professionals have defined a specific concept called panels already, it&rsquo;s almost certain there are specific attributes tied to the panel itself&mdash;not just a convenient shorthand to a list of patients. 
       </p>
       <p>
-        As it turns out, panels aren&rsquo;t just assigned to doctors, but to medical assistants and health educators. Panels also have a certain optimal number of patients (so that all clinicians generally see the same number of patients). Panels can have openings or be closed. It turns out there&rsquo;s a lot of other attributes tied to the concept of a panel. 
+        As it turns out, panels aren&rsquo;t just assigned to doctors, but to medical assistants and health educators. Panels also have a certain optimal number of patients (so that all clinicians generally see the same number of patients). Panels can have openings or be full. It turns out there&rsquo;s a lot of other attributes tied to the concept of a panel. 
       </p>
       <p>
         What may have started out, in my mind, as a list of <code>Patient</code>s has now become something a whole lot richer.
@@ -1817,11 +1818,11 @@ public string EmailSubjectAction
 <pre>
 public class Panel
 {
-  private List&lt;Patient&gt; _patients;  
+  private List&lt;Patient&gt; patients;  
   
-  private Doctor _doctor;
-  private HealthEducator _healthEducator;
-  private List&lt;MedicalAssistant&gt; _medicalAssistants;
+  private Doctor doctor;
+  private HealthEducator healthEducator;
+  private List&lt;MedicalAssistant&gt; medicalAssistants;
   
   private bool hasOpening;
   ...
@@ -1882,13 +1883,13 @@ public class Panel
       </ul>
       <hr />
       <p>
-        If you&rsquo;re familiar with relational data modeling, you know one of the key concepts is the associative entity (or associative table).
+        Naming the <em>relationships</em> between concepts is a particular area that can be easily overlooked. For instance, if you&rsquo;re familiar with relational data modeling, you know one of the key concepts is the associative table (or associative entity).
       </p>
       <p>
         An associative table&rsquo;s core characteristic is that it contains two or more foreign keys to tables that have a &ldquo;many-to-many&rdquo; relationship. For instance, a student enrolls in multiple classes and a class can have multiple students. You might represent students in a <code>Students</code> table and another in a <code>Classes</code> table. The associative table would hold the relationship between those two tables alongside any other data relevant to that relationship (like a student&rsquo;s current grade in that class).
       </p>
       <p>
-        It's customary to name such an associative table by gluing the adjacent table names together. This approach usually creates a platable table name like <code>StudentsClasses</code>. It reads decently.
+        It&rsquo;s customary to name such an associative table by gluing the adjacent table names together. This approach usually creates a platable table name like <code>StudentsClasses</code>. It reads decently.
       </p>
       <p>
         Let&rsquo;s take another example. I have an associative table that links a <code>Users</code> table with an <code>Accounts</code> table.  A user can belong to many accounts and an account can have many users. If I blindly name the associative table that links these two tables together, I&rsquo;d call it a <code>UsersAccounts</code> table.
@@ -1897,10 +1898,17 @@ public class Panel
         Down the road, I might track other pieces of data, like the date someone was added to the account or the particular role a user has in a specific account. Both those columns would fit naturally in the <code>UsersAccounts</code> table.
       </p>
       <p>
-        But, saying "Nora&rsquo;s user account began on June 3rd, 2016" sounds obnoxiously technical. It sounds much more natural to say "Nora&rsquo;s <em>membership</em> began on June 3rd, 2016" or "Nora&rsquo;s <em>membership</em> has admin privileges." The associative table is far more descriptive with a name like <code>Memberships</code>. 
+        But, saying &ldquo;Nora&rsquo;s user account began on March 1st, 2017&rdquo; is much less natural than saying &ldquo;Nora&rsquo;s <em>membership</em> began on March 1st, 2017&rdquo; or &ldquo;Nora&rsquo;s <em>membership</em> has admin privileges.&rdquo; The associative table is far more clear with a name like <code>Memberships</code>. 
       </p>
       <p>
-        The trick with good names is getting your head out of the technical details of your work and thinking about what you're real-world thing you're actually modeling. You just might find a more appropriate name that way. 
+        A <code>UsersPublications</code> table might be better named <code>Subscriptions</code>. A <code>CustomersProducts</code> could be a <code>PurchaseOrders</code>. A <code>PassengersFlights</code> table could be a <code>Booking</code>.
+      </p>
+      <p>
+        And this isn&rsquo;t relegated to just table naming. Object-relational mappers usually map directly from tables, so it&rsquo;s common to see the same name patterns appear in our code&mdash; as data transfer or business domain objects. 
+      </p>
+      <hr />
+      <p>
+        The trick with good names is getting your head out of the technical details of your work and thinking about what real-world thing you&rsquo;re actually modeling. You just might find a more appropriate name that way. 
       </p>
     </div>
   </div>
@@ -2087,13 +2095,15 @@ Person mary = new Person("Mary", date_of_birth);</pre>
   </div>
 </div>
 
-<div class="chapter" id="ch-about-this-book">
+<div class="chapter" id="ch-about">
 <div class="grid-content">
   <div class="content">
-    <h2>About this book</h2>
-    <p>Hey there.
+    <h2>About</h2>
+    <p>
+      I hope you enjoyed reading my thoughts on naming things. I am sure there are other strategies I did not cover, and I&rsquo;m equally sure you might not agree with my view on everything. My hope for this book is to open up more discussions and questions on a topic I don&rsquo;t think we talk enough about.
     </p>
-    <p>I&rsquo;d like to thank a few (well-known) folks in the programming industry that provided some valuable insights into how they write code. Their thoughts gave me direction in my own thinking while writing this book.
+    <p>
+      I&rsquo;d like to thank a few (well-known) folks in the programming industry that provided some valuable insights into how they write code. Their thoughts gave me direction in my own thinking while writing this book.
     </p>
     <ul>
       <li>Eric Evans</li>
@@ -2102,7 +2112,9 @@ Person mary = new Person("Mary", date_of_birth);</pre>
       <li>Sandi Metz</li>
       <li>Brandon Rhodes</li>
     </ul>
-<p>Also, a special thanks to <a href="https://www.tartworkshop.com/">Tart Workshop</a>, the creator of the excellent handwritten font <a href="https://fonts.google.com/specimen/Fredericka+the+Great" style="font-family:&rsquo;Fredericka the Great&rsquo; !important">Frederika the Great</a> that I&rsquo;ve used for the title and headings. I had no idea what "character" this book would have when I began designing the layout. This font became a lot of that character.</p>
+    <p>
+      If you&rsquo;d like to connect, send me a message on Twitter <a href="https://www.twitter.com/developerscode">@developerscode</a> or email me directly at <a href="mailto:kawai.cheung@donedone.com">kawai.cheung@donedone.com</a>. Thanks for reading!
+    </p>
   </div>
 </div>
 </div>
@@ -2115,17 +2127,6 @@ Person mary = new Person("Mary", date_of_birth);</pre>
 </div>
 
 </body>
-
-<!--
-
-Other notes:
-
-ONT: Email methods -- sendExternalUserEmail DRY up vs. split out to a postmark_ses_thing() because relationship to loggability is different than &rsquo;from&rsquo; address thing. - COMPLETE
-
-ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. because of the methods it has -- sending to queue, pulling from queue)
-
-
--->
 
 
 <script>
@@ -2195,17 +2196,32 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
 
     $("div.menu > a").click(function(e) {
       e.preventDefault();
-      $("div.toc").toggle();
+      openMenu();
     });
 
-    $("div.toc a").click(function(e) {
-      $("div.toc").hide();
+    $("div.toc > a.close-btn").click(function(e) {
+      e.preventDefault();
+      closeMenu();
     });
+
+    $("div.toc-content > a").click(function(e) {
+      closeMenu();
+    });
+
+
 
 
     /* 
      * Functions
      */
+    function openMenu() {
+      $("#toc").attr("style", "width:100%");
+    }
+
+    function closeMenu() {
+      $("#toc").attr("style", "width:0%");
+    }
+
     function showChapter(chapterId)
     {
       if (chapterId == getIntroChapterId())
@@ -2219,8 +2235,8 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
 
       $("div.chapter").hide();
 
-      $("div.toc > ul > li > a").removeClass("selected");
-      $("div.toc > ul > li > a[href='" + chapterId + "']").addClass("selected");
+      $("div.toc-content > a").removeClass("selected");
+      $("div.toc-content > a[href='" + chapterId + "']").addClass("selected");
 
       $(chapterId).fadeIn(200);
 
@@ -2286,7 +2302,7 @@ ONT: SQSCourier extraction (Name: Courier -- rather than helper/wrapper etc. bec
 
     function getIntroChapterId()
     {
-      return $("div.toc > ul > li > a").first().attr("href");
+      return $("div.toc-content > a").first().attr("href");
     }
   });
 
