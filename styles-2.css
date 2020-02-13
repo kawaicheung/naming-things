@@ -133,6 +133,13 @@ pre span.emphasis {
 	border-color: #000;
 }
 
+.footer {
+	text-align: center;
+	font-size: .7rem;
+	font-family: 'Lora', serif;
+	margin-bottom: 4rem;
+}
+
 .toc {
   height: 100%;
   width: 0;
@@ -194,18 +201,11 @@ pre span.emphasis {
 }
 
 .cover > h2 {
+	margin-top: .4rem;
 	font-size: 1.2rem;
 	font-style: italic;
 	font-family: 'Lora', serif;
 	font-weight: 400;
-}
-
-.cover > h3 {
-	padding-top: 1.4rem;
-	font-size: 1.1rem;
-	font-family: 'Lora', serif;
-	font-weight: 400;
-	text-align: right;
 }
 
 .cover > h4 {
@@ -214,7 +214,6 @@ pre span.emphasis {
 	font-style: italic;
 	font-family: 'Lora', serif;
 	font-weight: 400;
-	text-align: right;
 }
 
 .cover > h4 > a {
@@ -230,14 +229,6 @@ pre span.emphasis {
 
 .cover > h4 > a:hover {
   background-color: #fff;
-}
-
-.cover > h5 {
-  	padding-top: 2rem;
-  	font-size: 0.7rem;
-	font-family: 'Lora', serif;
-	font-weight: 400;
-	text-align: center;
 }
 
 
