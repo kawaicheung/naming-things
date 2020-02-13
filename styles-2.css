@@ -52,7 +52,7 @@ strong { font-weight: bold; }
 	display: grid;
 	grid-template-areas: ". prev next .";
 	grid-template-columns: 1fr 3.5fr 3.5fr 1fr;
-	padding-bottom: 20vh;
+	padding-bottom: 10vh;
 }
 
 #grid-prev-next > div.prev {
@@ -137,7 +137,7 @@ pre span.emphasis {
 	text-align: center;
 	font-size: .7rem;
 	font-family: 'Lora', serif;
-	margin-bottom: 4rem;
+	padding-bottom: 10vh;
 }
 
 .toc {
@@ -485,6 +485,22 @@ hr:after {
 .content > blockquote {
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
+}
+
+#grid-prev-next {
+	display: block;
+}
+
+#grid-prev-next > div {
+	margin-top: 1rem;
+}
+
+#grid-prev-next > div.prev {
+	text-align: center;
+}
+
+#grid-prev-next > div.next {
+	text-align: center;
 }
 
 }
