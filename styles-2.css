@@ -113,6 +113,7 @@ pre span.emphasis {
 	display: none;
 	position: fixed;
 	margin: 1rem 0 0 1rem;
+	
 	top: 0;
 	left: 0;
 	font-family: 'Fredericka the Great', serif;
@@ -125,7 +126,6 @@ pre span.emphasis {
 	padding: .4rem;
 	border-radius: .2rem;
 	background-color: #fff;
-	border: solid 2px #efefef;
 }
 
 .menu > a:hover {
@@ -134,56 +134,49 @@ pre span.emphasis {
 }
 
 .toc {
-	display: none;
-	position: fixed;
-	padding: 1rem 2rem 2rem 2rem;
-	top: 1rem;
-	left: 4rem;
-	background-color: #fff;
-	border-top: solid 2px #efefef;
-	border-bottom: solid 2px #efefef;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: 0.3s;
 }
 
-.toc > span {
-	display:inline-block;
-	margin: 1rem 0 0 .6rem;
-	font-family: 'Lora', serif;
-	font-size: .6rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: .1rem;
+.toc-content {
+  position: relative;
+  top: 15%;
+  width: 100%;
+  text-align: center;
 }
 
-.toc > ul {
-	list-style-type: none;
-	padding: .5rem .6rem;
+.toc a {
+  font-family: 'Lora', serif;
+  padding: .4rem;
+  font-size: 1.4rem;
+  color: #222;
+  display: block;
+  text-decoration: none;
 }
 
-.toc > ul > li {
-	margin-top: .6rem;
-	font-family: 'Lora', serif;
-	font-size: 1rem;
+.toc a:hover, .toc a:focus {
+  color: #000;
 }
 
-.toc > ul > li.extended {
-	border-top: dotted 1px #444;
-	padding-top: .8rem;
-	font-family: 'Lora', serif;
+.toc a.selected {
+  color: #fd5634;
+  text-decoration: underline;
+}
+.toc .close-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 1rem;
+  font-size: 3rem;
 }
 
-.toc > ul > li > a {
-	color: #444;
-	text-decoration: none;
-}
-
-.toc > ul > li > a.selected {
-	text-decoration: underline;
-}
-
-.toc > ul > li > a:hover {
-	color: #000 !important;
-	text-decoration: underline;
-}
 
 /* cover */
 
@@ -211,7 +204,6 @@ pre span.emphasis {
 	padding-top: 1.4rem;
 	font-size: 1.1rem;
 	font-family: 'Lora', serif;
-	color: #fd5634;
 	font-weight: 400;
 	text-align: right;
 }
@@ -423,6 +415,9 @@ hr:after {
     font-size: 17px;
   }
 
+.toc-content {
+  top: 10%;
+}
 .grid-cover {
 	display: block;
 	margin: 0 1rem;
