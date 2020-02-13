@@ -113,7 +113,7 @@ pre span.emphasis {
 	display: none;
 	position: fixed;
 	margin: 1rem 0 0 1rem;
-	
+
 	top: 0;
 	left: 0;
 	font-family: 'Fredericka the Great', serif;
@@ -417,6 +417,10 @@ hr:after {
 
 .toc-content {
   top: 10%;
+}
+
+.toc-content > a {
+	font-size: 1.2rem;
 }
 .grid-cover {
 	display: block;
