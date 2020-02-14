@@ -16,6 +16,7 @@
 <div class="toc" id="toc">
   <a href="" class="close-btn">&times;</a>
   <div class="toc-content">
+    <h3>Naming Things</h3>
     <a href="#ch-introduction">Introduction</a>
     <a href="#ch-imagining-objects">Imagining Objects</a>
     <a href="#ch-name-hunting">Name Hunting</a>
@@ -1919,46 +1920,33 @@ public class Panel
   <div class="grid-content">
     <div class="content">
       <h2>Naming to Teach</h2>
+      <p class="emphasis">
+        The most important thing we can do as programmers is to teach others this craft well.
+      </p> 
       <p>
-        I have a very simple thing to say about how code is taught. The more advanced you are, the more likely you teach the craft poorly. As you become more advanced in a field, more basic concepts in that field become so familiar that it becomes harder to recall what it was like before you understood those concepts. 
+        The first programming class I ever took was for C++. One of the first concepts I learned was about object instantiation. I never felt so utterly lost in a class in all my life.
       </p>
       <p>
-        Assuming you actually know how to ride a bike&mdash;and have known how to do so for years&mdash;imagine the feeling you had of getting on a bike for the very first time. You tried to pedal and keep the handlebars straight, but you <em>still</em> fell down. I can remember this struggle when I was five years old. 
-      </p>
-      <p>
-        If I got on a bike today, I would have to fight my instincts to try to pedal and fall down. It would actually be <em>hard</em> for me to fall off my bike now. The old saying "it&rsquo;s like riding a bike" isn&rsquo;t just about something being intuitive; it&rsquo;s about how hard it is to recall the feeling of that thing not being intuitive.
-      </p>
-      <p>
-        Having worked with object-oriented programming languages for over twenty years, to me, the concept of a class constructor is obvious&mdash;it&rsquo;s a method which instantiate an instance of the object a class defines. Like riding a bike.
-      </p>
-      <p>
-        But, when I was first taught about class construction, I was at a complete and utter loss. The concept was one of those fancy italian racing bikes with those clip-on pedals. I was a mermaid. 
-      </p>
-      <p>
-        Looking back, it was unclear to me because I couldn&rsquo;t differentiate a class definition from an instance of the class&mdash;that these were two entirely different things. I couldn&rsquo;t visualize "instantiation". Is this a term ever used outside of programming?
-      </p>
-      <p>
-        A large part of the problem was how the concept was introduced. I recall seeing one of these example lines of code in my introductory class. While it&rsquo;s easy for me to understand now, I remember vividly the feeling of confusion staring at this kidn of code. I remember having to parse through it a dozen times to finally <em>get it</em>. The next day, it became completely foreign again.
+        A large part of the problem was how the concept was introduced. I recall seeing one of these example lines of code in my introductory textbook. While it&rsquo;s easy for me to understand now, I remember the feeling of complete confusion staring at this kind of code, parsing through it a dozen times to finally get it. The next day, it became completely foreign again.
       </p>
     </div>
   </div>
   <div class="grid-code-only">
-    <div class="code-block">
-<pre>
-Object myObject = new Object();
-myObject.DoSomething();</pre>
+    <div class="code-block large">
+      <pre>
+<span class="11-d1">Object</span> my<span class="11-d1">Object</span> = new <span class="11-d1">Object</span>();
+</pre>
     </div>
   </div>
-  <div class="grid-content">
+   <div class="grid-content">
     <div class="content">
       <p>
-        A line of code like this has no relatable concept outside of the programming world to latch onto. The word <code>Object</code> appears three times in one line. It creates that dizzying effect I mentioned in <a href="#ch-shape-of-code">The Shape of Code</a>. A knowledgeable programmer knows that they each stand for something different.
+        The word <code>Object</code> appears <a href="#" class="code-ref" data-code-ref="11-d1">three times</a> in one line. It creates that dizzying effect I mentioned in <a href="#ch-shape-of-code">The Shape of Code</a>. A knowledgeable programmer knows that they each stand for something different.
       </p>
       <ul>
         <li>The first <code>Object</code> refers to the type of the instance we&rsquo;re instantiating.</li>
-        <li>The second <code>Object</code> is part of the name of this instance <code>MyObject</code>.</li>
+        <li>The second <code>Object</code> is part of the name of this instance <code>myObject</code>.</li>
         <li>The third <code>Object</code> is invoking the constructor.</li>
-        <li>The fourth <code>Object</code> is part of the now-instantiated instance <code>myObject</code>, which is now performing the very detailed action of <code>DoSomething()</code>.</li>
       </ul>
       <p>
       But, for a programming newbie, this made as much sense as this equally sensible line.
@@ -1966,24 +1954,25 @@ myObject.DoSomething();</pre>
     </div>
   </div>
   <div class="grid-code-only">
-    <div class="code-block">
+    <div class="code-block large">
       <pre>
 Xy8lksp0 myXy8lksp0 = new Xy8lksp0();
-myXy8lksp0.DoSomething();</pre>
+</pre>
     </div>
   </div>
+ 
   <div class="grid-content">
     <div class="content">
       <p>
-        Some code writers will "improve" upon this example by introducing meaningless variable names&mdash;<code>foo</code>, <code>bar</code>, <code>baz</code>, and so forth.
+        Some code writers will improve upon this example by introducing meaningless variable names&mdash;<code>foo</code>, <code>bar</code>, <code>baz</code>, and so forth.
       </p>
     </div>
   </div>
   <div class="grid-code-only">
-    <div class="code-block">
+    <div class="code-block large">
       <pre>
 Object foo = new Object();
-foo.DoSomething();</pre>
+</pre>
     </div>
   </div>
   <div class="grid-content">
