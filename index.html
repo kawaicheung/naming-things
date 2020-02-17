@@ -1373,7 +1373,7 @@ doc.Add(new Field(_FIELD_item_event_desc, item_event.PlainTextDescription...);
         In cases like this, I look for a completely different angle to the name. After staring at my options for a few minutes, I realize the obstacle lies with the prefix <em>isWorkflow</em>. It forces me into having to come up with an adjective to describe the state of the workflow I want to achieve&mdash;and there aren&rsquo;t any good ones that make the method name read clearly.
       </p>
       <p>
-        Instead of starting the name with the adjective-requiring &ldquo;is&rdquo;, I start with the verb-requiring &ldquo;can.&rdquo; <code>CanUnpublishWorkflow()</code>
+        Instead of starting the name with the adjective-requiring &ldquo;is&rdquo;, I start with the verb-requiring &ldquo;can&rdquo; and come up with <code>CanUnpublishWorkflow()</code>.
       </p>
       <p>
         Now I might be onto something! Notice I still use the word <em>unpublish</em>, but as a verb the intent is no longer ambiguous. It&rsquo;s clear we are checking whether this <em>workflow can be unpublished</em> as opposed to checking whether the <em>workflow can&rsquo;t be published</em>.
@@ -1732,7 +1732,10 @@ public void UpdateAccountName(int id, string name) { ... }</pre>
   <div class="grid-code-only">
     <div class="code-block">
         <pre>
-/* Only being used by the mailing service right now as part of the email subject, but I&rsquo;m sure it will have other uses one day. */
+/* 
+   Only being used by the mailing service right now as part of the email subject,
+   but I&rsquo;m sure it will have other uses one day. 
+*/
 public string AbbreviatedAction
 {
   get { ... }
@@ -2069,16 +2072,16 @@ addPerson(41, "Jane", "Smith");
       </p>
       <hr />
       <p>
-        The <em>Big Idea</em> behind this entire book is just this. Your code&mdash;no matter how elegantly you believe you&rsquo;ve written it&mdash;will always feel foreign and mysterious to someone else at first. It&rsquo;s your job to invite your fellow programmer into your space with open arms. 
+        The <em>Big Idea</em> behind this entire book is just this. Your code&mdash;no matter how elegantly you believe you&rsquo;ve written it&mdash;will always feel foreign and mysterious to someone else at first.  That somebody else might even be <em>you</em> reacquainting yourself with your own code down the road. It&rsquo;s your job to invite the reader into your space with open arms. 
       </p>
       <p>
-        Naming things well is like putting the welcome mat down before the front doorstep of your code. It can be the difference between a home people want to live in and keep thriving versus one we&rsquo;d all rather leave abandoned.
+        Naming things well is putting the welcome mat down before the front doorstep of your code. It can be the difference between a home people want to keep alive and thriving versus one we&rsquo;d soon rather leave behind.
       </p>
     </div>
   </div>
 </div>
 
-<div class="chapter" id="ch-about">
+<div class="chapter end" id="ch-about">
 <div class="grid-content">
   <div class="content">
     <h2>About</h2>
@@ -2086,7 +2089,7 @@ addPerson(41, "Jane", "Smith");
       I hope you enjoyed reading my thoughts on naming things. I am sure there are other strategies I did not cover, and I&rsquo;m equally sure you might not agree with my view on everything. My hope for this book is to open up more discussions and questions on a topic I don&rsquo;t think we talk enough about.
     </p>
     <p>
-      If you&rsquo;d like to connect, send me a message on Twitter <a href="https://www.twitter.com/developerscode">@developerscode</a> or email me directly at <a href="mailto:kawai.cheung@donedone.com">kawai.cheung@donedone.com</a>. Thanks for reading!
+      If you&rsquo;d like to connect about this book in any way, message me on Twitter <a href="https://www.twitter.com/developerscode">@developerscode</a> or email me directly at <a href="mailto:kawai.cheung@donedone.com">kawai.cheung@donedone.com</a>. Thanks for reading!
     </p>
   </div>
 </div>
@@ -2115,7 +2118,7 @@ addPerson(41, "Jane", "Smith");
     var curChapterId = "";
 
 
-    $("div.chapter").each(function(i) {
+    $("div.chapter:not(.end)").each(function(i) {
       $(this).children("div.grid-content").first().children("div.content").first().prepend("<h4>Chapter " + (i + 1) + "</h4>");
     });
 
