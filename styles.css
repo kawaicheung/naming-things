@@ -155,7 +155,7 @@ pre span.emphasis {
 
 .toc-content {
   position: relative;
-  top: 15%;
+  top: 10%;
   width: 100%;
   text-align: center;
 }
@@ -423,8 +423,13 @@ hr:after {
     font-size: 17px;
   }
 
+.code-block.large pre,
+.code-block.large pre span {
+	font-size: 0.7rem;
+	line-height: 1.1rem;
+}
 .toc-content {
-  top: 10%;
+  top: 8%;
 }
 
 .toc-content > a {
