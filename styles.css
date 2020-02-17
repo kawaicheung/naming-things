@@ -124,7 +124,7 @@ pre span.emphasis {
 	display: inline-block;
 	padding: .4rem;
 	border-radius: .2rem;
-	background-color: #fff;
+	border: solid 1px #cccac6;
 }
 
 .menu > a:hover {
