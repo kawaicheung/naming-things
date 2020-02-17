@@ -110,6 +110,7 @@ pre span.emphasis {
 
 /* menu */
 .menu {
+	background-color: #faf9f6;
 	display: none;
 	position: fixed;
 	margin: 1rem 0 0 1rem;
@@ -132,6 +133,10 @@ pre span.emphasis {
 	border-color: #000;
 }
 
+.sig {
+	font-weight: bold;
+	font-family: inherit;
+}
 
 .footer {
 	text-align: center;
@@ -186,7 +191,7 @@ pre span.emphasis {
 }
 
 .toc-content > a.extended {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .toc .close-btn {
