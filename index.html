@@ -2,7 +2,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Lora:400,400i,700,700i|Roboto+Mono&display=swap" rel="stylesheet">
-  <link href="styles-2.css" rel="stylesheet" type="text/css" />
+  <link href="styles.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
@@ -27,7 +27,7 @@
     <a href="#ch-names-are-fickle">Names are Fickle</a>
     <a href="#ch-abstracting-too-soon">Abstracting Too Soon</a>
     <a href="#ch-speaking-the-native-tongue">Speaking the Native Tongue</a>
-    <a href="#ch-naming-to-teach">Naming to Teach</a>
+    <a href="#ch-naming-and-teaching">Naming and Teaching</a>
     <a href="#ch-about" class="extended">About</a>
   </div>
 </div>
@@ -1916,18 +1916,15 @@ public class Panel
 
 
 
-<div class="chapter" id="ch-naming-to-teach">
+<div class="chapter" id="ch-naming-and-teaching">
   <div class="grid-content">
     <div class="content">
-      <h2>Naming to Teach</h2>
+      <h2>Naming and Teaching</h2>
       <p class="emphasis">
-        The most important thing we can do as programmers is to teach others this craft well.
-      </p> 
-      <p>
-        The first programming class I ever took was for C++. One of the first concepts I learned was about object instantiation. I never felt so utterly lost in a class in all my life.
+        Imagine you&rsquo;re teaching a new programmer about one of the most fundamental concepts in object-oriented programming&mdash;constructors. How would you describe an example?
       </p>
       <p>
-        A large part of the problem was how the concept was introduced. I recall seeing one of these example lines of code in my introductory textbook. While it&rsquo;s easy for me to understand now, I remember the feeling of complete confusion staring at this kind of code, parsing through it a dozen times to finally get it. The next day, it became completely foreign again.
+        My first introduction to the concept was in my college &ldquo;Intro to C++&rdquo; class. Even decades later, I still recall my textbook using an example that looked similar to this:
       </p>
     </div>
   </div>
@@ -1935,21 +1932,19 @@ public class Panel
     <div class="code-block large">
       <pre>
 <span class="11-d1">Object</span> my<span class="11-d1">Object</span> = new <span class="11-d1">Object</span>();
+my<span class="11-d1">Object</span>.<span class="11-d2">DoSomething()</span>;
 </pre>
     </div>
   </div>
-   <div class="grid-content">
+  <div class="grid-content">
     <div class="content">
       <p>
-        The word <code>Object</code> appears <a href="#" class="code-ref" data-code-ref="11-d1">three times</a> in one line. It creates that dizzying effect I mentioned in <a href="#ch-shape-of-code">The Shape of Code</a>. A knowledgeable programmer knows that they each stand for something different.
+        For an experienced programmer, this example feels like a good starting point. You can now focus on the academic discussion of class constructors without being sidetracked by the specificity of the example. 
       </p>
-      <ul>
-        <li>The first <code>Object</code> refers to the type of the instance we&rsquo;re instantiating.</li>
-        <li>The second <code>Object</code> is part of the name of this instance <code>myObject</code>.</li>
-        <li>The third <code>Object</code> is invoking the constructor.</li>
-      </ul>
       <p>
-      But, for a programming newbie, this made as much sense as this equally sensible line.
+        But, I remember staring at this line of code until the end of the class period, still unable to unravel the mystery of its meaning, still struggling with what <a href="#" class="code-ref" data-code-ref="11-d1">each representation of the word <code>Object</code></a> meant, or what <a href="#" class="code-ref" data-code-ref="11-d2">possible <em>something</em></a> this object would want to do.
+      <p>
+        After all, the word <code>Object</code> appears four times in two lines. It creates that dizzying effect discussed in <a href="#ch-shape-of-code">The Shape of Code</a>. For a programming newbie like me, this example was as clear as this equally correct line.
       </p>
     </div>
   </div>
@@ -1957,125 +1952,127 @@ public class Panel
     <div class="code-block large">
       <pre>
 Xy8lksp0 myXy8lksp0 = new Xy8lksp0();
+myXy8lksp0.yXlx8x3();
 </pre>
     </div>
   </div>
- 
+   <div class="grid-content">
+    <div class="content">
+      <p>
+         If I couldn&rsquo;t grasp one of the most basic concepts in an <em>introductory-level course</em>, what hope for me was there in this industry? I was never going to be a programmer.
+      </p>
+      <p>
+        This is the hopelessness I felt&mdash;and the hopelessness I&rsquo;m sure many others have felt when they first learned about code. I got lucky&mdash;I would learn a lot more about code over the years because I had specific needs that required me to learn concepts organically. But what about so many others that quit after that introductory class? 
+      </p>
+      <hr />
+      <p>
+        One of the easiest ways to teach code better is simple: <strong>Use relatable names in your examples</strong>.
+      </p>
+      <p>
+        I understand the impulse to shy away from specific examples. By showing an actual application of a concept, we fear misleading the student into some myopic understanding of the <em>Big Idea</em>.
+      </p>
+      <p>
+        It&rsquo;s this kind of belief that has also led many of us to use metasyntactic variable names like <code>foo</code>, <code>bar</code>, <code>baz</code>, and <code>qux</code> when teaching concepts. 
+      </p>
+     <blockquote>
+        Metasyntactic variables are used to name entities...whose exact identity is unimportant and serve only to demonstrate a concept, which is useful for teaching programming.
+      </blockquote>
+      <div class="quoter">
+        Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Metasyntactic_variable">metasyntactic variables</a>
+      </div>
+      <p>
+        Here&rsquo;s the application of these variables to describe method overloading. 
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+void foo(int bar);
+void foo(int bar, string baz);
+void foo(int bar, string baz, string qux);
+
+...
+
+foo(0);
+foo(1, "arg0");
+foo(2, "arg0", "arg1");
+</pre>
+    </div>
+  </div>
   <div class="grid-content">
     <div class="content">
       <p>
-        Some code writers will improve upon this example by introducing meaningless variable names&mdash;<code>foo</code>, <code>bar</code>, <code>baz</code>, and so forth.
+        I don&rsquo;t get the sense that the meaninglessness of the variables is helping teach this concept.
+      </p>
+      <p>
+        What does help immensely is concreteness. Object instantiation, method overloading, and most other programming concepts are only understandable when you apply them to something <em>real</em>. Their reason for existing only makes sense after you understand why their necessary in the first place. No one will ever grasp the benefits of method overloading because passing in <code>bar</code>, <code>baz</code>, and <code>qux</code>to <code>foo()</code> produce different useful results.
+      </p>
+      <p>
+        The very best examples, to me, are the ones that aren&rsquo;t only specific, but relevant to something you might actually do in code. Compare the original example of object instantiation above to an example like this.
       </p>
     </div>
   </div>
   <div class="grid-code-only">
     <div class="code-block large">
       <pre>
-Object foo = new Object();
+User requester = new User(username, password);
+requester.Login();</pre>
+    </div>
+  </div>
+  <div class="grid-content">
+    <div class="content">
+      <p>
+        If I showed this to someone learning the concept, they would still have many questions about the concept. But it would be much easier for me to begin explaining things like:
+      </p>
+      <ul>
+        <li>The difference between the <code>User</code> type and the <code>User()</code> constructor method. Instead of an empty constructor signature, passing in variables with relatable names better differentiates the two.
+        </li>
+        <li>The difference between a class (<code>User</code>) and an instance of that class (<code>requester</code>).
+        <li>An example of an appropriate method that a <code>User</code> instance might own.</li>
+      </ul>
+      <p>
+        Similarly, I can improve the method overloading example:
+      </p>
+    </div>
+  </div>
+  <div class="grid-code-only">
+    <div class="code-block">
+      <pre>
+void addPerson(int age);
+void addPerson(int age, string first_name);
+void addPerson(int age, string first_name, string last_name);
+
+...
+
+addPerson(27);
+addPerson(34, "John");
+addPerson(41, "Jane", "Smith");
 </pre>
     </div>
   </div>
   <div class="grid-content">
     <div class="content">
       <p>
-        This helps rid some of the dizzying effects. At least the instance name is more readily discernable. But, the newbie is still left wondering what this all means. What is a <code>foo</code>? I&rsquo;d come to find that it&rsquo;s intentionally meant to mean nothing specific&mdash;a way of ensuring the novice understands that the concept can be pplicable to nearly every kind of a "thing". 
+        Again, there will still be many questions about the concept of method overloading, but the student would have a much better grasp of the intention right out of the gate. Even a newbie could tell you what happened when each method version was invoked.
+      </p>
+      <ul>
+        <li>A 27-year old was added.</li>
+        <li>A 34-year old named John was added.</li>
+        <li>A 41-year old named Jane Smith was added.</li>
+      </ul>
+      <p>
+        Discussions about why method overloading is useful, what alternative approaches could be taken, or what trade-offs using each specific implementation entails would be far more productive with an example like this.
+      </p>
+      <p>The <em>Big Idea</em> should be the final stop in the learning process, not the first stop.
+        Once the student can anchor their understanding to something <em>real</em>, they can more quickly grasp other <em>real</em> examples. After that, the final step to fully understanding something is a much smaller one. 
+      </p>
+      <hr />
+      <p>
+        The <em>Big Idea</em> behind this entire book is just this. Your code&mdash;no matter how elegantly you believe you&rsquo;ve written it&mdash;will always feel foreign and mysterious to someone else at first. It&rsquo;s your job to invite your fellow programmer into your space with open arms. 
       </p>
       <p>
-        But, at such an early step in the process, concreteness is exactly what the novice needs. The mental bridge to the abstract is far easier to cross this way, than to immediately start with the abstract. 
-      </p>
-      <p>
-        Then there are the "concrete" examples that are easy to visualize, but unrelatable to the vast majority of real programming tasks. This makes the bridge from the example to something a novice might actually need to do, still, a difficult one to cross. I see this in many writeups when demonstrating how an interface is used, with the classic example always revolving around domesticated household pets.
-      </p>
-    </div>
-  </div>
-  <div class="grid-code-only">
-    <div class="code-block">
-      <pre>
-interface IAnimal
-{
-    string Speak();
-}
-
-class Dog : IAnimal
-{
-    public string Speak()
-    {
-        return "Bark!";
-    }
-}
-
-class Cat : IAnimal
-{
-    public string Speak()
-    {
-        return "Meow!";
-    }
-}</pre>
-    </div>
-  </div>
-  <div class="grid-content">
-    <div class="content">
-      <p>
-        The example is certainly _concrete_, but when&rsquo;s the last time you worked on a video game with anima superheroes or for a pet store supply chain? . Imagine a newbie attempting to parlay the knowledge gained from this example of interfaces into a generic integration engine or a file export tool. 
-      </p>
-      <p>
-        It may be second nature for a seasoned programmer, but for someone who&rsquo;s just learning these new concept of inheritance and intefaces, it takes a large leap to correlate a method like `Speak()` with animals to `ExportFile()` with various file types. At the same time, it&rsquo;s not as if a newbie doesn&rsquo;t understand the concept that a document can be exported as a PDF, plain-text file, Word doc, and so forth.
-      </p>
-      <p>
-        So, why not skip the animal stuff and just start with a more relatable example -- you know, the ones you find when you&rsquo;re trying to do things with _software_. Then, it&rsquo;s imperative to name the constructs in our examples as _concretely_ as possible. Let the novice anchor their understanding around something real. This will make the bridge to other similar examples easy to cross. With confidence and momentum behind their newfound knowledge, it will make the further reaching bridges quicker to cross as well.
-      </p>
-      <p>
-        [Deitel and Deitel example of gradebook...concrete, and more real world -- we might be building some system...but still using myGradebook1 and myGradebook2]
-      </p>
-      <p>
-        A better example of constructors and class instantiation may be something like this:
-      </p>
-    </div>
-  </div>
-  <div class="grid-code-only">
-    <div class="code-block">
-      <pre>
-User requester = new User(username, password);
-requester.AttemptLogin();</pre>
-    </div>
-  </div>
-  <div class="grid-content">
-    <div class="content">
-      <p>
-        Most all software these days require logins and users. This would be an instantly relatable example to the vast majority of novices. 
-      </p>
-      <p>
-        Nearly every programming book I know will start with an example of a default constructor method that always has no parameters. Now, I know technical authors do this to prove the point that a constructor&rsquo;s unique quality -- the thing that differentiates it from any other method of a class -- is that it instantiates the object. We want to show the newbie that the mere act of calling this thing -- the one with the same name as the class but with two parentheses at the end -- creates an instance. Adding parameters to that method would just get in the way of that point.
-      </p>
-      <p>
-        But, I remember thinking that for some reason, constructors _couldn&rsquo;t_ have parameters attached to them -- that somehow this made a constructor no longer a constructor. 
-      </p>
-      <p>
-        Instead, if we showed early examples of constructors with parameters, the whole idea of a constructor makes much more sense. 
-      </p>
-    </div>
-  </div>
-  <div class="grid-code-only">
-    <div class="code-block">
-      <pre>
-var date_of_birth = new DateTime(1980,1,3);
-Person mary = new Person("Mary", date_of_birth);</pre>
-    </div>
-  </div>
-  <div class="grid-content">
-    <div class="content">
-      <p>
-        Ah, I see... we&rsquo;re creating a person named Mary born on January 3rd, 1980.
-      </p>
-      <p>
-        Of course, we know that constructors can have parameters. In fact, most well-written objects will have parameterized constructors that, in particular, accept data that can only be given during the instance&rsquo;s construction. This leads to all sorts of other concepts that bring out the empassioned object-oriented audience like immutability and hiding implementation details.
-      </p>
-      <p>
-        Also, idea of a parameter name neeed not be the name of the passed in thing!!!!
-      </p>
-      <p>
-        (string myText) doesnt have to pass something called myText. Show SCOPE. Silly things we take for granted but a newbie wouldnt.
-      [Finish]
+        Naming things well is like putting the welcome mat down before the front doorstep of your code. It can be the difference between a home people want to live in and keep thriving versus one we&rsquo;d all rather leave abandoned.
       </p>
     </div>
   </div>
@@ -2088,16 +2085,6 @@ Person mary = new Person("Mary", date_of_birth);</pre>
     <p>
       I hope you enjoyed reading my thoughts on naming things. I am sure there are other strategies I did not cover, and I&rsquo;m equally sure you might not agree with my view on everything. My hope for this book is to open up more discussions and questions on a topic I don&rsquo;t think we talk enough about.
     </p>
-    <p>
-      I&rsquo;d like to thank a few (well-known) folks in the programming industry that provided some valuable insights into how they write code. Their thoughts gave me direction in my own thinking while writing this book.
-    </p>
-    <ul>
-      <li>Eric Evans</li>
-      <li>Martin Fowler</li>
-      <li>David Heinemeier Hansson</li>
-      <li>Sandi Metz</li>
-      <li>Brandon Rhodes</li>
-    </ul>
     <p>
       If you&rsquo;d like to connect, send me a message on Twitter <a href="https://www.twitter.com/developerscode">@developerscode</a> or email me directly at <a href="mailto:kawai.cheung@donedone.com">kawai.cheung@donedone.com</a>. Thanks for reading!
     </p>
@@ -2113,7 +2100,7 @@ Person mary = new Person("Mary", date_of_birth);</pre>
 </div>
 
 <div class="footer">
-  Copyright &copy; 2019-2020, DoneDone LLC. All rights reserved.
+  Copyright &copy; 2020, DoneDone LLC. All rights reserved.
 </div>
 
 </body>
