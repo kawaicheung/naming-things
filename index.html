@@ -259,7 +259,7 @@ public sealed class <span class="blanked">AuthToken</span>
         The last hurdle, however, is a big one. What do I name this thing? This &ldquo;object&rdquo; is not a dog or cat. I don&rsquo;t really know what this thing is. 
       </p>
       <p>
-        My first attempt, <code>AuthToken</code> was half-hearted. I just wanted to get something down so I could finish the implementation. Reading this name again brings up all sorts of questions and lackluster answers.
+        My initial attempt, <code>AuthToken</code> was half-hearted. I just wanted to get something down so I could finish the implementation. Reading this name again brings up all sorts of questions and lackluster answers.
       </p>
       <ul>
         <li>
@@ -1834,7 +1834,7 @@ public class Panel
   <div class="grid-content">
     <div class="content">
       <p>  
-        To add a patient to a panel, my first attempt at a method signature might be something like:
+        To add a patient to a panel, my first sketch at a method signature might be something like:
       </p>
     </div>
   </div>
@@ -1924,7 +1924,7 @@ public class Panel
     <div class="content">
       <h2>Naming and Teaching</h2>
       <p class="emphasis">
-        Imagine you&rsquo;re teaching a new programmer about one of the most fundamental concepts in object-oriented programming&mdash;constructors. How would you describe an example?
+        Imagine you&rsquo;re teaching a new programmer about one of the most fundamental concepts in object-oriented programming&mdash;object instantiation. How would you describe an example?
       </p>
       <p>
         My first introduction to the concept was in my college &ldquo;Intro to C++&rdquo; class. Even decades later, I still recall my textbook using an example that looked similar to this:
@@ -1942,12 +1942,12 @@ my<span class="11-d1">Object</span>.<span class="11-d2">DoSomething()</span>;
   <div class="grid-content">
     <div class="content">
       <p>
-        For an experienced programmer, this example feels like a good starting point. You can now focus on the academic discussion of class constructors without being sidetracked by the specificity of the example. 
+        For an experienced programmer, this example feels like a good starting point. The names are abstract enough so you can focus on an academic discussion of class constructors and method invocations without being sidetracked by the specificity of the example. 
       </p>
       <p>
-        But, I remember staring at this line of code until the end of the class period, still unable to unravel the mystery of its meaning, still struggling with what <a href="#" class="code-ref" data-code-ref="11-d1">each representation of the word <code>Object</code></a> meant, or what <a href="#" class="code-ref" data-code-ref="11-d2">possible <em>something</em></a> this object would want to do.
+        As the student, this was not the experience I recollect. I remember staring at this line of code until the end of the class period unable to decrypt the mystery of its meaning, still struggling with what <a href="#" class="code-ref" data-code-ref="11-d1">each representation of the word <code>Object</code></a> meant, or what <a href="#" class="code-ref" data-code-ref="11-d2">possible <em>something</em></a> this object would want to do. It was maddening.
       <p>
-        After all, the word <code>Object</code> appears four times in two lines. It creates that dizzying effect discussed in <a href="#ch-shape-of-code">The Shape of Code</a>. For a programming newbie like me, this example was as clear as this equally correct line.
+        After all, the word <code>Object</code> appears four times in two lines. It creates that dizzying effect I discuss in <a href="#ch-shape-of-code">The Shape of Code</a>. For a programming newbie like me, this example was as clear as this syntactically correct line:
       </p>
     </div>
   </div>
@@ -1965,17 +1965,17 @@ myXy8lksp0.yXlx8x3();
          If I couldn&rsquo;t grasp one of the most basic concepts in an <em>introductory-level course</em>, what hope for me was there in this industry? I was never going to be a programmer.
       </p>
       <p>
-        This is the hopelessness I felt&mdash;and the hopelessness I&rsquo;m sure many others have felt when they first learned about code. I got lucky&mdash;I would learn a lot more about code over the years because I had specific needs that required me to learn concepts organically. But what about so many others that quit after that introductory class? 
+        This is the hopelessness I felt&mdash;and the hopelessness I&rsquo;m sure many others have felt when they first learned about code. I got lucky. I would learn a lot more about code over the years because I had specific needs that required me to learn concepts organically. But what about so many others that quit after that introductory class? 
       </p>
       <hr />
       <p>
-        One of the easiest ways to teach code better is simple: <strong>Use relatable names in your examples</strong>.
+        One of the easiest ways to teach code better is simple: <strong>Always use relatable names in your examples</strong>.
       </p>
       <p>
-        I understand the impulse to shy away from specific examples. By showing an actual application of a concept, we fear misleading the student into some myopic understanding of the <em>Big Idea</em>.
+        I understand the impulse to shy away from specifics. By showing an actual application of a concept, we fear misleading the student into some myopic understanding of the <em>Big Idea</em>. The reach of the concept will never be given its due justice.
       </p>
       <p>
-        It&rsquo;s this kind of belief that has also led many of us to use metasyntactic variable names like <code>foo</code>, <code>bar</code>, <code>baz</code>, and <code>qux</code> when teaching concepts. 
+        It&rsquo;s this kind of false belief that has also led many of us to use metasyntactic variable names like <code>foo</code>, <code>bar</code>, <code>baz</code>, and <code>qux</code> when teaching concepts. 
       </p>
      <blockquote>
         Metasyntactic variables are used to name entities...whose exact identity is unimportant and serve only to demonstrate a concept, which is useful for teaching programming.
@@ -2006,13 +2006,13 @@ foo(2, "arg0", "arg1");
   <div class="grid-content">
     <div class="content">
       <p>
-        I don&rsquo;t get the sense that the meaninglessness of the variables is helping teach this concept.
+        I don&rsquo;t get the sense that the meaninglessness of the variables helps teach this concept. The student, if lucky, might learn the technicalities of the concept but will certainly struggle with sensing when an occasion arises to actually use the concept.
       </p>
       <p>
-        What does help immensely is concreteness. Object instantiation, method overloading, and most other programming concepts are only understandable when you apply them to something <em>real</em>. Their reason for existing only makes sense after you understand why their necessary in the first place. No one will ever grasp the benefits of method overloading because passing in <code>bar</code>, <code>baz</code>, and <code>qux</code>to <code>foo()</code> produce different useful results.
+        What does help immensely is concreteness. Object instantiation, method overloading, and most other programming concepts are only understandable when you apply them to something <em>real</em>. Their reason for existing only makes sense after you understand why they&rsquo;re necessary in the first place. No one will ever grasp the benefits of method overloading because passing in <code>bar</code>, <code>baz</code>, and <code>qux</code>to <code>foo()</code> produces different useful results.
       </p>
       <p>
-        The very best examples, to me, are the ones that aren&rsquo;t only specific, but relevant to something you might actually do in code. Compare the original example of object instantiation above to an example like this.
+        As I discussed in <a href="#ch-imagining-objects">Imagining Objects</a>, another teaching anti-pattern I notice is we use unrealistic scenarios as examples&mdash;dogs, cats, birds, cars, and planes. The very best examples, to me, are the ones that aren&rsquo;t only specific, but relevant to something you might actually do in code. Compare the original example of object instantiation above to an example like this.
       </p>
     </div>
   </div>
@@ -2029,7 +2029,7 @@ requester.Login();</pre>
         If I showed this to someone learning the concept, they would still have many questions about the concept. But it would be much easier for me to begin explaining things like:
       </p>
       <ul>
-        <li>The difference between the <code>User</code> type and the <code>User()</code> constructor method. Instead of an empty constructor signature, passing in variables with relatable names better differentiates the two.
+        <li>The difference between the <code>User</code> type and the <code>User()</code> constructor method. And instead of using an empty constructor signature, I pass in variables with relatable names to better show what a constructor could do to initialize the instance.
         </li>
         <li>The difference between a class (<code>User</code>) and an instance of that class (<code>requester</code>).
         <li>An example of an appropriate method that a <code>User</code> instance might own.</li>
@@ -2067,15 +2067,22 @@ addPerson(41, "Jane", "Smith");
       <p>
         Discussions about why method overloading is useful, what alternative approaches could be taken, or what trade-offs using each specific implementation entails would be far more productive with an example like this.
       </p>
-      <p>The <em>Big Idea</em> should be the final stop in the learning process, not the first stop.
+      <p>
+        The <em>Big Idea</em> should be the final stop in the learning process, not the first stop.
         Once the student can anchor their understanding to something <em>real</em>, they can more quickly grasp other <em>real</em> examples. After that, the final step to fully understanding something is a much smaller one. 
+      </p>
+      <p>
+        Even after coding for more than two decades, I still get lost when looking at examples that use metasyntactic or abstract variables. Never have I learned a concept and thought to myself, in hindsight, &ldquo;Boy, I really wish they used <code>foo</code> and <code>bar</code> more so I would understand the concept better!&rdquo;
       </p>
       <hr />
       <p>
         The <em>Big Idea</em> behind this entire book is just this. Your code&mdash;no matter how elegantly you believe you&rsquo;ve written it&mdash;will always feel foreign and mysterious to someone else at first.  That somebody else might even be <em>you</em> reacquainting yourself with your own code down the road. It&rsquo;s your job to invite the reader into your space with open arms. 
       </p>
       <p>
-        Naming things well is putting the welcome mat down before the front doorstep of your code. It can be the difference between a home people want to keep alive and thriving versus one we&rsquo;d soon rather leave behind.
+        It&rsquo;s like putting the welcome mat down before the front doorstep of your code. So long as human beings are still writing code, the practice of naming things well will never go out of fashion.
+      </p>
+      <p>
+        Naming things well can be the difference between a home people want to keep alive and thriving versus one we&rsquo;d soon rather leave behind.
       </p>
     </div>
   </div>
