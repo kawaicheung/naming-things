@@ -134,8 +134,13 @@ pre span.emphasis {
 }
 
 .sig {
-	font-weight: bold;
+	font-weight: normal;
+	font-style: italic;
 	font-family: inherit;
+	display: inline-block;
+	float: right;
+	text-align: right;
+	padding-top: 2rem;
 }
 
 .footer {
@@ -174,7 +179,7 @@ pre span.emphasis {
 
 .toc-content a {
   font-family: 'Lora', serif;
-  padding: .4rem;
+  padding: .3rem;
   font-size: 1.4rem;
   color: #222;
   display: block;
@@ -474,7 +479,7 @@ hr:after {
 }
 
 .cover > h1 {
-	font-size: 3rem;
+	font-size: 2.6rem;
 	line-height: 3rem;
 	margin-bottom: 1rem;
 }
