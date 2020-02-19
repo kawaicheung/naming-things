@@ -196,6 +196,7 @@ pre span.emphasis {
 }
 
 .toc-content > a.extended {
+  margin-top: 1rem;
   font-size: 1.1rem;
 }
 
