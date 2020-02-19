@@ -138,9 +138,9 @@ pre span.emphasis {
 	font-style: italic;
 	font-family: inherit;
 	display: inline-block;
-	float: right;
 	text-align: right;
 	padding-top: 2rem;
+	width: 100%;
 }
 
 .footer {
