@@ -79,9 +79,8 @@ strong { font-weight: bold; }
 
 /* code-block */
 .code-block {
-	background-color: #3d4e5b;
-	/*background-color: #006ea5;*/
-	border-radius: .5rem;
+	background-color: #403d5b;
+	border-radius: .4rem;
 	padding: 1.5rem;
 	margin-bottom: 1.5rem;
 }
@@ -97,7 +96,7 @@ pre {
 }
 
 pre, pre span {
-	color: #c3eaff;
+	color: #f6f6f9;
 	font-family: 'Roboto Mono', monospace;
 	font-size: 0.7rem;
  	line-height: 1.1rem;
@@ -347,14 +346,14 @@ pre span.emphasis {
 	color: #000;
 	text-decoration: none;
 	cursor: context-menu;
-	/*background-color: #c4dfec;*/
-	background-color: #ffed95;
+	background-color: #e2e0fd;
 }
 
 .content a.code-ref:hover,
 .content a.code-ref:hover > code {
-	color: #006ea5 !important;
+	color: #000 !important;
 	cursor: context-menu;
+	background-color: #ffed95 !important;
 }
 
 code {
